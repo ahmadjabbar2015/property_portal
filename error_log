@@ -1,0 +1,2 @@
+[15-Nov-2022 10:00:20 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.0.2". You are running 7.3.33. in /home/thelogix/realstate.demo.crossdevlogix.com/vendor/composer/platform_check.php on line 24
+[15-Nov-2022 10:00:25 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.0.2". You are running 7.3.33. in /home/thelogix/realstate.demo.crossdevlogix.com/vendor/composer/platform_check.php on line 24
