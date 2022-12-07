@@ -118,7 +118,7 @@
                 </span>
                 <div class="multi-level collapse  " role="list" id="submenu-property" aria-expanded="false">
                     <ul class="flex-column nav">
-                       
+
                         <li class="nav-item ">
                             <a href="/property" class="nav-link">
                                 <span class="sidebar-text">Add Property</span>
@@ -170,8 +170,8 @@
                     data-bs-toggle="collapse" data-bs-target="#submenu-leases" aria-expanded="true">
                     <span>
                         <span class="sidebar-icon">
- 
- 
+
+
                             <i class="fa-sharp fa-solid fa-rectangle-list"></i></span>
                         <span class="sidebar-text">Leases</span>
                     </span>
@@ -348,7 +348,7 @@
                                 <span class="sidebar-text">Attempt</span>
                             </a>
                         </li>
-                       
+
                     </ul>
                 </div>
             </li>
@@ -380,11 +380,11 @@
             </li>
 
 
-            
 
 
-         
-        
+
+
+
 
 
 
@@ -415,9 +415,9 @@
                                 <span class="sidebar-text"> Source </span>
                             </a>
                         </li>
-                        
-                       
-                        
+
+
+
                     </ul>
                 </div>
             </li>
@@ -445,13 +445,13 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="#" class="nav-link">
-                                <span class="sidebar-text"> </span>
+                            <a href="{{route('rent.lease.reports')}}" class="nav-link">
+                                <span class="sidebar-text"> RantLease Reports</span>
                             </a>
                         </li>
-                        
-                       
-                        
+
+
+
                     </ul>
                 </div>
             </li>

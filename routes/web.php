@@ -40,6 +40,8 @@ use App\Http\Controllers\LeadController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\landlordreportsController;
+use App\Http\Controllers\RentLeaseReports;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -120,7 +122,7 @@ Route::middleware('auth')->group(function () {
     Route::get('propertyunits/delete/{id}', [propertyunitsController::class, 'delete']);
     Route::get('propertyunits/edit/{id}', [propertyunitsController::class, 'edit']);
     Route::post('propertyunits/update/{id}', [propertyunitsController::class, 'update']);
-    //leaes 
+    //leaes
     Route::get('lease', [LeaseController::class, 'create'])->name('lease.create');
     Route::get('lease/index', [LeaseController::class, 'index'])->name('lease.index');
     Route::get('lease/sale/index', [LeaseController::class, 'saleindex'])->name('lease.saleindex');
@@ -142,7 +144,7 @@ Route::middleware('auth')->group(function () {
     Route::get('inventory/delete/{id}', [InventoryController::class, 'delete']);
     Route::get('inventory/edit/{id}', [InventoryController::class, 'edit']);
     Route::post('inventory/update/{id}', [InventoryController::class, 'update']);
-    //event 
+    //event
     Route::get('calendar', [EventController::class, 'index'])->name('calendar.index');
     Route::post('/add_event', [EventController::class, 'add_event'])->name('add_event');
     Route::post('calendar/create-event', [EventController::class, 'create'])->name('calendar.create');
@@ -152,8 +154,8 @@ Route::middleware('auth')->group(function () {
     Route::get('ticket/index', [TicketController::class, 'index'])->name('ticket.index');
     Route::any('ticket/store', [TicketController::class, 'store']);
     Route::get('ticket/show/{id}', [TicketController::class, 'show']);
-    //customer 
-    Route::get('customers/index', [CustomerController::class, 'index'])->name('customers.index'); 
+    //customer
+    Route::get('customers/index', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('customer/{id}', [CustomerController::class, 'create']);
     Route::get('customer/hello', [CustomerController::class, 'hello'])->name('customer.hello');
     Route::post('customer/store', [CustomerController::class, 'store']);
@@ -188,6 +190,8 @@ Route::middleware('auth')->group(function () {
 
     //reports
     Route::get('landlordreports', [LandlordreportsController::class, 'create']);
+
+    Route::get('rentleasereports', [RentLeaseReports::class, 'index'])->name("rent.lease.reports");
     //payment
 
     Route::post('payments/sale/store', [PaymentController::class, 'store']);
