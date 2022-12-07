@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\LandloardController;
+use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\TenantController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -47,5 +48,13 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::get('tenants' , [TenantController::class , 'index']);
         Route::get('tenant/{id}' , [TenantController::class , 'show']);
         Route::post('tenants/store' , [TenantController::class , 'store']);
+        // Property Units
+        Route::get('property-units' , [PropertyController::class , 'getPropertyUnits']);
+
+        // Property Types
+        Route::get('property-types' , [PropertyController::class , 'getPropertyTypes']);
+        Route::get('property-types/{id}' , [PropertyController::class , 'showPropertyType']);
+        Route::post('property-type/store' , [PropertyController::class , 'storePropertytype']);
+
     });
 Route::post("login",[UserController::class,'index']);
