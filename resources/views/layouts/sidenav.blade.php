@@ -195,6 +195,14 @@
                                 <span class="sidebar-text">Show Leases</span>
                             </a>
                         </li>
+
+                        <li class="nav-item ">
+                            <a href="{{route('lease.saleindex')}}" class="nav-link">
+                                <span class="sidebar-text">Sale Booking</span>
+                            </a>
+                        </li>
+
+
                     </ul>
                 </div>
             </li>
@@ -446,11 +454,15 @@
                         </li>
                         <li class="nav-item ">
                             <a href="{{route('rent.lease.reports')}}" class="nav-link">
-                                <span class="sidebar-text"> RantLease Reports</span>
+                                <span class="sidebar-text"> Rent Lease Reports</span>
                             </a>
                         </li>
 
-
+                        <li class="nav-item ">
+                            <a href="{{route('sale.lease.reports')}}" class="nav-link">
+                                <span class="sidebar-text"> Sale Lease Reports</span>
+                            </a>
+                        </li>
 
                     </ul>
                 </div>

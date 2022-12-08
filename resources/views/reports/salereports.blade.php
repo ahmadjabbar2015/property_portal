@@ -7,7 +7,7 @@
         <div class="container">
 
             <h1>
-                Rent Leases Reports
+                Sale Booking Reports
             </h1>
             <div>
                 <button class="btn btn btn-danger mt-4 ml-3 mb-3" onclick="myFunction()"><i class="fa-solid fa-filter"></i>
@@ -27,13 +27,14 @@
 
                         </select>
                     </div>
+
                     <div class="col-md-3 mt-3">
-                        <label>Tenants</label>
-                        <select class="form-control " placeholder="Property" id="tenants_id">
+                        <label>Customer</label>
+                        <select class="form-control " placeholder="Property" id="customer_id">
                             <option value="" disabled selected>Select your option</option>
-                            @foreach ($ts as $item)
+                            @foreach ($customer as $item)
                                 <option value="{{ $item->id }}">
-                                    {{ $item->full_name }}</option>
+                                    {{ $item->client_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -42,36 +43,37 @@
                         <label>Installments</label>
                         <select class="form-control " placeholder="Property" id="installments">
                             <option value="" disabled selected>Select your option</option>
-                                <option value="daily">Daily</option>
                                 <option value="monthly">Monthly</option>
-                                <option value="annual">Annual</option>
+                                <option value="annually">Annual</option>
                         </select>
                     </div>
-                 <div class="col-md-3 mt-3">
-                                    <label>Date Rage</label>
-         <input class="form-control form-control-solid date_range"  onchange="datepicker()" placeholder="Pick date rage"
-          id="kt_daterangepicker_4" name="date_range" /></div>
-                </div>
+                    <div class="col-md-3 mt-3">
 
+                            <label>Date Rage</label>
+                            <input class="form-control form-control-solid date_range"  onchange="datepicker()" placeholder="Pick date rage"
+                                id="kt_daterangepicker_4" name="date_range" />
+                     </div>
+                </div>
             </div>
+
+
             <div class="row">
                 <div class="col">
                     <div class="ms-2 me-2 mt-5 ">
                         <div class="table-responsive">
-                            <table class="table mt-4 yajra-datatable" id="propertyreports_table">
+                            <table class="table mt-4 yajra-datatable" id="sale_report_table">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="">ID</th>
-                                        <th scope="col" class=""> PROPERTY</th>
-                                        <th scope="col" class="">TENANTS</th>
-                                        <th scope="col" class="">RENT</th>
-                                        <th scope="col" class="">INSALLEMENT</th>
-                                        <th scope="col" class="">START LEASE</th>
-                                        <th scope="col" class="">END LEASE</th>
-                                        <th scope="col" class="">DUA DATE</th>
-                                        <th scope="col" class="">ADVANCE PAYMENT</th>
-                                        <th scope="col" class="">TOTAL PAYMENT</th>
-                                        <th scope="col" class=""> Action</th>
+                                        <th scope="col" class="">Property</th>
+                                        <th scope="col" class="">Customer Name</th>
+                                        <th scope="col" class="">Sale Price</th>
+                                        <th scope="col" class="">Remaning Payment</th>
+                                        <th scope="col" class="">Installement</th>
+                                        <th scope="col" class="">No.of yaers/month</th>
+                                        <th scope="col" class="">Payment Pr M/Y</th>
+                                        <th scope="col" class="">Due date</th>
+                                        <th scope="col" class="">Actions</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -128,5 +130,5 @@
 
 
 @section('page-script')
-    <script src="{{ asset('assets') }}/js/property_reports.js"></script>
+    <script src="{{ asset('assets') }}/js/sale_reports.js"></script>
 @endsection

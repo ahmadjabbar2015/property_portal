@@ -192,6 +192,13 @@ Route::middleware('auth')->group(function () {
     Route::get('landlordreports', [LandlordreportsController::class, 'create']);
 
     Route::get('rentleasereports', [RentLeaseReports::class, 'index'])->name("rent.lease.reports");
+    Route::get('sale/report', [RentLeaseReports::class, 'saleLeasesReports'])->name("sale.lease.reports");
+
+
+
+
+
+
     //payment
 
     Route::post('payments/sale/store', [PaymentController::class, 'store']);

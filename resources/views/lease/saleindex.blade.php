@@ -26,8 +26,6 @@
                                         <th scope="col" class="">No.of yaers/month</th>
                                         <th scope="col" class="">Payment Pr M/Y</th>
                                         <th scope="col" class="">Due date</th>
-
-
                                         <th scope="col" class="">Actions</th>
                                     </tr>
                                 </thead>

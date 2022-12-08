@@ -13,7 +13,7 @@ class LandlordreportsController extends Controller
     //
     public function create(Request $request)
     {
-     
+
         $where = " ";
         if (isset($request->date)) {
             $where.= "date(created_at)".$request->date;
@@ -31,7 +31,7 @@ class LandlordreportsController extends Controller
              $rents+= $value->rent;
              $depoists+= $value->deposit;
              $total+= $value->total;
-        } 
+        }
         if ($request->ajax()) {
             return Datatables::of($data)
                 ->addIndexColumn()

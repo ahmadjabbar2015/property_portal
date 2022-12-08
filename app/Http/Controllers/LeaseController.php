@@ -116,12 +116,12 @@ class LeaseController extends Controller
         }
         $leasesdata->terms = $request->terms;
 
-        
+
 
         $leasesdata->save();
 
         propertydetail::where('id',$property_id)->update(['property_status' => 1]);
-       
+
         $this->rentintallment($leasesdata->id);
         $flas_message = toastr()->success('Leases Addedd Successfully');
         return redirect(route('lease.index'))->with('flas_message');
@@ -354,7 +354,7 @@ class LeaseController extends Controller
                     $actionBtn = '<a href="/lease/installment/' . $row->id . '" class="show btn btn-info btn-sm"><i class="fa-sharp fa-solid fa-eye"></i></a>
                     <a href="/lease/installment/' . $row->id . '" class="edit btn btn-success btn-sm">View</a>
                     <a href="/lease/sale/payment/' . $row->id . '" class="edit btn btn-success btn-sm">payment</a>
-                   
+
                    ';
                     return $actionBtn;
                 })

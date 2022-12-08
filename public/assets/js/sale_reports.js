@@ -7,17 +7,16 @@ $(document).ready(function () {
 
 // $(function (){
 
-    mydataTable = $('#propertyreports_table').DataTable({
+    mydataTable = $('#sale_report_table').DataTable({
 
         processing: true,
         serverSide: true,
         ajax: {
-            url: "/rentleasereports/",
+            url: "/sale/report/",
             data: function (d) {
                 d.property_id = property_id,
-                d.tenants_id = tenants_id,
+                d.customer_id = customer_id,
                 d.installments_id = installments_id,
-               // d.leads_id = leads_id,
                 d.start_date = start_date,
                 d.end_date = end_date
             }
@@ -30,17 +29,12 @@ $(document).ready(function () {
         },
         data: {
 
-            'tenants_id': tenants_id
+            'customer_id': customer_id
         },
         data: {
 
             'installments_id': installments_id
         },
-        // data: {
-
-        //     'leads_id': leads_id
-        // },
-
 
         columns: [
             {
@@ -53,38 +47,33 @@ $(document).ready(function () {
                 name: 'name',
             },
             {
-                data: 'full_name',
-                name: 'full_name',
+                data: 'first_name',
+                name: 'first_name',
             },
             {
-                data: 'rent',
-                name: 'rent',
+                data: 'total_sale_price',
+                name: 'total_sale_price',
+            },
+            {
+                data: 'remaing_payment',
+                name: 'remaing_payment',
             },
             {
                 data: 'frequency_collection',
                 name: 'frequency_collection',
             },
             {
-                data: 'lease_start',
-                name: 'lease_start',
+                data: 'number_of_years_month',
+                name: 'number_of_years_month',
             },
             {
-                data: 'lease_end',
-                name: 'lease_end',
+                data: 'payment_per_frequency',
+                name: 'payment_per_frequency',
             },
+
             {
                 data: 'due_date',
                 name: 'due_date',
-            },
-
-            {
-                data: 'advance_payments',
-                name: 'advance_payments',
-            },
-
-            {
-                data: 'total_payment',
-                name: 'total_payment',
             },
 
             {
@@ -101,27 +90,27 @@ $(document).ready(function () {
     var property_id = null;
     $('#search_property_id').on('change', function () {
         property_id = $(this).find(":selected").val();
-        $("#propertyreports_table").DataTable().ajax.reload();
+        $("#sale_report_table").DataTable().ajax.reload();
     });
 
-    var tenants_id = null;
-    $('#tenants_id').on('change', function () {
-        tenants_id = $(this).find(":selected").val();
-        $("#propertyreports_table").DataTable().ajax.reload();
+    var customer_id = null;
+    $('#customer_id').on('change', function () {
+        customer_id = $(this).find(":selected").val();
+        $("#sale_report_table").DataTable().ajax.reload();
     });
 
 
     var installments_id = null;
     $('#installments').on('change', function () {
         installments_id = $(this).find(":selected").val();
-        $("#propertyreports_table").DataTable().ajax.reload();
+        $("#sale_report_table").DataTable().ajax.reload();
 
     });
 
     // var leads_id = null;
     // $('#customer_id').on('change', function () {
     //     leads_id = $(this).find(":selected").val();
-    //     $("#propertyreports_table").DataTable().ajax.reload();
+    //     $("#sale_report_table").DataTable().ajax.reload();
 
     // });
 
@@ -144,7 +133,7 @@ $(document).ready(function () {
         var data_split = date_range.split("-");
            start_date = data_split[0];
            end_date = data_split[1];
-        $("#propertyreports_table").DataTable().ajax.reload();
+        $("#sale_report_table").DataTable().ajax.reload();
      }
     function myFunction() {
         var x = document.getElementById("filter_id");
