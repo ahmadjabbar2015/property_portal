@@ -12,5 +12,19 @@ class propertydetail extends Model
     protected $primaryKey = 'id';
     protected $guarded =['id'];
     // protected $fillable = ['name','rent','type','landlord','area','deposit','description'];
+
+    public function location(){
+        return $this->belongsTo(location::class , 'id' , 'property_id');
+    }
+
+    public function amenities(){
+        return   $this->belongsTo(amenitie::class , 'id', 'property_id');
+    }
+
+    public function propertyImages(){
+        return $this->belongsTo(propertyimage::class , 'id', 'property_id' );
+    }
+
+    
 }
 
