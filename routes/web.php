@@ -39,7 +39,8 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\landlordreportsController;
+use App\Http\Controllers\Porperty_reportsController;
+use App\Http\Controllers\Lead_reportsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -126,14 +127,14 @@ Route::middleware('auth')->group(function () {
     Route::get('lease/sale/index', [LeaseController::class, 'saleindex'])->name('lease.saleindex');
 
     Route::post('lease/store', [LeaseController::class, 'store']);
-    Route::post('lease/store/sale',[LeaseController::class,'sale_store']);
+    Route::post('lease/store/sale', [LeaseController::class, 'sale_store']);
     Route::get('lease/show/{id}', [LeaseController::class, 'show']);
     Route::get('lease/edit/{id}', [LeaseController::class, 'edit']);
     Route::post('lease/update/{id}', [LeaseController::class, 'update']);
     Route::get('lease/delete/{id}', [LeaseController::class, 'delete']);
-    Route::get('lease/get-property-units/{id}',[LeaseController::class,'get_property_unit']);
-    Route::get('lease/installment/{id}',[LeaseController::class,'installmentplane']);
-    Route::get('/lease/rent_intallment/{id}',[LeaseController::class,'rentinstallmentplane']);
+    Route::get('lease/get-property-units/{id}', [LeaseController::class, 'get_property_unit']);
+    Route::get('lease/installment/{id}', [LeaseController::class, 'installmentplane']);
+    Route::get('/lease/rent_intallment/{id}', [LeaseController::class, 'rentinstallmentplane']);
     //inventory
     Route::get('inventory', [InventoryController::class, 'create']);
     Route::get('inventory/index', [InventoryController::class, 'index'])->name('inventory.index');
@@ -153,7 +154,7 @@ Route::middleware('auth')->group(function () {
     Route::any('ticket/store', [TicketController::class, 'store']);
     Route::get('ticket/show/{id}', [TicketController::class, 'show']);
     //customer 
-    Route::get('customers/index', [CustomerController::class, 'index'])->name('customers.index'); 
+    Route::get('customers/index', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('customer/{id}', [CustomerController::class, 'create']);
     Route::get('customer/hello', [CustomerController::class, 'hello'])->name('customer.hello');
     Route::post('customer/store', [CustomerController::class, 'store']);
@@ -173,7 +174,7 @@ Route::middleware('auth')->group(function () {
     Route::get('lead', [LeadController::class, 'create']);
     Route::any('lead/store', [LeadController::class, 'store']);
     Route::get('lead/index', [LeadController::class, 'index'])->name('lead.index');
-    Route::get('lead/checknumber/{id}',[LeadController::class,'checknumber']);
+    Route::get('lead/checknumber/{id}', [LeadController::class, 'checknumber']);
     //attempt
     Route::get('lead/attempt/{id}', [LeadController::class, 'attempt'])->name('lead.attempt');
     Route::any('lead/update/{id}', [LeadController::class, 'update']);
@@ -185,13 +186,17 @@ Route::middleware('auth')->group(function () {
     Route::any('source/store', [SourceController::class, 'store']);
     Route::get('source/index', [SourceController::class, 'index'])->name('source.index');
     Route::get('source/delete/{id}', [SourceController::class, 'delete']);
-
-    //reports
-    Route::get('landlordreports', [LandlordreportsController::class, 'create']);
     //payment
 
     Route::post('payments/sale/store', [PaymentController::class, 'store']);
-    Route::get('lease/sale/payment/{id}',[paymentController::class,'salepayment']);
-    Route::post('payments/sale/rentstore',[PaymentController::class,'rent_payment']);
-    Route::get('/lease/rent_payment/{id}',[PaymentController::class,'rentshowpayment']);
+    Route::get('lease/sale/payment/{id}', [paymentController::class, 'salepayment']);
+    Route::post('payments/sale/rentstore', [PaymentController::class, 'rent_payment']);
+    Route::get('/lease/rent_payment/{id}', [PaymentController::class, 'rentshowpayment']);
+    //property_reports
+    Route::get('porperty_reports/index', [Porperty_reportsController::class, 'index'])->name('porperty_reports.index');
+    Route::get('porperty_reports/show/{id}', [Porperty_reportsController::class, 'show'])->name('porperty_reports.show');
+
+    // lead_reports
+    Route::get('lead_reports/index', [Lead_reportsController::class, 'index'])->name('lead_reports.index');
+    Route::get('lead_reports/show/{id}', [Lead_reportsController::class, 'show'])->name('lead_reports.show');
 });

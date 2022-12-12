@@ -22,9 +22,7 @@
             <div class="d-flex justify-content-center">
                 <div class="shadow -lg-3 p-3 mb-5 bg-body rounded mr-4 ml-4 col-md-10">
                     <div class="text-end">
-                        <h4>
-                            Hello Landlord
-                        </h4>
+                      
                         <button type="submit" class="btn btn-success"><a
                                 href="{{ url('/landlord/edit/' . $landlord->id) }}">
                                 Edit</a></button>

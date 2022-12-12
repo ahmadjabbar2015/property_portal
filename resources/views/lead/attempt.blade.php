@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="col-md-6 mt-4">
                                     <label for="email">Next Follow Date</label>
-                                    <input type="date" class="form-control" placeholder=""
+                                    <input type="date" class="form-control" data-date-format="DD MMMM YYYY" placeholder=""
                                         name="next_follow_date">
 
                                 </div>

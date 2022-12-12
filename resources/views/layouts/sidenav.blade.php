@@ -192,7 +192,12 @@
                         </li>
                         <li class="nav-item ">
                             <a href="/lease/index" class="nav-link">
-                                <span class="sidebar-text">Show Leases</span>
+                                <span class="sidebar-text"> Rent Leases Show</span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="/lease/sale/index" class="nav-link">
+                                <span class="sidebar-text">Sale Leases Show</span>
                             </a>
                         </li>
                     </ul>
@@ -440,13 +445,13 @@
                     <ul class="flex-column nav">
 
                         <li class="nav-item ">
-                            <a href="/landlordreports" class="nav-link">
-                                <span class="sidebar-text">Landlord Reports</span>
+                            <a href="/porperty_reports/index" class="nav-link">
+                                <span class="sidebar-text">Property Reports</span>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="#" class="nav-link">
-                                <span class="sidebar-text"> </span>
+                            <a href="/lead_reports/index" class="nav-link">
+                                <span class="sidebar-text"> Lead Reports</span>
                             </a>
                         </li>
                         
