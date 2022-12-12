@@ -10,7 +10,7 @@ $(document).ready(function () {
     mydataTable = $('#sale_report_table').DataTable({
 
         processing: true,
-        serverSide: true,
+        serverSide: false,
         ajax: {
             url: "/sale/report/",
             data: function (d) {

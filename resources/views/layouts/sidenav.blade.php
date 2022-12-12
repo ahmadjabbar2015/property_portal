@@ -454,13 +454,13 @@
                         </li>
                         <li class="nav-item ">
                             <a href="{{route('rent.lease.reports')}}" class="nav-link">
-                                <span class="sidebar-text"> Rent Lease Reports</span>
+                                <span class="sidebar-text"> Rent Reports</span>
                             </a>
                         </li>
 
                         <li class="nav-item ">
                             <a href="{{route('sale.lease.reports')}}" class="nav-link">
-                                <span class="sidebar-text"> Sale Lease Reports</span>
+                                <span class="sidebar-text"> Sale Reports</span>
                             </a>
                         </li>
 

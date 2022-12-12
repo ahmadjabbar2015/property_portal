@@ -10,14 +10,13 @@ $(document).ready(function () {
     mydataTable = $('#propertyreports_table').DataTable({
 
         processing: true,
-        serverSide: true,
+        serverSide: false,
         ajax: {
             url: "/rentleasereports/",
             data: function (d) {
                 d.property_id = property_id,
                 d.tenants_id = tenants_id,
                 d.installments_id = installments_id,
-               // d.leads_id = leads_id,
                 d.start_date = start_date,
                 d.end_date = end_date
             }

@@ -45,8 +45,9 @@ $sale_transaction=saletransaction::where('id',$request->sale_monthly_id)->where(
         $sale_payment->current_date=$request->rent_current_date;
         $sale_payment->save();
 
-$sale_transaction=renttransaction::where('id',$request->rent_monthly_id)->where('rent_leases_id',$request->rent_lease_id)
-->update(['status' => '1']);
+        $sale_transaction=renttransaction::where('monthly',$request->rent_monthly_id)->where('rent_leases_id',$request->rent_lease_id)
+        ->update(['status' => '1']);
+
         $flas_message=  toastr()->success('Data Successfully Saved');
 
         return redirect()->back()->with('flas_message');

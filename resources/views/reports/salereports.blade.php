@@ -15,11 +15,11 @@
                 </button>
             </div>
             <div id="filter_id" class="shadow bg-light">
-                <div class="row mt-3 px-3">
-                    <div class="col-md-3 mt-3" >
+                <div class="row mt-3 px-3 ">
+                    <div class="col-md-3 mt-3 mb-5" >
                         <label>Property</label>
                         <select class="form-control property_id" placeholder="Property" id="search_property_id" >
-                            <option value=""disabled selected >Select your option</option>
+                            <option value="" selected >Select your option</option>
                             @foreach ($propertydetail as $propertydata)
                                 <option  id="property_detial_id" value="{{ $propertydata->id }}">{{ $propertydata->name }}
                                 </option>
@@ -31,7 +31,7 @@
                     <div class="col-md-3 mt-3">
                         <label>Customer</label>
                         <select class="form-control " placeholder="Property" id="customer_id">
-                            <option value="" disabled selected>Select your option</option>
+                            <option value=""  selected>Select your option</option>
                             @foreach ($customer as $item)
                                 <option value="{{ $item->id }}">
                                     {{ $item->client_name }}</option>
@@ -42,7 +42,7 @@
                     <div class="col-md-3 mt-3">
                         <label>Installments</label>
                         <select class="form-control " placeholder="Property" id="installments">
-                            <option value="" disabled selected>Select your option</option>
+                            <option value=""  selected>Select your option</option>
                                 <option value="monthly">Monthly</option>
                                 <option value="annually">Annual</option>
                         </select>

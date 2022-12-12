@@ -50,7 +50,7 @@
 <script src="{{ asset('assets') }}/js/lease.js"></script>
 @endsection
 @section('custom-script')
-<script>
+{{-- <script>
     var table = $('#leases_table').DataTable({
 
         processing: true,
@@ -99,6 +99,6 @@
             },
         ]
     });
-</script>
+</script> --}}
 @endsection
 

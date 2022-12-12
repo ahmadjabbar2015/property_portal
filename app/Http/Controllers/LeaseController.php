@@ -11,7 +11,8 @@ use App\Models\customer;
 use App\Models\saletransaction;
 use App\Models\renttransaction;
 use App\Models\propertydetail;
-use DB;
+// use DB;
+ use Illuminate\Support\Facades\DB;
 use Datatables;
 use DateTime;
 
@@ -58,18 +59,26 @@ class LeaseController extends Controller
     }
     public function index(Request $request)
     {
-        // $data = leases::with(['propertyUnits','tenants'])->latest()->get();
+
+        // $query = 'select leases.id,leases.rent,leases.lease_start,leases.lease_end,leases.due_date, leases.frequency_collection,tenants.full_name,propertydetails.name,propertyunits.title,(SUM(rentpayments.payment))-leases.total_payment as total_payment from leases INNER JOIN propertydetails on propertydetails.id = leases.property_id INNER JOIN tenants on tenants.id = leases.tenant_id INNER JOIN rentpayments on rentpayments.rent_lease_id = leases.id INNER JOIN propertyunits on propertyunits.id = leases.propertyunit_id  WHERE rentpayments.rent_lease_id = leases.id';
+
+    //   $leasesdata=  DB::select(DB::raw("select leases.id,leases.rent,leases.lease_start,leases.lease_end,leases.due_date,leases.frequency_collection,tenants.full_name,propertydetails.name,propertyunits.title,from leases inner join propertydetails on propertydetails.id = leases.property_id inner join tenants on tenants.id = leases.tenant_id inner join rentpayments on rentpayments.rent_lease_id = leases.id inner join propertyunits on propertyunits.id = leases.propertyunit_id WHERE rentpayments.rent_lease_id = leases.id"));
+
+
+// $rent = $request->input("rent_lease_id");
 
         $leasesdata = DB::table('leases')
             ->join('propertydetails', 'propertydetails.id', '=', 'leases.property_id')
             ->join('tenants', 'tenants.id', '=', 'leases.tenant_id')
+            ->join('rentpayments', 'rentpayments.rent_lease_id', '=', 'leases.id')
             ->join('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
-            ->select('leases.*', 'tenants.full_name', 'propertyunits.title', 'propertydetails.name')
-            ->get();
+            ->select('leases.*', 'tenants.full_name', 'propertyunits.title', 'propertydetails.name')->get();
+
+
+            //  dd($leasesdata);
+
 
         if ($request->ajax()) {
-
-
             return Datatables::of($leasesdata)
 
                 ->addIndexColumn()
@@ -371,10 +380,10 @@ class LeaseController extends Controller
 
         return view("lease.sale_installment")->with('data', $data);
     }
+
     public function rentinstallmentplane($id)
     {
         $data = renttransaction::where('rent_leases_id', $id)->get();
-
         return view("lease.rent_installment")->with('data', $data);
     }
 }

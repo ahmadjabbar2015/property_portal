@@ -1,5 +1,5 @@
 
-    
+
 var table = $('#type_data').DataTable({
     processing: true,
     serverSide: true,
@@ -24,7 +24,7 @@ var table = $('#type_data').DataTable({
             searchable: true
         },
     ]
-});        
+});
     $(function () {
         var regiester_propertytype=$("#regiester_propertytype");
         regiester_propertytype.validate({
@@ -35,7 +35,7 @@ var table = $('#type_data').DataTable({
                 description :{
                     required: true
                 },
-               
+
             },
             messages:{
                 type:{
@@ -44,8 +44,7 @@ var table = $('#type_data').DataTable({
                 description:{
                     required: "Email field is required"
                 },
-                
+
             }
         })
     })
-    
