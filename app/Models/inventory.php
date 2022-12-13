@@ -11,5 +11,4 @@ class inventory extends Model
     protected $table = 'inventories';
     protected $primaryKey = 'id';
     protected $guarded =['id'];
-    // protected $fillable = ['main', 'title','commission','rent','deposit','details','description','image'];
 }

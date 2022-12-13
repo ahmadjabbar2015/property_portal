@@ -14,11 +14,7 @@ class PropertyController extends Controller
 
     // Property Units
     
-    public function getPropertyUnits(){
-        $property_units =propertyunits::get();
-        return CommonResource::collection($property_units);
-    }
-
+   
     // Proerty Types
 
     public function getPropertyTypes(){
@@ -42,7 +38,7 @@ class PropertyController extends Controller
             DB::commit();
             return [
                 'success'   => true,
-                'message'   => "Tenant Added Successfully",
+                'message'   => "Property Added Successfully",
             ];
 
         } catch (\Throwable $th) {

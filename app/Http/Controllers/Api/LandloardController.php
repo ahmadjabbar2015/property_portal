@@ -8,7 +8,6 @@ use App\Http\Resources\LandLordResource;
 use App\Http\Resources\TenantResource;
 use App\Models\landlord;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class LandloardController extends Controller
@@ -28,7 +27,7 @@ class LandloardController extends Controller
 
        try{
             DB::beginTransaction();
-            $landlord=new landlord;
+            $landlord=new Landlord;
             $landlord->full_name=$request->full_name;
             $landlord->email=$request->email;
             $landlord->number=$request->number;

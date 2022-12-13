@@ -1,8 +1,9 @@
+<main class="content">
 <x-layouts.base>
     @extends('layouts.app')
     @include('layouts.sidenav')
     @include('layouts.topbar')
-    <main class="content">
+  
        
 
         <div class="container">
@@ -109,9 +110,9 @@
                 </div>
             </div>
         </div>
-    </main>
+   
 </x-layouts.base>
-
+</main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>

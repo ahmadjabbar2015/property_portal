@@ -101,16 +101,9 @@
                     <button type="submit" class="btn btn-primary btn-lg ml-3">Register Tenant</button>
                 </div>
             </form>
-
-        </div>
-        @include('layouts.footer')
-        @include('layouts.footer2')
+        </div>     
     </main>
 </x-layouts.base>
-
-
-
-
     @section('page-script')
         <script src="{{ asset('assets') }}/js/tenants.js"></script>
     @endsection

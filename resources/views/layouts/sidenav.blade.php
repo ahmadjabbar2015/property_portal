@@ -77,7 +77,7 @@
                     data-bs-toggle="collapse" data-bs-target="#submenu-landlord" aria-expanded="true">
                     <span>
                         <span class="sidebar-icon"><i class="fa-solid fa-landmark"></i></span>
-                        <span class="sidebar-text">LandLoard</span>
+                        <span class="sidebar-text">Landlord</span>
                     </span>
                     <span class="link-arrow"><svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -90,12 +90,12 @@
                     <ul class="flex-column nav">
                         <li class="nav-item ">
                             <a href="/landlord" class="nav-link">
-                                <span class="sidebar-text">Add Landloard</span>
+                                <span class="sidebar-text">Add Landlord</span>
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a href="/landlord/index" class="nav-link">
-                                <span class="sidebar-text">Show Landloard</span>
+                                <span class="sidebar-text">Show Landlord</span>
                             </a>
                         </li>
                     </ul>

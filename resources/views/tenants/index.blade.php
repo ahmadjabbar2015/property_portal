@@ -34,8 +34,7 @@
             </div>
         </div>
     </div>
-    @include('layouts.footer')
-    @include('layouts.footer2')
+ 
    </main>
 
 </x-layouts.base>

@@ -1,6 +1,6 @@
-<x-layouts.base>
-<main>
 
+<main class="content">
+   
 <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
     <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown"
         >
@@ -33,4 +33,4 @@
 </div>
     
 </main>
-</x-layouts.base>
+

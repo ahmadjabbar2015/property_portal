@@ -12,5 +12,6 @@ class propertydetail extends Model
     protected $primaryKey = 'id';
     protected $guarded =['id'];
     // protected $fillable = ['name','rent','type','landlord','area','deposit','description'];
+    
 }
 
