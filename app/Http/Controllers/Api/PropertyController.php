@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Utils\PropertyUtil;
 use App\Http\Requests\PropertyRequest;
 use App\Http\Resources\CommonResource;
 use App\Http\Resources\PropertyResource;
@@ -16,6 +17,13 @@ use Illuminate\Support\Facades\DB;
 class PropertyController extends Controller
 {
 
+
+    public $propertyUtil;
+
+    public function __construct( PropertyUtil $propertyUtil)
+    {
+        $this->propertyUtil = $propertyUtil;
+    }
     // Property Units
     
     public function getPropertyUnits(){
@@ -77,16 +85,26 @@ class PropertyController extends Controller
     }
 
     public function store(PropertyRequest $request){
-        dd($request->all());
-
+        
         $property_details_array = [
             'name' => $request->name,
             'rent' => $request->rent,
             'propertytype_id' => $request->propertytype_id,
             'landlord_id' => $request->landlord_id,
+            'description' => $request->description,
             'area' => $request->area,
             'deposit' => $request->deposit
         ];
         $property_details = propertydetail::create($property_details_array);
+
+        $property_data = [
+            'property_images' => $request->property_images,
+            'property_amenities' =>$request->property_amenities,
+            'property_location' => $request->property_location
+        ];
+
+        $this->propertyUtil->createProperty($property_data, $property_details );
+        dd($request->all());
+
     }
 }
