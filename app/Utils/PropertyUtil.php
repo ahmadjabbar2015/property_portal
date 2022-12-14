@@ -19,32 +19,15 @@ class PropertyUtil extends Util
         $amenities = amenitie::create($property_amenities);
 
         $property_images = $data['property_images'];
-        dd($property_images);
         
-       
-      
-        $propertyimage->save();
         foreach($property_images as $image){
-            if(file($image->hasfile())){
-                dd(true);
-                $new_image = new propertyimage;
-                $new_image = $image['property_id'];
-                $new_image = $image['propertyimage'];
-                $new_image->save();
-                $file=$request->file('propertyimage');
-                        $extention=$file->getClientoriginalExtension();
-                        $filename=time().'.'.$extention;
-                        
-                        $data=$file->move(public_path('/assets/img'),$filename);
-                        $propertyimage->propertyimage=$filename;
-            
-
-            }
-            
+            if(file($image)){
+                $extension = $image->getClientoriginalExtension(); 
+                $file_name = time() . "." . $extension;
+                propertyimage::create(['property_id' => $property_detail->id , 'propertyimage'=> $file_name]);
+                $image->move(public_path('/assets/img'),$file_name);
+            }   
         }
-        dd($location);
-
-
     }
 
 

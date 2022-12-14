@@ -11,6 +11,7 @@ use App\Models\propertydetail;
 use App\Models\propertyimage;
 use App\Models\propertytype;
 use App\Models\propertyunits;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -85,8 +86,9 @@ class PropertyController extends Controller
     }
 
     public function store(PropertyRequest $request){
-        
-        $property_details_array = [
+        try{
+            DB::beginTransaction();
+            $property_details_array = [
             'name' => $request->name,
             'rent' => $request->rent,
             'propertytype_id' => $request->propertytype_id,
@@ -94,17 +96,26 @@ class PropertyController extends Controller
             'description' => $request->description,
             'area' => $request->area,
             'deposit' => $request->deposit
-        ];
-        $property_details = propertydetail::create($property_details_array);
+            ];
+            $property_details = propertydetail::create($property_details_array);
 
-        $property_data = [
-            'property_images' => $request->property_images,
-            'property_amenities' =>$request->property_amenities,
-            'property_location' => $request->property_location
-        ];
+            $property_data = [
+                'property_images' => $request->property_images,
+                'property_amenities' =>$request->property_amenities,
+                'property_location' => $request->property_location
+            ];
 
-        $this->propertyUtil->createProperty($property_data, $property_details );
-        dd($request->all());
-
+            $this->propertyUtil->createProperty($property_data, $property_details );
+            DB::commit();
+            return [
+                'success'   => true,
+                'message'   => "Property Added Successfully",
+            ];
+       }catch(Exception $e){
+            return [
+                'success'   => false,
+                'message'   => $e->getMessage(),
+            ];
+        }
     }
 }
