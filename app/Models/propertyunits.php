@@ -30,4 +30,16 @@ class propertyunits extends Model
     {
         return $this->belongsTo(propertyimage::class,  'property_id');
     }
+    protected $appends = ['image_url'];
+
+
+    public function getImageUrlAttribute()
+    {
+        if (!empty($this->propertyunitsfimage)) {
+            $image_url = asset('/assets/img/' . rawurlencode($this->propertyunitsimage));
+        } else {
+            $image_url = asset('assets/img/default.png');
+        }
+        return $image_url;
+    }
 }

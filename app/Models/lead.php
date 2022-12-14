@@ -26,4 +26,8 @@ class lead extends Model
     {
         return $this->belongsTo(user::class, 'user_id');
     }
+    public function getAttempts()
+    {
+        return $this->hasMany(attempt::class , 'lead_id' , 'id');
+    }
 }

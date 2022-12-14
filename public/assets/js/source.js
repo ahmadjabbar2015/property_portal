@@ -15,8 +15,8 @@ $('#source_table').DataTable({
         name: 'source'
     },
     {
-        data: 'created_at',
-        name: 'created_at'
+        data: 'date',
+        name: 'date'
     },
     {
         data: 'action',

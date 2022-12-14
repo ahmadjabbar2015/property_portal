@@ -40,7 +40,12 @@ class SourceController extends Controller
                     <a href="/source/delete/' . $row->id . '"class="delete btn btn-danger btn-sm"><i class="fa-regular fa-trash-can"></i></a>';
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->addcolumn('date', function ($row) {
+                    $data = explode(" ", $row->created_at);
+                    $date = $data[0];
+                    return $date;
+                  })
+                ->rawColumns(['action','date'])
                 ->make(true);
         }
 

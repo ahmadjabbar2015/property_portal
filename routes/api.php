@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\TenantController;
 use App\Http\Controllers\Api\Property_unitsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\InventoryController;
+use App\Http\Controllers\Api\LeadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -53,10 +54,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('tenant/{id}', [TenantController::class, 'show']);
     Route::post('tenants/store', [TenantController::class, 'store']);
     // Property Units
-    Route::get(' ', [Property_unitsController::class, 'getPropertyUnits']);
-    Route::get('property-units/{id}',[Property_unitsController::class,'showPropertyUnit']);
-    Route::post('property-units/store', [Property_unitsController::class, 'storePropertyUnit']);
 
+
+    Route::get('property-units', [Property_unitsController::class, 'getPropertyUnits']);
+    Route::get('property-units/{id}', [Property_unitsController::class, 'showPropertyUnit']);
+    Route::post('property-units/store', [Property_unitsController::class, 'storePropertyUnit']);
 
     // Property Types
     Route::get('property-types', [PropertyController::class, 'getPropertyTypes']);
@@ -65,12 +67,18 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     //agent
     Route::get('agents', [AgentController::class, 'getAgents']);
-    Route::get('agents/{id}',[AgentController::class,'showAgent']);
+    Route::get('agents/{id}', [AgentController::class, 'showAgent']);
     Route::post('agent/store', [AgentController::class, 'storeAgent']);
 
     //inventory
-    Route::get('inventories',[InventoryController::class,'getInventories']);
-    Route::get('inventories/{id}',[InventoryController::class,'showInventory']);
+    Route::get('inventories', [InventoryController::class, 'getInventories']);
+    Route::get('inventories/{id}', [InventoryController::class, 'showInventory']);
     Route::post('inventory/store', [InventoryController::class, 'storeInventory']);
+    //lead
+    Route::get('leads',[LeadController::class,'getleads']);
+    Route::get('leads/{id}', [LeadController::class, 'showlead']);
+    Route::post('lead/store', [LeadController::class, 'storelead']);
+    Route::get('attempts/{id}', [LeadController::class, 'getAttempt']);
+
 });
 Route::post("login", [UserController::class, 'index']);
