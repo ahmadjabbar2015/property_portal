@@ -58,7 +58,7 @@
                 <div class="col">
                     <div class="ms-2 me-2 mt-5 ">
                         <div class="table-responsive">
-                            <table class="table mt-4 yajra-datatable" id="propertyreports_table">
+                            <table class="table mt-4 yajra-datatable" id="rentReports">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="">ID</th>
@@ -70,7 +70,9 @@
                                         <th scope="col" class="">END LEASE</th>
                                         <th scope="col" class="">DUA DATE</th>
                                         <th scope="col" class="">ADVANCE PAYMENT</th>
+                                        <th scope="col" class="">Remaning PAYMENT</th>
                                         <th scope="col" class="">TOTAL PAYMENT</th>
+                                        <th scope="col" class="">TOTAL PAID</th>
                                         <th scope="col" class=""> Action</th>
                                     </tr>
                                 </thead>

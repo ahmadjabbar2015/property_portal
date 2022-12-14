@@ -103,7 +103,7 @@ Route::middleware('auth')->group(function () {
     Route::post('tenants/update/{id}', [TenantsController::class, 'update']);
     Route::get('tenants/delete/{id}', [TenantsController::class, 'delete']);
     //landlord
-    Route::get('landlord', [LandlordController::class, 'create']);
+    Route::get('/landlord', [LandlordController::class, 'create'])->name('landlord.create');
     Route::post('landlord/store', [LandlordController::class, 'store']);
     Route::get('landlord/index', [LandlordController::class, 'index'])->name('landlord.index');
     Route::get('landlord/edit/{id}', [LandlordController::class, 'edit']);
@@ -193,6 +193,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('rentleasereports', [RentLeaseReports::class, 'index'])->name("rent.lease.reports");
     Route::get('sale/report', [RentLeaseReports::class, 'saleLeasesReports'])->name("sale.lease.reports");
+    Route::get('/sale/report/view/{id}', [RentLeaseReports::class, 'saleView'])->name("sale.lease.reports.view");
+    Route::get('/rent/report/view/{id}', [RentLeaseReports::class, 'rentView'])->name("rent.lease.reports.view");
 
 
 

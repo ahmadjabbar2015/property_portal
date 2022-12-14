@@ -41,12 +41,22 @@ var table = $('#leases_table').DataTable({
         data: 'due_date',
         name: 'due_date'
     },
+
     {
         data: 'total_payment',
         name: 'total_payment'
     },
 
 
+    {
+        data: 'paid_payment',
+        name: 'paid_payment'
+    },
+
+  {
+        data: 'paid',
+        name: 'paid'
+    },
 
     {
         data: 'action',
@@ -248,6 +258,11 @@ $("#propertysale_id").on('change', function () {
 
     let get_rent = $(this).find('option:selected').data('id');
     $('input[name=total_sale_price]').val(get_rent);
+    let get_commission = $(this).find('option:selected').data('name');
+    $('input[name=commission_payment]').val(get_commission);
+
+
+
     $(".property_sale_unit").html("<option disabled value=''>Select An Option</option>");
     // $('#unit').select2();
     $.ajax({
@@ -431,9 +446,20 @@ var table = $('#sale_leases_table').DataTable({
         name: 'total_sale_price'
     },
     {
-        data: 'remaing_payment',
-        name: 'remaing_payment',
+        data: 'remining_paid',
+        name: 'remining_paid',
     },
+
+    {
+        data: 'sale_advance_payment',
+        name: 'sale_advance_payment',
+    },
+
+    {
+        data: 'paid_payment',
+        name: 'paid_payment',
+    },
+
     {
         data: 'frequency_collection',
         name: 'frequency_collection'

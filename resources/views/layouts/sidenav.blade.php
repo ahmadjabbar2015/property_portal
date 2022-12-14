@@ -39,11 +39,11 @@
         <ul class="nav flex-column pt-3 pt-md-0">
             <!-- Tenants -->
 
-            <li class="nav-item" >
+            <li class="nav-item">
                 <span class="nav-link collapse d-flex justify-content-between align-items-center"
                     data-bs-toggle="collapse" data-bs-target="#submenu-tenants" aria-expanded="true">
                     <span>
-                        <span class="sidebar-icon "><i class="fa-solid 	fas fa-poll"></i></span>
+                        <span class="sidebar-icon"><i class="fa-solid 	fas fa-poll"></i></span>
                         <span class="sidebar-text">Tenants</span>
                     </span>
                     <span class="link-arrow "><svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20"
@@ -53,7 +53,7 @@
                                 clip-rule="evenodd"></path>
                         </svg></span>
                 </span>
-                <div class="multi-level collapse" role="list" id="submenu-tenants" aria-expanded="">
+                <div class="multi-level collapse " role="list" id="submenu-tenants" aria-expanded="">
                     <ul class="flex-column nav ">
                         <li class="nav-item">
                             <a href="/tenants" class="nav-link">
@@ -85,16 +85,16 @@
                                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                 clip-rule="evenodd"></path>
                         </svg></span>
-                </span>
-                <div class="multi-level collapse " role="list" id="submenu-landlord" aria-expanded="false">
+                    </span>
+                <div class="multi-level collapse" role="list" id="submenu-landlord" aria-expanded="false">
                     <ul class="flex-column nav">
-                        <li class="nav-item ">
-                            <a href="/landlord" class="nav-link">
+                        <li class="nav-item  @yield('create_landlord')">
+                            <a href="{{route("landlord.create")}}" class="nav-link {{request()->routeIs("landlord.create") ? "active" : ""}}">
                                 <span class="sidebar-text">Add Landloard</span>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a href="/landlord/index" class="nav-link">
+                        <li class="nav-item @yield('index_landlord')">
+                            <a href="{{route("landlord.index")}}" class="nav-link {{request()->routeIs('landlord.index') ? "active" : ""}}">
                                 <span class="sidebar-text">Show Landloard</span>
                             </a>
                         </li>

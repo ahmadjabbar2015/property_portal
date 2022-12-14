@@ -27,6 +27,8 @@
                                     <th scope="col" class="">End Lease</th>
                                     <th scope="col" class="">Due date</th>
                                     <th scope="col" class="">Total Payment</th>
+                                    <th scope="col" class="">Paid Payment</th>
+                                    <th scope="col" class="">Remaining Payment</th>
 
 
                                     <th scope="col" class="">Actions</th>

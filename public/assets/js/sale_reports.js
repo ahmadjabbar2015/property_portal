@@ -55,8 +55,12 @@ $(document).ready(function () {
                 name: 'total_sale_price',
             },
             {
-                data: 'remaing_payment',
-                name: 'remaing_payment',
+                data: 'sale_advance_payment',
+                name: 'sale_advance_payment',
+            },
+            {
+                data: 'sale_remaning_payment',
+                name: 'sale_remaning_payment',
             },
             {
                 data: 'frequency_collection',
@@ -75,6 +79,11 @@ $(document).ready(function () {
                 data: 'due_date',
                 name: 'due_date',
             },
+            {
+                data: 'paid_payment',
+                name: 'paid_payment',
+            },
+
 
             {
                 data: 'action',

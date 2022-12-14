@@ -7,7 +7,7 @@ $(document).ready(function () {
 
 // $(function (){
 
-    mydataTable = $('#propertyreports_table').DataTable({
+    mydataTable = $('#rentReports').DataTable({
 
         processing: true,
         serverSide: false,
@@ -82,8 +82,18 @@ $(document).ready(function () {
             },
 
             {
+                data:'remaning_payment',
+                name:'remaning_payment',
+            },
+
+            {
                 data: 'total_payment',
                 name: 'total_payment',
+            },
+
+            {
+                data: 'paid_payment',
+                name: 'paid_payment',
             },
 
             {
@@ -100,27 +110,27 @@ $(document).ready(function () {
     var property_id = null;
     $('#search_property_id').on('change', function () {
         property_id = $(this).find(":selected").val();
-        $("#propertyreports_table").DataTable().ajax.reload();
+        $("#rentReports").DataTable().ajax.reload();
     });
 
     var tenants_id = null;
     $('#tenants_id').on('change', function () {
         tenants_id = $(this).find(":selected").val();
-        $("#propertyreports_table").DataTable().ajax.reload();
+        $("#rentReports").DataTable().ajax.reload();
     });
 
 
     var installments_id = null;
     $('#installments').on('change', function () {
         installments_id = $(this).find(":selected").val();
-        $("#propertyreports_table").DataTable().ajax.reload();
+        $("#rentReports").DataTable().ajax.reload();
 
     });
 
     // var leads_id = null;
     // $('#customer_id').on('change', function () {
     //     leads_id = $(this).find(":selected").val();
-    //     $("#propertyreports_table").DataTable().ajax.reload();
+    //     $("#rentReports").DataTable().ajax.reload();
 
     // });
 
@@ -143,7 +153,7 @@ $(document).ready(function () {
         var data_split = date_range.split("-");
            start_date = data_split[0];
            end_date = data_split[1];
-        $("#propertyreports_table").DataTable().ajax.reload();
+        $("#rentReports").DataTable().ajax.reload();
      }
     function myFunction() {
         var x = document.getElementById("filter_id");

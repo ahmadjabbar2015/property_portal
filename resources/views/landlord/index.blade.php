@@ -1,10 +1,10 @@
 <x-layouts.base>
 @extends('layouts.app')
-
+@section('index_landlord' , 'active')
 @include('layouts.sidenav')
 <main class="content">
     @include('layouts.topbar')
-  
+
 
 <div class="container">
     <div class="row">

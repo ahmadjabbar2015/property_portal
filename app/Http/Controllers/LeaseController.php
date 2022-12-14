@@ -60,35 +60,33 @@ class LeaseController extends Controller
     public function index(Request $request)
     {
 
-        // $query = 'select leases.id,leases.rent,leases.lease_start,leases.lease_end,leases.due_date, leases.frequency_collection,tenants.full_name,propertydetails.name,propertyunits.title,(SUM(rentpayments.payment))-leases.total_payment as total_payment from leases INNER JOIN propertydetails on propertydetails.id = leases.property_id INNER JOIN tenants on tenants.id = leases.tenant_id INNER JOIN rentpayments on rentpayments.rent_lease_id = leases.id INNER JOIN propertyunits on propertyunits.id = leases.propertyunit_id  WHERE rentpayments.rent_lease_id = leases.id';
-
-    //   $leasesdata=  DB::select(DB::raw("select leases.id,leases.rent,leases.lease_start,leases.lease_end,leases.due_date,leases.frequency_collection,tenants.full_name,propertydetails.name,propertyunits.title,from leases inner join propertydetails on propertydetails.id = leases.property_id inner join tenants on tenants.id = leases.tenant_id inner join rentpayments on rentpayments.rent_lease_id = leases.id inner join propertyunits on propertyunits.id = leases.propertyunit_id WHERE rentpayments.rent_lease_id = leases.id"));
-
-
-// $rent = $request->input("rent_lease_id");
-
         $leasesdata = DB::table('leases')
             ->join('propertydetails', 'propertydetails.id', '=', 'leases.property_id')
             ->join('tenants', 'tenants.id', '=', 'leases.tenant_id')
-            ->join('rentpayments', 'rentpayments.rent_lease_id', '=', 'leases.id')
             ->join('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
-            ->select('leases.*', 'tenants.full_name', 'propertyunits.title', 'propertydetails.name')->get();
-
-
-            //  dd($leasesdata);
-
+            ->select('leases.*', 'tenants.full_name', 'propertyunits.title', 'propertydetails.name')
+            ->get();
 
         if ($request->ajax()) {
             return Datatables::of($leasesdata)
 
                 ->addIndexColumn()
+                ->addColumn('paid', function ($row){
+                    $totalpayment=$row->total_payment;
+                    $remainingpayment=$row->paid_payment;
+
+                    $remaining_total_payment = $totalpayment - $remainingpayment;
+
+                    return $remaining_total_payment;
+
+                })
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a href="/lease/rent_intallment/' . $row->id . '" class="show btn btn-info btn-sm"><i class="fa-sharp fa-solid fa-eye"></i></a>
                     <a href="/lease/rent_intallment/' . $row->id . '" class="edit btn btn-success btn-sm"><i class="fa-solid fa-file-pen"></i></a>
                     <a href="/lease/rent_payment/' . $row->id . '" class="edit btn btn-success btn-sm">payment</a> ';
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action' , "paid"])
                 ->make(true);
         }
         return view('lease.index');
@@ -341,7 +339,7 @@ class LeaseController extends Controller
     public function saleindex(Request $request)
     {
 
-        // $data = leases::with(['propertyUnits','tenants'])->latest()->get();
+
 
         $leasessaledata = DB::table('saleleases')
             ->join('propertydetails', 'propertydetails.id', '=', 'saleleases.property_id')
@@ -351,14 +349,21 @@ class LeaseController extends Controller
             ->select('saleleases.*', 'customers.id', 'propertyunits.title', 'propertydetails.name','leads.client_name As first_name')
             ->get();
 
-
-// dd($leasessaledata);
         if ($request->ajax()) {
 
 
             return Datatables::of($leasessaledata)
 
                 ->addIndexColumn()
+                ->addColumn("remining_paid" , function($row){
+                      $paid = $row->paid_payment;
+                      $remining= $row->remaing_payment;
+
+                      $totalRemining = $remining- $paid;
+
+                      return $totalRemining;
+
+                })
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a href="/lease/installment/' . $row->id . '" class="show btn btn-info btn-sm"><i class="fa-sharp fa-solid fa-eye"></i></a>
                     <a href="/lease/installment/' . $row->id . '" class="edit btn btn-success btn-sm">View</a>
@@ -368,7 +373,7 @@ class LeaseController extends Controller
                     return $actionBtn;
                 })
 
-                ->rawColumns(['action'])
+                ->rawColumns(['action' , "remining_paid"])
                 ->make(true);
         }
         return view('lease.saleindex');

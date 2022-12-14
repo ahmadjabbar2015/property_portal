@@ -83,6 +83,9 @@
 
                                         </div>
                                     </div>
+
+
+
                                 </div>
 
                                 <div class="row mt-4 col-md-12">
@@ -191,7 +194,7 @@
                                             id="propertysale_id">
                                             <option selected disabled>Choose an Option</option>
                                             @foreach ($property as $propertydata)
-                                                <option data-id="{{ $propertydata->rent }}"
+                                                <option data-id="{{ $propertydata->rent }}" data-name = "{{$propertydata->agency}}"
                                                     value="{{ $propertydata->id }}">{{ $propertydata->name }}
                                                 </option>
                                             @endforeach
@@ -236,6 +239,21 @@
 
                                         </div>
                                     </div>
+
+
+                                    <div class="col-md-6">
+                                        <label>Commission*</label>
+                                        <div class="input-group mb-3 text-center">
+
+                                            <span class="input-group-text bg-#918b8a">%</span>
+
+                                            <input type="number" class="form-control" id="commissionpPayment"
+                                                placeholder="" name="commission_payment">
+
+
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="row mt-4 col-md-12">
