@@ -26,7 +26,7 @@ class SourceController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->all() , [
-            'source' => 'required | unique:source | max:255'
+            'source' => 'required|unique:sources|max:255'
         ]);
 
         if($validate->fails()){

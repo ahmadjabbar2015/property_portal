@@ -5,6 +5,9 @@ namespace App\Utils;
 use App\Models\amenitie;
 use App\Models\location;
 use App\Models\propertyimage;
+use Exception;
+
+use function PHPUnit\Framework\throwException;
 
 class PropertyUtil extends Util
 {
@@ -23,10 +26,14 @@ class PropertyUtil extends Util
         foreach($property_images as $image){
             if(file($image)){
                 $extension = $image->getClientoriginalExtension(); 
-                $file_name = time() . "." . $extension;
-                propertyimage::create(['property_id' => $property_detail->id , 'propertyimage'=> $file_name]);
-                $image->move(public_path('/assets/img'),$file_name);
-            }   
+                if(in_array($extension , ['PNG' , 'JPEG' , 'JPG'])){
+                    $file_name = time() . "." . $extension;
+                    propertyimage::create(['property_id' => $property_detail->id , 'propertyimage'=> $file_name]);
+                    $image->move(public_path('/assets/img'),$file_name);
+                }else{
+                    throw new Exception("Image Type not Supported");
+                }
+            }
         }
     }
 

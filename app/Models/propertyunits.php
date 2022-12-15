@@ -12,5 +12,10 @@ class propertyunits extends Model
     protected $primaryKey = 'id';
     protected $guarded =['id'];
     // protected $fillable = ['main', 'title','commission','rent','deposit','details','description','image'];
+
+    public function propertyDetails()
+    {
+        return $this->belongsTo(propertydetail::class,  'property_id');
+    }
 }
 

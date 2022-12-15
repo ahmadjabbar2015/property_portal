@@ -5,6 +5,10 @@ use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\SourceController;
 use App\Http\Controllers\Api\TenantController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\AgentController;
+use App\Http\Controllers\Api\PropertyUnitController;
+use App\Http\Controllers\Api\LeadController;
+use App\Http\Controllers\Api\inventoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -49,8 +53,6 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::get('tenants' , [TenantController::class , 'index']);
         Route::get('tenant/{id}' , [TenantController::class , 'show']);
         Route::post('tenants/store' , [TenantController::class , 'store']);
-        // Property Units
-        Route::get('property-units' , [PropertyController::class , 'getPropertyUnits']);
 
         // Property Types
         Route::get('property-types' , [PropertyController::class , 'getPropertyTypes']);
@@ -59,13 +61,32 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         // Source 
 
-        Route::get('sources' , [SourceController::class , 'getPropertyTypes']);
-        Route::get('sources/{id}' , [SourceController::class , 'showPropertyType']);
-        Route::post('sources/store' , [SourceController::class , 'storePropertytype']);
+        Route::get('sources' , [SourceController::class , 'index']);
+        Route::get('sources/{id}' , [SourceController::class , 'show']);
+        Route::post('sources/store' , [SourceController::class , 'store']);
 
         // Property
         Route::get('property/{id}' , [PropertyController::class , 'show']);
         Route::post('properties/store' , [PropertyController::class , 'store']);
+
+         //agent
+        Route::get('agents', [AgentController::class, 'getAgents']);
+        Route::get('agents/{id}', [AgentController::class, 'showAgent']);
+        Route::post('agent/store', [AgentController::class, 'storeAgent']);
+
+        //inventory
+        Route::get('inventories', [InventoryController::class, 'getInventories']);
+        Route::get('inventories/{id}', [InventoryController::class, 'showInventory']);
+        Route::post('inventory/store', [InventoryController::class, 'storeInventory']);
+        //lead
+        Route::get('leads',[LeadController::class,'getleads']);
+        Route::get('leads/{id}', [LeadController::class, 'showlead']);
+        Route::post('lead/store', [LeadController::class, 'storelead']);
+
+    // Property Units
+        Route::get('property-units', [PropertyUnitController::class, 'getPropertyUnits']);
+        Route::get('property-units/{id}', [PropertyUnitController::class, 'showPropertyUnit']);
+        Route::post('property-units/store', [PropertyUnitController::class, 'storePropertyUnit']);
 
 
     });
