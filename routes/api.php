@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AgentController;
 use App\Http\Controllers\Api\LandloardController;
 use App\Http\Controllers\Api\PropertyController;
+use App\Http\Controllers\Api\SourceController;
 use App\Http\Controllers\Api\TenantController;
 use App\Http\Controllers\Api\Property_unitsController;
 use App\Http\Controllers\Api\UserController;
@@ -80,5 +81,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('lead/store', [LeadController::class, 'storelead']);
     Route::get('attempts/{id}', [LeadController::class, 'getAttempt']);
 
-});
-Route::post("login", [UserController::class, 'index']);
+    });
+    Route::get('properties' , [PropertyController::class , 'index']);
+
+Route::post("login",[UserController::class,'index']);
