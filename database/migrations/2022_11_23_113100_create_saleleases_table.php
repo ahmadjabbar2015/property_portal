@@ -25,11 +25,12 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->string("remaing_payment");
             $table->string("lease_start");
-            $table->string("lease_end");
+
             $table->string("due_date");
             $table->string("frequency_collection");
             $table->string("number_of_years_month");
             $table->string("payment_per_frequency");
+            $table->string('paid_payment')->default(0);
             $table->string('image')->nullable();
             $table->string('terms')->nullable();
             $table->timestamps();

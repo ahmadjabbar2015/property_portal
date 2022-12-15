@@ -13,7 +13,9 @@ class propertytypeController extends Controller
     public function type(Request $request)
     {
 
-
+        if (!auth()->user()->hasPermission('Add property Type','view')){
+            return redirect(route('404'));
+        }
 
 
         $data = propertytype::latest()->get();
@@ -38,6 +40,9 @@ class propertytypeController extends Controller
     }
     public function store(Request $request)
     {
+        if (!auth()->user()->hasPermission('Add property Type','create')){
+            return redirect(route('404'));
+        }
         $propertytype = new propertytype;
         $propertytype->type = $request->type;
         $propertytype->description = $request->description;
@@ -48,7 +53,7 @@ class propertytypeController extends Controller
     }
     public function delete($id)
     {
-        
+
         try {
             DB::table('propertytype')->delete($id);
             $flas_message =  toastr()->success('Propertytype Deleted Successfully');
@@ -59,5 +64,5 @@ class propertytypeController extends Controller
             return redirect(route('property.type'))->with('flas_message');
         }
     }
-    
+
 }

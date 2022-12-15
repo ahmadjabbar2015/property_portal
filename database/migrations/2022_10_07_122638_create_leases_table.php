@@ -30,6 +30,7 @@ class CreateLeasesTable extends Migration
             $table->string('due_date');
             $table->string('frequency_collection');
             $table->string('total_payment');
+            $table->string('paid_payment')->default(0);
             $table->string('image')->nullable();
             $table->string('terms')->nullable();
             $table->timestamps();

@@ -18,6 +18,9 @@ class LeadController extends Controller
   //
   public  function create()
   {
+    if (!auth()->user()->hasPermission('Lead','create')){
+        return redirect(route('404'));
+    }
 
     $propertytypes = propertytype::all();
     $sources = source::all();
@@ -46,7 +49,9 @@ class LeadController extends Controller
   }
   public function index(Request $request)
   {
-   
+    if (!auth()->user()->hasPermission('Lead','view')){
+        return redirect(route('404'));
+    }
     $data = lead::with('propertyType', 'source', 'users')->where('attempt_status', 0)->get();
     if ($request->ajax()) {
 

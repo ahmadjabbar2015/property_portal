@@ -3,7 +3,7 @@
 @include('layouts.sidenav')
 <main class="content">
     @include('layouts.topbar')
-  
+
 
     {{-- saad --}}
     <div class="container">
@@ -11,14 +11,12 @@
         <div class="row">
             <div class=" mt-6 ml-4">
                 <h1>
-                    Create Property
+                    Create New Property
                 </h1>
             </div>
         </div><br>
         <div class="shadow -lg-3 p-3 mb-5 bg-body rounded mr-2 ml-2">
-            <h4>
-                Create New Property
-            </h4>
+
             <p>Full all required details in all sections before submitting the data</p><br>
             <div class="container-fluid">
                 <div class="row bg-light col-md-12 "style="height: 60px;">
@@ -26,25 +24,25 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <button id="basic" type="button"
-                                    class="btn btn-outline-primary mt-2 btn-lg btn-block real">
+                                    class="btn btn-outline-primary mt-2 btn-lg btn-block real disabled">
                                     Basic Details
                                 </button>
                             </div>
                             <div class="col-md-3">
                                 <button type="button"
-                                    id="location"class="btn btn-outline-primary btn-lg btn-block mt-2   real  ">
+                                    id="location"class="btn btn-outline-primary btn-lg btn-block mt-2   disabled real  ">
                                     Location
                                 </button>
                             </div>
                             <div class="col-md-3">
                                 <button type="button"
-                                    id="features"class="btn  btn-outline-primary btn-lg btn-block  mt-2 real   ">
+                                    id="features"class="btn  btn-outline-primary btn-lg btn-block  mt-2 real disabled  ">
                                     Amenities
                                 </button>
                             </div>
                             <div class="col-md-3">
                                 <button type="button" id="image"
-                                    class="btn btn-outline-primary  btn-lg btn-block mt-2  real ">
+                                    class="btn btn-outline-primary  btn-lg btn-block mt-2  real disabled">
                                     Property Image
                                 </button>
                             </div>
@@ -329,7 +327,7 @@
                         {{-- <div class="form-group">
                         <label for="document">Documents</label>
                         <div class="needsclick dropzone" id="document-dropzone">
-                
+
                         </div> --}}
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button class="btn btn-lg btn-primary me-md-2" type="submit">Create Property</button>

@@ -9,6 +9,7 @@ use App\Http\Livewire\Components\Typography;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Err404;
 use App\Http\Livewire\Err500;
+use App\Http\Livewire\Err403;
 use App\Http\Livewire\ResetPassword;
 use App\Http\Livewire\ForgotPassword;
 use App\Http\Livewire\Lock;
@@ -39,7 +40,15 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\landlordreportsController;
+use App\Http\Controllers\LandlordreportsController;
+use App\Http\Controllers\newAdminController;
+use App\Http\Controllers\AdminMiddleware as mdController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Porperty_reportsController;
+use App\Http\Controllers\Lead_reportsController;
+use App\Http\Controllers\RentLeaseReports;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,7 +62,7 @@ use App\Http\Controllers\landlordreportsController;
 
 Route::redirect('/', '/login');
 
-Route::get('/register', Register::class)->name('register');
+// Route::get('/register', Register::class)->name('register');
 
 Route::get('/login', Login::class)->name('login');
 
@@ -61,14 +70,18 @@ Route::get('/forgot-password', ForgotPassword::class)->name('forgot-password');
 
 Route::get('/reset-password/{id}', ResetPassword::class)->name('reset-password')->middleware('signed');
 
-Route::get('/404', Err404::class)->name('404');
+Route::get('/403', Err404::class)->name('404');
 Route::get('/500', Err500::class)->name('500');
-Route::get('/upgrade-to-pro', UpgradeToPro::class)->name('upgrade-to-pro');
+// Route::get('/403', Err403::class)->name('403');
+// Route::get('/upgrade-to-pro', UpgradeToPro::class)->name('upgrade-to-pro');
 
-Route::middleware('auth')->group(function () {
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin',[newAdminController::class,'index'])->name('admin.index');
     Route::get('/profile', Profile::class)->name('profile');
     Route::get('/profile-example', ProfileExample::class)->name('profile-example');
-    Route::get('/users', Users::class)->name('users');
+    // Route::get('/users', Users::class)->name('users');
     Route::get('/login-example', LoginExample::class)->name('login-example');
     Route::get('/register-example', RegisterExample::class)->name('register-example');
     Route::get('/forgot-password-example', ForgotPasswordExample::class)->name('forgot-password-example');
@@ -82,6 +95,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/forms', Forms::class)->name('forms');
     Route::get('/modals', Modals::class)->name('modals');
     Route::get('/typography', Typography::class)->name('typography');
+    //role
+    Route::resource('/role',RoleController::class);
+    Route::get('/role/delete/{id}',[RoleController::class,'destroy'])->name('role.delete');
+    Route::get('/assign_permission/{id}',[RoleController::class,'assign_permission'])->name('role.assign_permission');
+    Route::post('/permission/assign/{id}',[RoleController::class,'permission'])->name('role.permission');
+    Route::resource('/permission',PermissionController::class);
+    Route::get('/users/index',[UserController::class,'index'])->name('users.index');
+    Route::get('/users/create',[UserController::class,'create']);
+    Route::post('/users/store',[UserController::class,'store'])->name('users.store');
+    Route::get('/users/edit/{id}',[UserController::class,'edit'])->name('users.edit');
+    Route::post('/users/update/{id}',[UserController::class,'update'])->name('users.update');
     //property
     Route::get('property', [PropertyController::class, 'create'])->name('property.create');
     Route::POST('property/store', [propertyController::class, 'store'])->name('property.store');
@@ -113,14 +137,14 @@ Route::middleware('auth')->group(function () {
     Route::post('propertytype/store', [propertytypeController::class, 'store']);
     Route::get('propertytype/delete/{id}', [propertytypeController::class, 'delete']);
     //property units
-    Route::get('propertyunits', [propertyunitsController::class, 'create']);
+    Route::get('propertyunits', [propertyunitsController::class, 'create'])->name('propertyunits.create');
     Route::POST('propertyunits/store', [propertyunitsController::class, 'store']);
     Route::get('propertyunits/index', [propertyunitsController::class, 'index'])->name('propertyunits.index');
     Route::get('propertyunits/show/{id}', [propertyunitsController::class, 'show']);
     Route::get('propertyunits/delete/{id}', [propertyunitsController::class, 'delete']);
     Route::get('propertyunits/edit/{id}', [propertyunitsController::class, 'edit']);
     Route::post('propertyunits/update/{id}', [propertyunitsController::class, 'update']);
-    //leaes 
+    //leaes
     Route::get('lease', [LeaseController::class, 'create'])->name('lease.create');
     Route::get('lease/index', [LeaseController::class, 'index'])->name('lease.index');
     Route::get('lease/sale/index', [LeaseController::class, 'saleindex'])->name('lease.saleindex');
@@ -142,7 +166,7 @@ Route::middleware('auth')->group(function () {
     Route::get('inventory/delete/{id}', [InventoryController::class, 'delete']);
     Route::get('inventory/edit/{id}', [InventoryController::class, 'edit']);
     Route::post('inventory/update/{id}', [InventoryController::class, 'update']);
-    //event 
+    //event
     Route::get('calendar', [EventController::class, 'index'])->name('calendar.index');
     Route::post('/add_event', [EventController::class, 'add_event'])->name('add_event');
     Route::post('calendar/create-event', [EventController::class, 'create'])->name('calendar.create');
@@ -152,8 +176,8 @@ Route::middleware('auth')->group(function () {
     Route::get('ticket/index', [TicketController::class, 'index'])->name('ticket.index');
     Route::any('ticket/store', [TicketController::class, 'store']);
     Route::get('ticket/show/{id}', [TicketController::class, 'show']);
-    //customer 
-    Route::get('customers/index', [CustomerController::class, 'index'])->name('customers.index'); 
+    //customer
+    Route::get('customers/index', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('customer/{id}', [CustomerController::class, 'create']);
     Route::get('customer/hello', [CustomerController::class, 'hello'])->name('customer.hello');
     Route::post('customer/store', [CustomerController::class, 'store']);
@@ -187,11 +211,25 @@ Route::middleware('auth')->group(function () {
     Route::get('source/delete/{id}', [SourceController::class, 'delete']);
 
     //reports
-    Route::get('landlordreports', [LandlordreportsController::class, 'create']);
+
     //payment
 
     Route::post('payments/sale/store', [PaymentController::class, 'store']);
     Route::get('lease/sale/payment/{id}',[paymentController::class,'salepayment']);
     Route::post('payments/sale/rentstore',[PaymentController::class,'rent_payment']);
     Route::get('/lease/rent_payment/{id}',[PaymentController::class,'rentshowpayment']);
+     //property_reports
+     Route::get('porperty_reports/index', [Porperty_reportsController::class, 'index'])->name('porperty_reports.index');
+     Route::get('porperty_reports/show/{id}', [Porperty_reportsController::class, 'show'])->name('porperty_reports.show');
+
+     // lead_reports
+     Route::get('lead_reports/index', [Lead_reportsController::class, 'index'])->name('lead_reports.index');
+     Route::get('lead_reports/show/{id}', [Lead_reportsController::class, 'show'])->name('lead_reports.show');
+     //rent report
+     Route::get('rentleasereports', [RentLeaseReports::class, 'index'])->name("rent.lease.reports");
+     Route::get('/rent/report/view/{id}', [RentLeaseReports::class, 'rentView'])->name("rent.lease.reports.view");
+     //booking report
+     Route::get('sale/report', [RentLeaseReports::class, 'saleLeasesReports'])->name("sale.lease.reports");
+     Route::get('/sale/report/view/{id}', [RentLeaseReports::class, 'saleView'])->name("sale.lease.reports.view");
+
 });

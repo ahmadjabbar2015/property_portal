@@ -7,7 +7,9 @@ use App\Models\Salepayment;
 use App\Models\saletransaction;
 use App\Models\Rentpayment;
 use App\Models\renttransaction;
-
+use App\Models\leases;
+use App\Models\salelease;
+use DB;
 class PaymentController extends Controller
 {
 
@@ -22,8 +24,14 @@ class PaymentController extends Controller
         $sale_payment->current_date=$request->current_date;
         $sale_payment->save();
 
-$sale_transaction=saletransaction::where('id',$request->sale_monthly_id)->where('sale_lease_id',$request->sale_lease_id)
-->update(['status' => '1']);
+
+    $sale_transaction=saletransaction::where('monthly',$request->sale_monthly_id)->where('sale_lease_id',$request->sale_lease_id)
+     ->update(['status' => '1']);
+
+     $data=DB::table('salepayments')->where('sale_lease_id',$request->sale_lease_id)->select('salepayments.payment')->sum('salepayments.payment');
+
+        $sale_remining_payment=salelease::where('id', $request->sale_lease_id)->update(["paid_payment" => $data]);
+
         $flas_message=  toastr()->success('Data Successfully Saved');
 
         return redirect()->back()->with('flas_message');
@@ -45,8 +53,13 @@ $sale_transaction=saletransaction::where('id',$request->sale_monthly_id)->where(
         $sale_payment->current_date=$request->rent_current_date;
         $sale_payment->save();
 
-$sale_transaction=renttransaction::where('id',$request->rent_monthly_id)->where('rent_leases_id',$request->rent_lease_id)
-->update(['status' => '1']);
+        $sale_transaction=renttransaction::where('monthly',$request->rent_monthly_id)->where('rent_leases_id',$request->rent_lease_id)
+        ->update(['status' => '1']);
+
+        $data=DB::table('rentpayments')->where('rent_lease_id',$request->rent_lease_id)->select('rentpayments.payment')->sum('rentpayments.payment');
+
+        $rent_remining_payment=leases::where('id', $request->rent_lease_id)->update(["paid_payment" => $data]);
+
         $flas_message=  toastr()->success('Data Successfully Saved');
 
         return redirect()->back()->with('flas_message');

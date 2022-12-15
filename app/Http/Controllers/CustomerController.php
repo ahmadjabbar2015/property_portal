@@ -13,9 +13,12 @@ use DB;
 
 class CustomerController extends Controller
 {
-    //Saad
+
     public function create($id)
     {
+        if (!auth()->user()->hasPermission('Customer','create')){
+            return redirect(route('404'));
+        }
 
         $agents = agent::all();
         $leads = attempt::where('id', $id)->first();
@@ -26,14 +29,16 @@ class CustomerController extends Controller
     }
     public function index()
     {
-       
-        $customer = customer::with(['propertydetail', 'agent','lead' => function($query) {   
+        if (!auth()->user()->hasPermission('Customer','view')){
+            return redirect(route('404'));
+        }
+        $customer = customer::with(['propertydetail', 'agent','lead' => function($query) {
             $query->where('customer_status', 1);
          }])->get();
-    //   dd($customer);
+
         if (request()->ajax()) {
-           
-          
+
+
             return Datatables::of($customer)
 
                 ->addIndexColumn()
@@ -57,7 +62,7 @@ class CustomerController extends Controller
     }
     public function store(Request $request)
     {
-        
+
         lead::where('id', $request->leads_id)->update(['customer_status' => 1]);
         $customers = new customer;
         $customers->leads_id = $request->leads_id;
@@ -65,7 +70,7 @@ class CustomerController extends Controller
         $customers->property_id = $request->property_id;
         $customers->property_price = $request->property_price;
         $customers->description = $request->description;
-        
+
         $customers->save();
         // dd($customers);
         $flas_message =  toastr()->success('Customer Addedd Successfully');
@@ -73,8 +78,7 @@ class CustomerController extends Controller
     }
     public function show($id)
     {
-        //  dd("jkjk");
-        $customer = customer::find($id);
+
         $data = DB::table('customers')
 
 

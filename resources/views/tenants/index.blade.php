@@ -2,10 +2,10 @@
 <x-layouts.base>
     @include('layouts.sidenav')
 @extends('layouts.app')
-    
+
    <main class="content">
     @include('layouts.topbar')
-  
+
     <div class="container">
         <div class="row">
             <div class="col">
@@ -34,8 +34,7 @@
             </div>
         </div>
     </div>
-    @include('layouts.footer')
-    @include('layouts.footer2')
+
    </main>
 
 </x-layouts.base>

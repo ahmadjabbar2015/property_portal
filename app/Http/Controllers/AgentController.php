@@ -11,16 +11,22 @@ class AgentController extends Controller
     //saad
     public function create()
     {
-    
+        if (!auth()->user()->hasPermission('Agent','create')){
+            return redirect(route('404'));
+        }
+
       return view('agent.create');
     }
     public function index(Request $request)
     {
-        
+        if (!auth()->user()->hasPermission('Agent','view')){
+            return redirect(route('404'));
+        }
+
         $data = agent::latest()->get();
-      
+
         if ($request->ajax()) {
-           
+
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -32,22 +38,22 @@ class AgentController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        
+
         return view('agent.index');
     }
     public function store(Request $request)
     {
         // dd($request);
-    
+
         $agents=new agent;
         $agents->name=$request->name;
-       
+
         $agents->email=$request->email;
         $agents->number=$request->number;
         $agents->address=$request->address;
-        
+
         $agents->save();
-           
+
             $flas_message =  toastr()->success('agent Addedd Successfully');
             return redirect(route('agent.index'))->with('flas_message');
     }

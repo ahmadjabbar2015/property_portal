@@ -16,7 +16,7 @@ class CreatePropertytype extends Migration
         Schema::create('propertytype', function (Blueprint $table) {
             $table->id()->foreignkey();
             $table->string("type");
-            $table->string("description");
+            $table->string("description")->nullable();
             $table->timestamps();
         });
     }

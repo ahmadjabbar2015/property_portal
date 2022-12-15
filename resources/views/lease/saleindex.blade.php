@@ -22,12 +22,12 @@
                                         <th scope="col" class="">Property Unit</th>
                                         <th scope="col" class="">Sale Price</th>
                                         <th scope="col" class="">Remaning Payment</th>
+                                        <th scope="col" class="">Advance Payment</th>
+                                        <th scope="col" class="">Paid Payment</th>
                                         <th scope="col" class="">Installement</th>
                                         <th scope="col" class="">No.of yaers/month</th>
                                         <th scope="col" class="">Payment Pr M/Y</th>
                                         <th scope="col" class="">Due date</th>
-
-
                                         <th scope="col" class="">Actions</th>
                                     </tr>
                                 </thead>

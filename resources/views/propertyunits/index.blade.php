@@ -4,7 +4,7 @@
 @include('layouts.sidenav')
 <main class="content">
     @include('layouts.topbar')
-  
+
 
     <div class="container">
         <div class="row">
@@ -21,7 +21,7 @@
                                     <th scope="col" class="">ID</th>
                                     <th scope="col" class="">Parent Property</th>
                                     <th scope="col" class="">Title </th>
-                                    <th scope="col" class="">Detail</th>
+
                                     <th scope="col" class="">Actions</th>
                                 </tr>
                             </thead>
@@ -46,7 +46,7 @@
 @endsection
 @section('custom-script')
 <script>
-    
+
 
     var table = $('#units_data').DataTable({
                 processing: true,
@@ -65,12 +65,12 @@
                         data: 'title',
                         name: 'title'
                     },
-                   
+
                     {
                         data: 'details',
                         name: 'details'
                     },
-                  
+
                     {
                         data: 'action',
                         name: 'action',

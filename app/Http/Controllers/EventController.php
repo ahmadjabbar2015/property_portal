@@ -17,7 +17,7 @@ class EventController extends Controller
 
             return response()->json($events);
         }
-        
+
         return view('calendar.create');
     }
 
@@ -28,7 +28,7 @@ class EventController extends Controller
      */
     public function create(Request $request)
     {
-        
+
         $input = $request->only(['title', 'start', 'end']);
 
         $request_data = [
@@ -117,8 +117,11 @@ class EventController extends Controller
     }
     public function add_event(Request $request)
     {
+        if (!auth()->user()->hasPermission('Events','create')){
+            return redirect(route('404'));
+        }
         try {
-        
+
             $event=new Event;
             $event->title=$request->title;
             $event->start=$request->start;
@@ -128,7 +131,7 @@ class EventController extends Controller
             return redirect('calendar')->with('flas_message');
         } catch (\Throwable $th) {
             $flas_message=  toastr()->error('something went wrong');
-    
+
             return redirect(route('calendar.index'))->with('flas_message');
         }
     }

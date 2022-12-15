@@ -9,18 +9,13 @@ use DB;
 class SourceController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    // public function source_create()
-    // {
 
-    //    return view(' source.create');
-    // }
-    //
+
     public function store(Request $request)
     {
+        if (!auth()->user()->hasPermission('Source','create')){
+            return redirect(route('404'));
+        }
         $Sources = new source;
         $Sources->source = $request->source;
         $Sources->save();
@@ -29,6 +24,10 @@ class SourceController extends Controller
     }
     public function index( Request $request)
     {
+
+        if (!auth()->user()->hasPermission('Source','view')){
+            return redirect(route('404'));
+        }
         $data = source::latest()->get();
 
         if ($request->ajax()) {
@@ -48,7 +47,10 @@ class SourceController extends Controller
     }
     public function delete($id)
     {
-        
+        if (!auth()->user()->hasPermission('Source','delete')){
+            return redirect(route('404'));
+        }
+
         try {
             DB::table('sources')->delete($id);
             $flas_message =  toastr()->success('Source Deleted Successfully');

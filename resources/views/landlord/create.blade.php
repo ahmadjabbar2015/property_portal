@@ -4,7 +4,7 @@
 @include('layouts.sidenav')
 <main class="content">
     @include('layouts.topbar')
-  
+
 {{-- saad --}}
 
 
@@ -24,25 +24,25 @@
     <h4>
         Register New  Landlord
     </h4>
-    <p>Register landlord  will be receive wellcom email with login credentiels</p><br>
+
     <div class="row mt-2">
         <div class="col">
             <label>Full name*:</label>
             <input type="text" class="form-control" placeholder="Full name" name="full_name" id="name">
             <span  id="full_name" class="text-danger font-weight-bold"></span>
-           
+
         </div>
         <div class="col">
             <label>Email*:</label>
             <input type="email" class="form-control" placeholder="email" name="email" id="email">
             <span  id="email_id" class="text-danger font-weight-bold"></span>
-           
+
         </div>
         <div class="col">
             <label>Phone Number*:</label>
             <input type="text" class="form-control" placeholder="12321" name="number" id="number">
             <span  id="number_id" class="text-danger font-weight-bold"></span>
-          
+
         </div>
     </div><br><br>
     <div class="row ">
@@ -62,7 +62,7 @@
             <label>Address*:</label>
             <input type="text" class="form-control" placeholder="address" name="address" id="address">
             <span  id="address_id" class="text-danger font-weight-bold"></span>
-      
+
         </div>
         <div class="col">
             <label>Bank Associated</label>
