@@ -33,4 +33,6 @@ class inventory extends Model
         }
         return $image_url;
     }
+
+    
 }
