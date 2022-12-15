@@ -12,10 +12,7 @@ use Illuminate\Support\Facades\DB;
 class PropertyController extends Controller
 {
 
-    // Property Units
-    
    
-    // Proerty Types
 
     public function getPropertyTypes(){
         $property_type = propertytype::get() ;

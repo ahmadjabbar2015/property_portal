@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\CommonResource;
+use App\Http\Requests\InventoryRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Inventory;
 use Exception;
+
 
 class inventoryController extends Controller
 {
@@ -24,9 +26,10 @@ class inventoryController extends Controller
 
         return  CommonResource::collection($inventory);
     }
-    public function storeInventory(Request $request)
+    public function storeInventory(InventoryRequest $request)
     {
         try {
+            
             DB::beginTransaction();
             $inventory = new Inventory;
             $inventory->property_id = $request->property_id;
@@ -34,29 +37,17 @@ class inventoryController extends Controller
             $inventory->description = $request->description;
             $inventory->image = $request->image;
             $inventory->unit = $request->unit;
-
-
-            // if ($request->hasfile('image')) {
-            //     $file = $request->file('image');
-            //     $extention = $file->getClientoriginalExtension();
-            //     $filename = time() . '.' . $extention;
-            //     $inventory = $file->move(public_path('/assets/img'), $filename);
-            //     $inventory->image = $filename;
-            // }
-
-          
-
             $inventory->save();
             DB::commit();
             return [
                 'success'   => true,
                 'message'   => "Inventory Added Successfully",
             ];
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             DB::rollBack();
             return [
                 'success'   => false,
-                'message'   => $th->getMessage(),
+                'message'   => $e->getMessage(),
             ];
         }
     }
