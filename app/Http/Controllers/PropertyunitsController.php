@@ -10,10 +10,12 @@ use DB;
 
 class propertyunitsController extends Controller
 {
-    //saad
+
     public function create()
     {
-
+        if (!auth()->user()->hasPermission('Property Units','create')){
+            return redirect(route('404'));
+        }
         $property = DB::table('propertydetails')
             ->leftjoin('property_location', 'property_location.property_id', '=', 'propertydetails.id')
             ->leftjoin('amenities', 'amenities.property_id', '=', 'propertydetails.id')
@@ -44,7 +46,12 @@ class propertyunitsController extends Controller
     }
     public function index(Request $request)
     {
-        // dd( $request);
+        if (!auth()->user()->hasPermission('Property Units','view')){
+            return redirect(route('404'));
+        }
+        try {
+
+
         $data = DB::table('propertyunits')
             ->leftjoin('propertydetails', 'propertydetails.id', '=', 'propertyunits.property_id')
             ->select('propertyunits.*', 'propertydetails.name')
@@ -69,21 +76,23 @@ class propertyunitsController extends Controller
                 ->make(true);
         }
         return view('propertyunits.index')->with(compact('data'));
+    } catch (\Throwable $th) {
+        $flas_message =  toastr()->error('something went wrong');
+
+            return redirect(route('propertyunits.index'))->with('flas_message');
+    }
     }
     public function store(Request $request)
     {
-        // dd($request);
-
-        
+        try {
 
         $propertyunit = new propertyunits;
         $propertyunit->property_id = $request->property_id;
         $propertyunit->title = $request->title;
-        $propertyunit->commission = $request->commission;
-        $propertyunit->details = $request->details;
+
+
         $propertyunit->description = $request->description;
-        // $propertyunit->image = $request->image;
-        // dd($propertyunit);
+
         if ($request->hasfile('image')) {
 
 
@@ -94,9 +103,15 @@ class propertyunitsController extends Controller
             $data = $file->move(public_path('/assets/img'), $filename);
             $propertyunit->image = $filename;
         }
-        // dd($propertyunit);
+
         $propertyunit->save();
-        return redirect('propertyunits')->with('success', 'propertyunits Addedd!');
+        return redirect(route('propertyunits.index'))->with('success', 'propertyunits Addedd!');
+    }
+     catch (\Throwable $th) {
+        $flas_message =  toastr()->error('something went wrong');
+
+        return redirect(route('propertyunits.create'))->with('flas_message');
+    }
     }
     public function show($id)
     {
@@ -155,7 +170,7 @@ class propertyunitsController extends Controller
     public function update(Request $request, $id)
     {
 
-       
+
         $input = $request->except('_token');
 
 

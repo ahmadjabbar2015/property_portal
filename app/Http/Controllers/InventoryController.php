@@ -12,13 +12,12 @@ use DataTables;
 
 class Inventorycontroller extends Controller
 {
-    //
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
     public function create()
     {
+        if (!auth()->user()->hasPermission('Inventory','create')){
+            return redirect(route('404'));
+        }
         $propertyunits = propertyunits::all();
         $property_details = DB::table('propertydetails')
             ->leftjoin('property_location', 'property_location.property_id', '=', 'propertydetails.id')
@@ -51,6 +50,9 @@ class Inventorycontroller extends Controller
 
     public function index(Request $request)
     {
+        if (!auth()->user()->hasPermission('Inventory','view')){
+            return redirect(route('404'));
+        }
         $inventorydata = DB::table('inventories')
             ->join('propertydetails', 'propertydetails.id', '=', 'inventories.property_id')
             ->leftjoin('propertyunits', 'propertyunits.id', '=', 'inventories.propertyunit_id')
@@ -122,7 +124,7 @@ class Inventorycontroller extends Controller
                 $file = $request->file('image');
                 $extention = $file->getClientoriginalExtension();
                 $filename = time() . '.' . $extention;
-    
+
                 $data = $file->move(public_path('/assets/img'), $filename);
                 $input['image'] = $filename;
             }

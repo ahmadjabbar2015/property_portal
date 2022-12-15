@@ -11,10 +11,13 @@ use DB;
 
 class TenantsController extends Controller
 {
-    //saad
-   
+
+
     public function create()
     {
+        if (!auth()->user()->hasPermission('Tenants','create')){
+            return redirect(route('404'));
+        }
 
         return view('tenants.create');
     }
@@ -68,7 +71,9 @@ class TenantsController extends Controller
 
     public function index(Request $request)
     {
-
+        if (!auth()->user()->hasPermission('Tenants','view')){
+            return redirect(route('404'));
+        }
         $data = tenants::latest()->get();
 
         if ($request->ajax()) {
@@ -89,16 +94,22 @@ class TenantsController extends Controller
     }
     public function edit($id)
     {
+        if (!auth()->user()->hasPermission('Tenants','update')){
+            return redirect(route('404'));
+        }
         $tenants = tenants::find($id);
         return view('tenants.edit')->with('tenants', $tenants);
     }
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->hasPermission('Tenants','update')){
+            return redirect(route('404'));
+        }
         try {
 
             $input = $request->except('_token');
 
-            
+
             // $tenants = new tenants;
             if ($request->hasfile('image')) {
 
@@ -106,7 +117,7 @@ class TenantsController extends Controller
                 $file = $request->file('image');
                 $extention = $file->getClientoriginalExtension();
                 $filename = time() . '.' . $extention;
-    
+
                 $data = $file->move(public_path('/assets/img'), $filename);
                 $input['image'] = $filename;
             }
@@ -123,6 +134,9 @@ class TenantsController extends Controller
     }
     public function delete($id)
     {
+        if (!auth()->user()->hasPermission('Tenants','delete')){
+            return redirect(route('404'));
+        }
         try {
             DB::table('tenants')->delete($id);
             $flas_message =  toastr()->success('Tenants Deleted Successfully');
@@ -136,7 +150,7 @@ class TenantsController extends Controller
     }
     public function show($id)
     {
-        
+
         $tenants = tenants::find($id);
         return view('tenants.show')->with('tenants', $tenants);
     }

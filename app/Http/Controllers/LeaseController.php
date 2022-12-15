@@ -11,17 +11,21 @@ use App\Models\customer;
 use App\Models\saletransaction;
 use App\Models\renttransaction;
 use App\Models\propertydetail;
-use DB;
+// use DB;
+ use Illuminate\Support\Facades\DB;
 use Datatables;
 use DateTime;
 
 class LeaseController extends Controller
 {
-    //saad
+
 
 
     public function create()
     {
+        if (!auth()->user()->hasPermission('Leases','create')){
+            return redirect(route('404'));
+        }
 
         $property = DB::table('propertydetails')
             ->leftjoin('property_location', 'property_location.property_id', '=', 'propertydetails.id')
@@ -58,8 +62,9 @@ class LeaseController extends Controller
     }
     public function index(Request $request)
     {
-        // $data = leases::with(['propertyUnits','tenants'])->latest()->get();
-
+        if (!auth()->user()->hasPermission('Leases','view')){
+            return redirect(route('404'));
+        }
         $leasesdata = DB::table('leases')
             ->join('propertydetails', 'propertydetails.id', '=', 'leases.property_id')
             ->join('tenants', 'tenants.id', '=', 'leases.tenant_id')
@@ -68,18 +73,25 @@ class LeaseController extends Controller
             ->get();
 
         if ($request->ajax()) {
-
-
             return Datatables::of($leasesdata)
 
                 ->addIndexColumn()
+                ->addColumn('paid', function ($row){
+                    $totalpayment=$row->total_payment;
+                    $remainingpayment=$row->paid_payment;
+
+                    $remaining_total_payment = $totalpayment - $remainingpayment;
+
+                    return $remaining_total_payment;
+
+                })
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="/lease/rent_intallment/' . $row->id . '" class="show btn btn-info btn-sm"><i class="fa-sharp fa-solid fa-eye"></i></a>
-                    <a href="/lease/rent_intallment/' . $row->id . '" class="edit btn btn-success btn-sm"><i class="fa-solid fa-file-pen"></i></a>
-                    <a href="/lease/rent_payment/' . $row->id . '" class="edit btn btn-success btn-sm">payment</a> ';
+                    $actionBtn = '
+                    <a title="installement" href="/lease/rent_intallment/' . $row->id . '" class="edit btn btn-info btn-sm"><i class="fas fa-coins"></i></a>
+                    <a title="payment" href="/lease/rent_payment/' . $row->id . '" class="edit btn btn-success btn-sm"><i class="fa fa-credit-card"></i></a> ';
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action' , "paid"])
                 ->make(true);
         }
         return view('lease.index');
@@ -91,7 +103,7 @@ class LeaseController extends Controller
         $property_id=$request->property_id;
         $leasesdata = new leases;
         $leasesdata->property_id = $request->property_id;
-        // dd($request->property_id);
+
         $leasesdata->propertyunit_id = $request->propertyunit_id;
         $leasesdata->rent = $request->rent;
         $leasesdata->get_dmy = $request->get_dmy;
@@ -116,12 +128,12 @@ class LeaseController extends Controller
         }
         $leasesdata->terms = $request->terms;
 
-        
+
 
         $leasesdata->save();
 
-        propertydetail::where('id',$property_id)->update(['property_status' => 1]);
-       
+        // propertydetail::where('id',$property_id)->update(['property_status' => 1]);
+
         $this->rentintallment($leasesdata->id);
         $flas_message = toastr()->success('Leases Addedd Successfully');
         return redirect(route('lease.index'))->with('flas_message');
@@ -129,7 +141,7 @@ class LeaseController extends Controller
     public function rentintallment($id)
     {
         $rentdata = leases::where('id', $id)->first();
-        // dd($rentdata);
+
         $no_of_ym = $rentdata->get_dmy;
         $payment_my = $rentdata->rent;
         $frequncy = $rentdata->frequency_collection;
@@ -176,7 +188,7 @@ class LeaseController extends Controller
     public function sale_store(Request $request)
     {
 
-        // dd($request);
+
         $property_id=$request->property_id;
         $salelease = new salelease;
         $salelease->property_id = $request->property_id;
@@ -186,7 +198,7 @@ class LeaseController extends Controller
         $salelease->customer_id = $request->customer_id;
         $salelease->remaing_payment = $request->remaing_payment;
         $salelease->lease_start = $request->lease_start;
-        $salelease->lease_end = $request->lease_end;
+
         $salelease->due_date = $request->due_date;
         $salelease->frequency_collection = $request->frequency_collection;
         $salelease->number_of_years_month = $request->number_of_years_month;
@@ -204,7 +216,7 @@ class LeaseController extends Controller
         $salelease->terms = $request->terms;
 
         $salelease->save();
-        propertydetail::where('id',$property_id)->update(['property_status' => 1]);
+        // propertydetail::where('id',$property_id)->update(['property_status' => 1]);
         $saleleseid = $salelease->id;
         $this->saleinstallmentplane($saleleseid);
 
@@ -332,34 +344,44 @@ class LeaseController extends Controller
     public function saleindex(Request $request)
     {
 
-        // $data = leases::with(['propertyUnits','tenants'])->latest()->get();
+        if (!auth()->user()->hasPermission('Leases','view')){
+            return redirect(route('404'));
+        }
 
         $leasessaledata = DB::table('saleleases')
             ->join('propertydetails', 'propertydetails.id', '=', 'saleleases.property_id')
             ->join('customers', 'customers.id', '=', 'saleleases.customer_id')
             ->join('leads','customers.leads_id','=','leads.id')
             ->join('propertyunits', 'propertyunits.id', '=', 'saleleases.propertyunit_id')
-            ->select('saleleases.*', 'customers.id', 'propertyunits.title', 'propertydetails.name','leads.client_name As first_name')
+            ->select('saleleases.*',  'propertyunits.title', 'propertydetails.name','leads.client_name As first_name')
             ->get();
 
 
-// dd($leasessaledata);
         if ($request->ajax()) {
 
 
             return Datatables::of($leasessaledata)
 
                 ->addIndexColumn()
+                ->addColumn("remining_paid" , function($row){
+                      $paid = $row->paid_payment;
+                      $remining= $row->remaing_payment;
+
+                      $totalRemining = $remining- $paid;
+
+                      return $totalRemining;
+
+                })
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="/lease/installment/' . $row->id . '" class="show btn btn-info btn-sm"><i class="fa-sharp fa-solid fa-eye"></i></a>
-                    <a href="/lease/installment/' . $row->id . '" class="edit btn btn-success btn-sm">View</a>
-                    <a href="/lease/sale/payment/' . $row->id . '" class="edit btn btn-success btn-sm">payment</a>
-                   
+                    $actionBtn = '
+                    <a title="installement" href="/lease/installment/' . $row->id . '" class="edit btn btn-info btn-sm"><i class="fas fa-coins"></i></a>
+                    <a title="payment" href="/lease/sale/payment/' . $row->id . '" class="edit btn btn-success btn-sm"><i class="fa fa-credit-card"></i></a>
+
                    ';
                     return $actionBtn;
                 })
 
-                ->rawColumns(['action'])
+                ->rawColumns(['action' , "remining_paid"])
                 ->make(true);
         }
         return view('lease.saleindex');
@@ -371,10 +393,10 @@ class LeaseController extends Controller
 
         return view("lease.sale_installment")->with('data', $data);
     }
+
     public function rentinstallmentplane($id)
     {
         $data = renttransaction::where('rent_leases_id', $id)->get();
-
         return view("lease.rent_installment")->with('data', $data);
     }
 }

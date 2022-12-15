@@ -11,26 +11,24 @@
             <div class="row">
                 <div class=" mt-6 ml-4">
                     <h1>
-                        Type
+                        Property Type
                     </h1>
                 </div>
             </div><br>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="shadow -lg-3 p-3 mb-5 bg-body rounded mr-4 ml-4">
-                        <h4>
-                            Property Type
-                        </h4><br>
+
 
                         <div class=" mt-2">
                             <div class="col">
                                 <label for="Fname">Type :*</label>
-                                <input type="text" class="form-control" placeholder="" name="type" id="type">
+                                <input type="text" class="form-control" placeholder="" name="type" id="type" required>
                                 <span id="type_id" class="text-danger font-weight-bold"></span>
                             </div>
                             <div class="col">
                                 <label for="">Description </label>
-                                <input type="" class="form-control" placeholder=""
+                                <input type="textarea" class="form-control" placeholder=""
                                     rows="3"name="description">
 
                             </div>
@@ -42,7 +40,7 @@
     </div>
 
 
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="table-responsive">
             <table class="table mt-4 yajra-datatable" id="type_data">
                 <thead>

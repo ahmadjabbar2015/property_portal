@@ -15,12 +15,9 @@ var table = $('#units_data').DataTable({
             data: 'title',
             name: 'title'
         },
-     
-        {
-            data: 'details',
-            name: 'details'
-        },
-      
+
+
+
         {
             data: 'action',
             name: 'action',
@@ -69,5 +66,5 @@ var table = $('#units_data').DataTable({
             }
         })
     })
-    
-    
+
+

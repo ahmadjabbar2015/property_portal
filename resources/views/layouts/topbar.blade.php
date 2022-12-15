@@ -5,7 +5,7 @@
     <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown"
         >
         <div class="media d-flex align-items-center">
-            <img class="avatar rounded-circle" alt="" src="../../assets/img/devlogix-picture-1.png">
+            <img class="avatar rounded-circle" alt="" src="{{asset('assets/img/devlogix-picture-1.png')}}">
             <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
                 <span
                     class="mb-0 font-small fw-bold text-gray-900">{{ auth()->user()->first_name ? auth()->user()->first_name . ' ' . auth()->user()->last_name : 'CrossDevlogix' }}
@@ -31,6 +31,6 @@
         </a>
     </div>
 </div>
-    
+
 </main>
 </x-layouts.base>

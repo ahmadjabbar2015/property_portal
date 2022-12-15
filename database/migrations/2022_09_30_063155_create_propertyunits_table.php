@@ -14,10 +14,9 @@ class CreatePropertyunitsTable extends Migration
     public function up()
     {
         Schema::create('propertyunits', function (Blueprint $table) {
-            $table->id()->foreignkey();
+            $table->id();
             $table->string("title");
-            $table->string("commission");
-            $table->string("details");
+
             $table->string("description");
             $table->string("image")->nullable();
             $table->timestamps();

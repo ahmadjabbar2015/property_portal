@@ -83,6 +83,9 @@
 
                                         </div>
                                     </div>
+
+
+
                                 </div>
 
                                 <div class="row mt-4 col-md-12">
@@ -191,7 +194,7 @@
                                             id="propertysale_id">
                                             <option selected disabled>Choose an Option</option>
                                             @foreach ($property as $propertydata)
-                                                <option data-id="{{ $propertydata->rent }}"
+                                                <option data-id="{{ $propertydata->rent }}" data-name = "{{$propertydata->agency}}"
                                                     value="{{ $propertydata->id }}">{{ $propertydata->name }}
                                                 </option>
                                             @endforeach
@@ -236,6 +239,10 @@
 
                                         </div>
                                     </div>
+
+
+
+
                                 </div>
 
                                 <div class="row mt-4 col-md-12">
@@ -265,11 +272,7 @@
                                         <input type="date" class="form-control" placeholder=""
                                             id="lease_sale_start" name="lease_start">
                                     </div>
-                                    <div class="col">
-                                        <label for=""> Lease End Date *</label>
-                                        <input type="date" class="form-control" placeholder=""
-                                            id="lease_sale_end" name="lease_end">
-                                    </div>
+
                                 </div>
                                 {{-- date  --}}
                                 <div class="row mt-4 col-md-12">

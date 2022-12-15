@@ -36,10 +36,7 @@
                                 <h5 class="card-text"> Property Units Title:</h5>
                                 <p>{{ $propertyunits->title }}</p>
                             </div>
-                            <div class="col">
-                                <h5 class="card-text"> Commission :</h5>
-                                <p> {{ $propertyunits->commission }}</p>
-                            </div>
+
                         </div>
                         <div class="row mt-4">
                             <div class="col">

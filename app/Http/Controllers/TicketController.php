@@ -10,19 +10,18 @@ use DB;
 
 class TicketController extends Controller
 {
-    //
+
 
     public function index(Request $request)
     {
-      
+
         $data=DB::table('tickets')
         ->leftjoin('users','users.id','=','tickets.users_id')
         ->leftjoin('users as assignuser','assignuser.id','=','tickets.assign_to')
         ->select('tickets.*','users.first_name','assignuser.first_name as assign_name')->get();
-        // dd($data);
-        // $data =ticket::latest()->get();
+
         $user_id=Auth::id();
-       
+
 
         if ($request->ajax()) {
 
@@ -45,15 +44,16 @@ class TicketController extends Controller
         $total_ticket=count($data);
         $ticket_assign=ticket::where('assign_to', '!=', 'null')->count();
         $ticket_pending=ticket::where('assign_to', '=', null)->count();
-        
+
 
         return view('ticket.index')->with('user_id',$user_id)->with('total_ticket',$total_ticket)->with('ticket_assign',$ticket_assign)->with('ticket_pending',$ticket_pending);
     }
-    
+
     public function store(Request $request)
     {
-    // try {
-    // dd( $request);
+        if (!auth()->user()->hasPermission('Tickets','create')){
+            return redirect(route('404'));
+        }
       $tickets=new ticket;
       $tickets->subject=$request->subject;
       $tickets->priority=$request->priority;
@@ -67,20 +67,20 @@ class TicketController extends Controller
 
         return redirect(route('ticket.index'))->with('flas_message');
     }
-        
-   
+
+
     public function  show($id)
     {
       try {
-       
+
         $ticket=DB::table('tickets')
         ->leftjoin('users','users.id','=','tickets.user_id')
         ->leftjoin('users as assignuser','assignuser.id','=','tickets.assign_to')
         ->select('tickets.*','users.name','assignuser.name as assign_name')
         ->where('tickets.id','=',$id)
         ->get();
-        
-       
+
+
         return view('ticket.show')->with('ticket', $ticket);
     } catch (\Throwable $th) {
         $flas_message=  toastr()->error('something went wrong');

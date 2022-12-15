@@ -13,10 +13,13 @@ use DB;
 use Datatables;
 class PropertyController extends Controller
 {
-    //saad
+
+
     public function index(Request $request)
     {
-
+        if (!auth()->user()->hasPermission('Property','view')){
+            return redirect(route('404'));
+        }
         $data=DB::table('propertydetails')
         ->leftjoin('property_location', 'property_location.property_id', '=', 'propertydetails.id')
         ->leftjoin('amenities', 'amenities.property_id', '=', 'propertydetails.id')
@@ -39,16 +42,16 @@ class PropertyController extends Controller
         ,'landlords.full_name as landlord_name'
         )
         ->get();
-        
-       
+
+
         if ($request->ajax()) {
-          
+
 
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $actionBtn = '<a href="/propertyshow/'.$row->id.'" class="show btn btn-info btn-sm"><i class="fa-sharp fa-solid fa-eye"></i></a>
-                    <a href="/property/edit/'.$row->id.'" class="edit btn btn-success btn-sm"> <i class="fa-solid fa-file-pen"></i></a>
+                    <a href="#" class="edit btn btn-success btn-sm"> <i class="fa-solid fa-file-pen"></i></a>
                     <a href="#" class="delete btn btn-danger btn-sm"><i class="fa-regular fa-trash-can"></i></a>';
                     return $actionBtn;
                 })
@@ -60,7 +63,11 @@ class PropertyController extends Controller
     }
     public function create()
     {
+        if (!auth()->user()->hasPermission('Property','create')){
+            return redirect(route('404'));
+        }
         try {
+
         $landlord = landlord::all();
         $propertytype = propertytype::all();
         return view('property.create')->with('landlord', $landlord)->with('propertytype', $propertytype);
@@ -73,7 +80,7 @@ class PropertyController extends Controller
     public function Store(Request $request)
     {
         $input = $request->except('_token');
-        
+
 
         $request->validate([
 
@@ -84,20 +91,20 @@ class PropertyController extends Controller
             'description' => 'required',
 
         ]);
-       
+
        $result= propertydetail::create($input);
         return $result;
 
     }
     public function location(Request $request)
     {
-        
+
         $input = $request->all();
-        
-       
+
+
         $result= location::create($input);
         return $result;
-    
+
     }
     public function amenities(Request $request)
     {
@@ -121,12 +128,12 @@ class PropertyController extends Controller
        $propertyimage->propertyimage=$request->propertyimage;
        if ($request->hasfile('propertyimage'))
             {
-       
-                
+
+
                         $file=$request->file('propertyimage');
                         $extention=$file->getClientoriginalExtension();
                         $filename=time().'.'.$extention;
-                        
+
                         $data=$file->move(public_path('/assets/img'),$filename);
                         $propertyimage->propertyimage=$filename;
             }
@@ -142,8 +149,8 @@ class PropertyController extends Controller
     public function show($id)
     {
         try {
-           
-        
+
+
         $data=DB::table('propertydetails')
         ->leftjoin('property_location', 'property_location.property_id', '=', 'propertydetails.id')
         ->leftjoin('amenities', 'amenities.property_id', '=', 'propertydetails.id')
@@ -167,9 +174,9 @@ class PropertyController extends Controller
         )
         ->where('propertydetails.id','=',$id)
         ->get();
-        
+
         return view('property.show')->with(compact('data'));
-    
+
     } catch (\Throwable $th) {
         $flas_message=  toastr()->error('something went wrong');
 
@@ -210,14 +217,14 @@ class PropertyController extends Controller
     public function update(Request $request,$id)
     {
         try {
-            
-       
+
+
         } catch (\Throwable $th) {
             $flas_message=  toastr()->error('something went wrong');
 
             return redirect(route('property.index'))->with('flas_message');
         }
-       
+
     }
 }
 

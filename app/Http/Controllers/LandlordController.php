@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\DB as FacadesDB;
 
 class LandlordController extends Controller
 {
-    //saad
+
 
     public function create()
     {
-        
+        if (!auth()->user()->hasPermission('Landlords','create')){
+            return redirect(route('404'));
+        }
         return view('landlord.create');
     }
     public function store(Request $request)
@@ -38,28 +40,31 @@ class LandlordController extends Controller
         $landlord->occupation=$request->occupation;
         $landlord->account=$request->account;
         $landlord->image=$request->image;
-       
+
 
         if ($request->hasfile('image'))
             {
-       
-                
+
+
                         $file=$request->file('image');
                         $extention=$file->getClientoriginalExtension();
                         $filename=time().'.'.$extention;
-                        
+
                         $data=$file->move(public_path('/assets/img'),$filename);
                         $landlord->image=$filename;
             }
         $landlord->save();
-       
+
         $flas_message =  toastr()->success('Landlord Addedd Successfully');
         return redirect(route('landlord.index'))->with('flas_message');
     }
     public function index(Request $request)
     {
+        if (!auth()->user()->hasPermission('Landlords','view')){
+            return redirect(route('404'));
+        }
         $data = landlord::latest()->get();
-        
+
         if ($request->ajax()) {
 
             return Datatables::of($data)

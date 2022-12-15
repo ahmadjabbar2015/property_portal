@@ -3,7 +3,7 @@
 @include('layouts.sidenav')
 <main class="content">
     @include('layouts.topbar')
-  
+
     {{-- @dd($propertyunits); --}}
     {{-- saad --}}
     <div class="container">
@@ -32,7 +32,7 @@
                                         </option>
                                     @endforeach
 
-                                </select> 
+                                </select>
 
                             </div>
                             <div class="col">
@@ -40,22 +40,9 @@
                                 <input type="text" class="form-control" placeholder="" name="title">
 
                             </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="Fname"> Commission * </label>
-                                <input type="number" class="form-control" placeholder="" name="commission">
-                                </select>
-                            </div>
-                          
-                        
                         </div>
-                        <div class="col mt-5">
-                            <label for="email">Details *</label>
-                            <input type="text" class="form-control" placeholder="e.g two bedroom,studio ,villa"
-                                name="details">
 
-                        </div><br>
+
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Description /Features*</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Room features and description"
@@ -71,8 +58,8 @@
                     </div>
                 </div>
         </form>
-        
-          
+
+
         </div>
     </div>
     </div>

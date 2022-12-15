@@ -51,7 +51,7 @@
                         <div class="col">
                             <label for="file">Identifcation Docoument</label>
                             <input type="file" class="form-control" id="" name="image">
-                         
+
                         </div>
                         <div class="col">
                             <label>Address :*</label>
@@ -103,8 +103,7 @@
             </form>
 
         </div>
-        @include('layouts.footer')
-        @include('layouts.footer2')
+
     </main>
 </x-layouts.base>
 

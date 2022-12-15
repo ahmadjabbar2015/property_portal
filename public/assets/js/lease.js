@@ -41,12 +41,22 @@ var table = $('#leases_table').DataTable({
         data: 'due_date',
         name: 'due_date'
     },
+
     {
         data: 'total_payment',
         name: 'total_payment'
     },
 
 
+    {
+        data: 'paid_payment',
+        name: 'paid_payment'
+    },
+
+  {
+        data: 'paid',
+        name: 'paid'
+    },
 
     {
         data: 'action',
@@ -248,6 +258,11 @@ $("#propertysale_id").on('change', function () {
 
     let get_rent = $(this).find('option:selected').data('id');
     $('input[name=total_sale_price]').val(get_rent);
+    let get_commission = $(this).find('option:selected').data('name');
+    $('input[name=commission_payment]').val(get_commission);
+
+
+
     $(".property_sale_unit").html("<option disabled value=''>Select An Option</option>");
     // $('#unit').select2();
     $.ajax({
@@ -280,54 +295,54 @@ $("#payment_per_frequency").click(function () {
 
     if (data_frequency == "monthly") {
         var start_date = document.getElementById("lease_sale_start").value;
-        var end_date = document.getElementById("lease_sale_end").value;
+        // var end_date = document.getElementById("lease_sale_end").value;
         var date1 = new Date(start_date);
-        var date2 = new Date(end_date);
-        var Difference_In_Time = date2.getTime() - date1.getTime();
-        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-        var months = Math.floor(Difference_In_Days / 30);
+        // var date2 = new Date(end_date);
+        // var Difference_In_Time = date2.getTime() - date1.getTime();
+        // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+        // var months = Math.floor(Difference_In_Days / 30);
 
         var saletotal = document.getElementById("remaing_payment").value;
 
         var numofmonth = document.getElementById("no_of_yearmonth").value;
 
-        if (numofmonth == 0) {
-            var total_payment = Math.floor(saletotal / months);
+        // if (numofmonth == 0) {
+        //     var total_payment = Math.floor(saletotal / months);
 
-            $('input[name=payment_per_frequency]').val(total_payment);
+        //     $('input[name=payment_per_frequency]').val(total_payment);
 
-        } else {
+        // } else {
             var total_payment = Math.floor(saletotal / numofmonth);
 
             $('input[name=payment_per_frequency]').val(total_payment);
 
-        }
+        // }
 
 
 
     } else {
 
         var start_date = document.getElementById("lease_sale_start").value;
-        var end_date = document.getElementById("lease_sale_end").value;
+        // var end_date = document.getElementById("lease_sale_end").value;
         var date1 = new Date(start_date);
-        var date2 = new Date(end_date);
-        var Difference_In_Time = date2.getTime() - date1.getTime();
-        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-        var years = Math.floor(Difference_In_Days / 365)
+        // var date2 = new Date(end_date);
+        // var Difference_In_Time = date2.getTime() - date1.getTime();
+        // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+        // var years = Math.floor(Difference_In_Days / 365)
         var saletotal = document.getElementById("remaing_payment").value;
 
         var numofmonth = document.getElementById("no_of_yearmonth").value;
-        if (numofmonth == 0) {
-            var total_payment = Math.floor(saletotal / years);
+        // if (numofmonth == 0) {
+            // var total_payment = Math.floor(saletotal / years);
 
-            $('input[name=payment_per_frequency]').val(total_payment);
+            // $('input[name=payment_per_frequency]').val(total_payment);
 
-        } else {
+        // } else {
             var total_payment = Math.floor(saletotal / numofmonth);
 
             $('input[name=payment_per_frequency]').val(total_payment);
 
-        }
+        // }
 
     }
 
@@ -353,9 +368,7 @@ $(function () {
             remaing_payment: {
                 required: true
             },
-            lease_end: {
-                required: true
-            },
+
             lease_start: {
                 required: true
             },
@@ -385,9 +398,7 @@ $(function () {
             remaing_payment: {
                 required: "Remaing Payment is required"
             },
-            lease_end: {
-                required: " lease end date   is required"
-            },
+
             lease_start: {
                 required: " lease start date  is required"
             },
@@ -431,9 +442,20 @@ var table = $('#sale_leases_table').DataTable({
         name: 'total_sale_price'
     },
     {
-        data: 'remaing_payment',
-        name: 'remaing_payment',
+        data: 'remining_paid',
+        name: 'remining_paid',
     },
+
+    {
+        data: 'sale_advance_payment',
+        name: 'sale_advance_payment',
+    },
+
+    {
+        data: 'paid_payment',
+        name: 'paid_payment',
+    },
+
     {
         data: 'frequency_collection',
         name: 'frequency_collection'
