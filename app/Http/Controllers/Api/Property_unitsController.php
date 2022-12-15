@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Propertyunits;
 use App\Http\Resources\CommonResource;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\propertyunitsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +28,7 @@ class Property_unitsController extends Controller
 
         return  CommonResource::collection($property_units);
     }
-    public function storePropertyUnit(Request $request)
+    public function storePropertyUnit(propertyunitsRequest $request)
     {
         try {
             DB::beginTransaction();

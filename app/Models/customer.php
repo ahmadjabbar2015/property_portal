@@ -10,7 +10,7 @@ class customer extends Model
     use HasFactory;
     protected $table = 'customers';
     protected $primaryKey = 'id';
-    protected $guarded =['id'];
+    protected $guarded = ['id'];
 
 
 
@@ -27,7 +27,23 @@ class customer extends Model
     public function agent()
     {
 
-        return $this->belongsTo(agent::class, 'agent_id');
+        return $this->belongsTo(agent::class, 'agent_id', 'id');
     }
-   
+
+    
+    public function location()
+    {
+        return $this->belongsTo(location::class, 'id', 'property_id');
+    }
+
+    public function amenities()
+    {
+        return   $this->belongsTo(amenitie::class, 'id', 'property_id');
+    }
+
+    public function propertyImages()
+    {
+        return $this->belongsTo(propertyimage::class, 'id', 'property_id');
+    }
+    
 }

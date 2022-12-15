@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\LeadRequest;
+use App\Http\Requests\AttemptRequest;
 use App\Http\Resources\CommonResource;
 use App\Models\attempt;
 use App\Models\Lead;
@@ -30,7 +32,7 @@ class LeadController extends Controller
 
         return  CommonResource::collection($lead);
     }
-    public function storeAgent(Request $request)
+    public function storelead(LeadRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -63,5 +65,41 @@ class LeadController extends Controller
         $lead = attempt::where('id', $id)->get();
 
         return  CommonResource::collection($lead);
+    }
+
+    public function storeAttempt(AttemptRequest $request )
+    {
+        // dd($request->all());
+        try {
+            DB::beginTransaction();
+            $attempt = new attempt();
+            $attempt->client_name = $request->client_name;
+            $attempt->client_contact = $request->client_contact;
+            $attempt->client_mail = $request->client_mail;
+            $attempt->clinet_location = $request->clinet_location;
+            $attempt->propertytype_id = $request->propertytype_id;
+            $attempt->area_minimum = $request->area_minimum;
+            $attempt->area_maximum = $request->area_maximum;
+            $attempt->source_id = $request->source_id;
+            $attempt->budget_minimum = $request->budget_minimum;
+            $attempt->budget_maximum = $request->budget_maximum;
+            $attempt->lead_status = $request->lead_status;
+            $attempt->class_status = $request->class_status;
+            $attempt->next_follow_date = $request->next_follow_date;
+            $attempt->aad_remark = $request->aad_remark;
+            $attempt->lead_id =$request->lead_id;
+            $attempt->save();
+            DB::commit();
+            return [
+                'success'   => true,
+                'message'   => "Attempt Added Successfully",
+            ];
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return [
+                'success'   => false,
+                'message'   => $th->getMessage(),
+            ];
+        }
     }
 }

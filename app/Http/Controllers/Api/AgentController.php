@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CommonResource;
 use App\Models\Agent;
+use App\Http\Requests\AgentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +24,7 @@ class AgentController extends Controller
 
         return  CommonResource::collection($agent);
     }
-    public function storeAgent(Request $request)
+    public function storeAgent(AgentRequest $request)
     {
         try {
             DB::beginTransaction();

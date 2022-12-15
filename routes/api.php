@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Property_unitsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\LeadController;
+use App\Http\Controllers\Api\CustomerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +81,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('leads/{id}', [LeadController::class, 'showlead']);
     Route::post('lead/store', [LeadController::class, 'storelead']);
     Route::get('attempts/{id}', [LeadController::class, 'getAttempt']);
+    Route::post('attempt/store', [LeadController::class, 'storeAttempt']);
+    //customer
+    Route::get('customers',[CustomerController::class,'getCustomer']);
+    Route::get('customers/{id}', [CustomerController::class, 'showCustomer']);
+    Route::post('customer/store', [CustomerController::class, 'storeCustomer']);
+    
 
     });
     Route::get('properties' , [PropertyController::class , 'index']);
