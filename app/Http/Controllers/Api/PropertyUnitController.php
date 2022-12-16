@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Models\Propertyunits;
 use App\Http\Resources\CommonResource;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\PropertyUnitsRequest;
 
 class PropertyUnitController extends Controller
 {
@@ -26,36 +26,30 @@ class PropertyUnitController extends Controller
 
         return  CommonResource::collection($property_units);
     }
-    public function storePropertyUnit(Request $request)
+    public function storePropertyUnit(PropertyUnitsRequest $request)
     {
         try {
             DB::beginTransaction();
-            $propertyunit = new propertyunits;
-            $propertyunit->property_id = $request->property_id;
-            $propertyunit->title = $request->title;
-            $propertyunit->commission = $request->commission;
-            $propertyunit->details = $request->details;
-            $propertyunit->description = $request->description;
+                $propertyunit = new propertyunits;
+                $propertyunit->property_id = $request->property_id;
+                $propertyunit->title = $request->title;
+                $propertyunit->commission = $request->commission;
+                $propertyunit->details = $request->details;
+                $propertyunit->description = $request->description;
 
-            if ($request->hasfile('image')) {
-                $file = $request->file('image');
-                $extention = $file->getClientoriginalExtension();
-                $filename = time() . '.' . $extention;
-                $data = $file->move(public_path('/assets/img'), $filename);
-                $propertyunit->image = $filename;
-            }
-            $propertyunit->save();
+                if ($request->hasfile('image')) {
+                    $file = $request->file('image');
+                    $extention = $file->getClientoriginalExtension();
+                    $filename = time() . '.' . $extention;
+                    $data = $file->move(public_path('/assets/img'), $filename);
+                    $propertyunit->image = $filename;
+                }
+                $propertyunit->save();
             DB::commit();
-            return [
-                'success'   => true,
-                'message'   => "PropertyUnits Added Successfully",
-            ];
+            return $this->returnSuccess("Property Unit");
         } catch (\Throwable $th) {
             DB::rollBack();
-            return [
-                'success'   => false,
-                'message'   => $th->getMessage(),
-            ];
+            return $this->returnFalse($th->getMessage());
         }
     }
 }

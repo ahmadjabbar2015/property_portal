@@ -8,7 +8,10 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AgentController;
 use App\Http\Controllers\Api\PropertyUnitController;
 use App\Http\Controllers\Api\LeadController;
+use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\inventoryController;
+use App\Http\Controllers\Api\LeaseController;
+use App\Http\Controllers\Api\RentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +29,6 @@ Route::get('hello' , function(Request $request){
     return 'Hello';
 });
 
-// Landlords
 
 
 
@@ -66,6 +68,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::post('sources/store' , [SourceController::class , 'store']);
 
         // Property
+        Route::get('properties' , [PropertyController::class , 'index']);
         Route::get('property/{id}' , [PropertyController::class , 'show']);
         Route::post('properties/store' , [PropertyController::class , 'store']);
 
@@ -78,18 +81,34 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::get('inventories', [InventoryController::class, 'getInventories']);
         Route::get('inventories/{id}', [InventoryController::class, 'showInventory']);
         Route::post('inventory/store', [InventoryController::class, 'storeInventory']);
-        //lead
-        Route::get('leads',[LeadController::class,'getleads']);
-        Route::get('leads/{id}', [LeadController::class, 'showlead']);
-        Route::post('lead/store', [LeadController::class, 'storelead']);
 
-    // Property Units
+        // Property Units
         Route::get('property-units', [PropertyUnitController::class, 'getPropertyUnits']);
         Route::get('property-units/{id}', [PropertyUnitController::class, 'showPropertyUnit']);
         Route::post('property-units/store', [PropertyUnitController::class, 'storePropertyUnit']);
+        //lead
+        Route::get('leads',[LeadController::class,'getLeads']);
+        Route::get('leads/{id}', [LeadController::class, 'showLead']);
+        Route::post('lead/store', [LeadController::class, 'storeLead']);
+        Route::get('attempts/{id}', [LeadController::class, 'getAttempt']);
+        Route::post('attempt/store', [LeadController::class, 'storeAttempt']);
+        //customer
+        Route::get('customers',[CustomerController::class,'getCustomer']);
+        Route::get('customers/{id}', [CustomerController::class, 'showCustomer']);
+        Route::post('customer/store', [CustomerController::class, 'storeCustomer']);
+        //leases
+        Route::get('leases' , [LeaseController::class , 'index']);
+        Route::post('leases/store', [LeaseController::class, 'store']);
+        Route::post('Sale-leases/store', [LeaseController::class, 'storeSaleLease']);
+
+        // rent installments
+
+        Route::get('lease-rent-installments/{lease-id}' , [RentController::class , 'getLeaseRentInstallments']);
+        Route::get('rent-installment/{id}' , [RentController::class , 'getRentInstallment']);
 
 
-    });
-    Route::get('properties' , [PropertyController::class , 'index']);
+});
+Route::get('leases/{id}' , [LeaseController::class , 'show']);
+
 
 Route::post("login",[UserController::class,'index']);

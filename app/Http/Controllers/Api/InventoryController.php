@@ -34,29 +34,20 @@ class inventoryController extends Controller
             $inventory->image = $request->image;
             $inventory->unit = $request->unit;
 
-
-            // if ($request->hasfile('image')) {
-            //     $file = $request->file('image');
-            //     $extention = $file->getClientoriginalExtension();
-            //     $filename = time() . '.' . $extention;
-            //     $inventory = $file->move(public_path('/assets/img'), $filename);
-            //     $inventory->image = $filename;
-            // }
-
-          
+            if ($request->hasfile('image')) {
+                $file = $request->file('image');
+                $extention = $file->getClientoriginalExtension();
+                $filename = time() . '.' . $extention;
+                $inventory = $file->move(public_path('/assets/img'), $filename);
+                $inventory->image = $filename;
+            }    
 
             $inventory->save();
             DB::commit();
-            return [
-                'success'   => true,
-                'message'   => "Inventory Added Successfully",
-            ];
+            return $this->returnSuccess("Inventory");
         } catch (\Throwable $th) {
             DB::rollBack();
-            return [
-                'success'   => false,
-                'message'   => $th->getMessage(),
-            ];
+            return $this->returnFalse($th->getMessage());
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AgentRequest;
 use App\Http\Resources\CommonResource;
 use App\Models\Agent;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class AgentController extends Controller
 
         return  CommonResource::collection($agent);
     }
-    public function storeAgent(Request $request)
+    public function storeAgent(AgentRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -34,17 +35,11 @@ class AgentController extends Controller
                 $agent->address = $request->address;
                 $agent->save();
             DB::commit();
-            return [
-                'success'   => true,
-                'message'   => "Agent Added Successfully",
-            ];
+            return $this->returnSuccess("Agent");
 
         } catch (\Throwable $th) {
             DB::rollBack();
-            return [
-                'success'   => false,
-                'message'   => $th->getMessage(),
-            ];
+            return $this->returnFalse($th->getMessage());
         }
       
     }
