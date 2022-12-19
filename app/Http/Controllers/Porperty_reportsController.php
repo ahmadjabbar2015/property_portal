@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Attempt;
 use Illuminate\Http\Request;
-use App\Models\Propertytype;
-use App\Models\Propertydetail;
-use App\Models\Landlord;
-use App\Models\Customer;
-use App\Models\Propertyunits;
-use App\Models\Leases;
-use App\Models\Lead;
+use App\Models\propertytype;
+use App\Models\propertydetail;
+use App\Models\landlord;
+use App\Models\customer;
+use App\Models\propertyunits;
+use App\Models\leases;
+use App\Models\lead;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use DB;
@@ -31,7 +31,7 @@ class Porperty_reportsController extends Controller
 
             $data = Propertydetail::join('landlords', 'landlords.id', '=', 'propertydetails.landlord_id')
                 ->join('propertytype', 'propertytype.id', '=', 'propertydetails.propertytype_id')
-                ->join('propertyunits', 'propertyunits.property_id', '=', 'propertydetails.id')
+                ->leftjoin('propertyunits', 'propertyunits.property_id', '=', 'propertydetails.id')
                 ->join('customers', 'customers.property_id', '=', 'propertydetails.id')
                 ->join('leads', 'customers.leads_id', '=', 'leads.id')
                 ->select('propertydetails.*', 'propertydetails.rent', 'landlords.full_name', 'propertytype.type', 'propertyunits.title', 'customers.leads_id as client_name ', 'leads.client_name');
@@ -84,7 +84,7 @@ class Porperty_reportsController extends Controller
         $propertydetail = Propertydetail::join('landlords', 'landlords.id', '=', 'propertydetails.landlord_id')
             ->join('propertytype', 'propertytype.id', '=', 'propertydetails.propertytype_id')
             ->join('customers', 'customers.property_id', '=', 'propertydetails.id')
-            ->join('propertyunits', 'propertyunits.property_id', '=', 'propertydetails.id')
+            ->leftjoin('propertyunits', 'propertyunits.property_id', '=', 'propertydetails.id')
             ->join('leads', 'customers.leads_id', '=', 'leads.id')
             ->select('propertydetails.*', 'landlords.full_name', 'propertytype.type', 'customers.leads_id as client_name', 'leads.client_name','propertyunits.title')
             ->where('propertydetails.id','=',$id)

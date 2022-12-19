@@ -43,7 +43,7 @@ class CustomerController extends Controller
 
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="#" class="show btn btn-info btn-sm"><i class="fa-sharp fa-solid fa-eye"></i></a>
+                    $actionBtn = '<a href="/customer/show/'.$row->id.'" class="show btn btn-info btn-sm"><i class="fa-sharp fa-solid fa-eye"></i></a>
                     <a href="#" class="edit btn btn-success btn-sm"><i class="fa-solid fa-file-pen"></i></a>
                     <a href="/customer/delete/' . $row->id . '" class="delete btn btn-danger btn-sm"><i class="fa-regular fa-trash-can"></i></a>';
                     return $actionBtn;
@@ -82,14 +82,19 @@ class CustomerController extends Controller
         $data = DB::table('customers')
 
 
-            ->leftjoin('agents', 'agents.id', '=', 'customers.property_id')
+            ->leftjoin('agents', 'agents.id', '=', 'customers.agent_id')
             ->leftjoin('propertydetails', 'propertydetails.id', '=', 'customers.property_id')
-            // ->leftjoin('propertyunits','propertyunits.id','=','inventories.propertyunit_id')
-            ->select('customers.*', 'agents.name', 'propertydetails.name as property_name')
+           ->join('leads','leads.id','=','customers.leads_id')
+           ->join('sources','sources.id','=','leads.source_id')
+           ->join('propertytype','propertytype.id','=','leads.propertytype_id')
+           ->join('users','users.id','=','leads.user_id')
+           ->join('attempts','attempts.id','=','leads.id')
+            ->select('customers.description','customers.created_at As customer_create_date', 'agents.name as agent_name','leads.*', 'propertydetails.name as property_name',
+            'propertytype.type','sources.source','users.first_name As leads_creater','attempts.budget_maximum','attempts.updated_at as last_follow_date','attempts.aad_remark as attempt_remark')
             ->where('customers.id', '=', $id)
             ->first();
-        // dd($data);
-        return view('customer.show')->with('data', $data);
+
+        return view('customer.show',compact('data'));
     }
     public function update($id, Request $request)
     {

@@ -68,7 +68,7 @@ class LeaseController extends Controller
         $leasesdata = DB::table('leases')
             ->join('propertydetails', 'propertydetails.id', '=', 'leases.property_id')
             ->join('tenants', 'tenants.id', '=', 'leases.tenant_id')
-            ->join('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
+            ->leftjoin('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
             ->select('leases.*', 'tenants.full_name', 'propertyunits.title', 'propertydetails.name')
             ->get();
 
@@ -87,7 +87,8 @@ class LeaseController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $actionBtn = '
-                    <a title="installement" href="/lease/rent_intallment/' . $row->id . '" class="edit btn btn-info btn-sm"><i class="fas fa-coins"></i></a>
+                    <a title="view" href="/lease/rent_show/'. $row->id . '" class="edit btn btn-info btn-sm"><i class="fa-sharp fa-solid fa-eye"></i></a>
+                    <a title="installement" href="/lease/rent_intallment/' . $row->id . '" class="edit btn btn-secondary btn-sm"><i class="fas fa-coins"></i></a>
                     <a title="payment" href="/lease/rent_payment/' . $row->id . '" class="edit btn btn-success btn-sm"><i class="fa fa-credit-card"></i></a> ';
                     return $actionBtn;
                 })
@@ -95,6 +96,22 @@ class LeaseController extends Controller
                 ->make(true);
         }
         return view('lease.index');
+    }
+    public function show($id)
+    {
+
+        $data =  DB::table('leases')
+        ->join('propertydetails', 'propertydetails.id', '=', 'leases.property_id')
+        ->join('tenants', 'tenants.id', '=', 'leases.tenant_id')
+        ->leftjoin('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
+        ->select('leases.*',
+        'tenants.full_name', 'propertydetails.name')
+        ->where('leases.id', $id)->first();
+
+
+
+
+        return view('lease.show')->with('data', $data);
     }
 
     public function store(Request $request)
@@ -185,6 +202,11 @@ class LeaseController extends Controller
             }
         }
     }
+    public function rentinstallmentplane($id)
+    {
+        $data = renttransaction::where('rent_leases_id', $id)->get();
+        return view("lease.rent_installment")->with('data', $data);
+    }
     public function sale_store(Request $request)
     {
 
@@ -257,14 +279,7 @@ class LeaseController extends Controller
             }
         }
     }
-    public function show($id)
-    {
-        $saledata = salelease::with('propertyUnits', 'property')->where("id", $id)->get();
 
-
-
-        return view('lease.show')->with('saledata', $saledata);
-    }
     public function edit($id)
     {
         $property = DB::table('propertydetails')
@@ -352,7 +367,7 @@ class LeaseController extends Controller
             ->join('propertydetails', 'propertydetails.id', '=', 'saleleases.property_id')
             ->join('customers', 'customers.id', '=', 'saleleases.customer_id')
             ->join('leads','customers.leads_id','=','leads.id')
-            ->join('propertyunits', 'propertyunits.id', '=', 'saleleases.propertyunit_id')
+            ->leftjoin('propertyunits', 'propertyunits.id', '=', 'saleleases.propertyunit_id')
             ->select('saleleases.*',  'propertyunits.title', 'propertydetails.name','leads.client_name As first_name')
             ->get();
 
@@ -374,6 +389,7 @@ class LeaseController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $actionBtn = '
+                    <a title="view" href="/lease/sale_show/'. $row->id . '" class="edit btn btn-info btn-sm"><i class="fa-sharp fa-solid fa-eye"></i></a>
                     <a title="installement" href="/lease/installment/' . $row->id . '" class="edit btn btn-info btn-sm"><i class="fas fa-coins"></i></a>
                     <a title="payment" href="/lease/sale/payment/' . $row->id . '" class="edit btn btn-success btn-sm"><i class="fa fa-credit-card"></i></a>
 
@@ -393,10 +409,17 @@ class LeaseController extends Controller
 
         return view("lease.sale_installment")->with('data', $data);
     }
-
-    public function rentinstallmentplane($id)
+    public function saleshow($id)
     {
-        $data = renttransaction::where('rent_leases_id', $id)->get();
-        return view("lease.rent_installment")->with('data', $data);
+        $data =  DB::table('saleleases')
+                ->join('propertydetails', 'propertydetails.id', '=', 'saleleases.property_id')
+                ->join('customers', 'customers.id', '=', 'saleleases.customer_id')
+                ->join('leads','customers.leads_id','=','leads.id')
+                ->join('propertyunits', 'propertyunits.id', '=', 'saleleases.propertyunit_id')
+                ->select('saleleases.*','customers.id', 'propertyunits.title', 'propertydetails.name','leads.client_name As first_name')
+                ->where('saleleases.id'  , $id)->first();
+
+                return view("lease.sale_show",compact('data'));
     }
+
 }

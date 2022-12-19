@@ -5,7 +5,7 @@
     @include('layouts.topbar')
 
     {{-- saad --}}
-    @foreach ($saledata as $item)
+
     <div class="container ">
         <div class="row">
             <div class="col-md-12  ">
@@ -14,12 +14,12 @@
                 <div class=" row ml-4 mr-4">
                     <div class="col-8">
                         <h4>
-                            Lease Details
+                            Lease Rent Details
                         </h4>
 
                     </div>
                     <div class="col-4 d-flex justify-content-end">
-                        <a href="/lease/sale/index" class="btn btn-lg btn-secondary " type="submit"><-Back Sale Lease</a>
+                        <a href="/lease/index" class="btn btn-lg btn-secondary " type="submit"><-Back Sale Lease</a>
                     </div>
 
 
@@ -28,68 +28,72 @@
 
                 <div class="row mt-3">
                     <div class="col">
-                        <h5 class="card-title "> Property  :</h5>{{ $item["property"]['name']}}
+                        <h5 class="card-title "> Property  :</h5>{{$data->name}}
 
                     </div>
                     <div class="col">
-                        <h5 class="card-text">Customer Name :</h5>
-                        {{ $item->customer_id}}
+                        <h5 class="card-text">Teanat Name :</h5>
+                        {{ $data->full_name}}
                     </div>
+
+
                     <div class="col">
-                        <h5 class="card-text">Property Unit :</h5>
-                        {{ $item["propertyUnits"]['title']}}
+                        <h5 class="card-text">Rent:</h5>
+                        {{ $data->rent}}
                     </div>
                 </div>
+
                 <div class="row mt-6">
                     <div class="col">
-                        <h5 class="card-title "> Sale Price  :</h5>
-                        {{ $item->total_sale_price}}
+                        <h5 class="card-title ">Advance Payment :</h5>
+                        {{ $data->advance_payments}}
                     </div>
                     <div class="col">
-                        <h5 class="card-text">Remaning Payment:</h5>
-                        {{ $item->remaing_payment}}
+                        <h5 class="card-text">Paid Payment:</h5>
+                        {{ $data->paid_payment}}
                     </div>
                     <div class="col">
-                        <h5 class="card-text">Installment Plane :</h5>
-                        {{ $item->frequency_collection}}
+                        <h5 class="card-text">Payment Collection :</h5>
+                        {{ $data->frequency_collection}}
                     </div>
                 </div>
+
                 <div class="row mt-6">
                     <div class="col">
-                        <h5 class="card-title "> No. of Years/Month:</h5>
-                        {{ $item->number_of_years_month}}
+                        <h5 class="card-title "> Laese Start Date:</h5>
+                        {{ $data->lease_start}}
                     </div>
                     <div class="col">
-                        <h5 class="card-text">Payment Per Month/Year:</h5>
-                        {{ $item->payment_per_frequency}}
+                        <h5 class="card-text">Laese End Date:</h5>
+                        {{ $data->lease_end}}
                     </div>
                     <div class="col">
-                        <h5 class="card-text">Advance payments :</h5>
-                        {{ $item->sale_advance_payment}}
+                        <h5 class="card-text">Due Date:</h5>
+                        {{ $data->due_date}}
                     </div>
                 </div>
+
                 <div class="row mt-6">
                     <div class="col">
-                        <h5 class="card-title ">Leases Start:</h5>
-                        {{ $item->lease_start}}
+                        <h5 class="card-title ">Created Date :</h5>
+
+                        {{date('F d, Y', strtotime($data->created_at))}}
                     </div>
-                    <div class="col">
-                        <h5 class="card-text">Lases End:</h5>
-                        {{ $item->lease_end}}
-                    </div>
-                    <div class="col">
-                        <h5 class="card-text">First Due Date :</h5>
-                        {{ $item->due_date}}
-                    </div>
-                </div>
-                <div class="row mt-6">
                     <div class="col">
                         <h5 class="card-title "> Terms:</h5>
-                        {{ $item->terms}}
+                        {{ $data->terms}}
                     </div>
                     <div class="col">
                         <h5 class="card-text">Image:</h5>
-                        {{ $item->image}}
+                        @if ($data->image == null)
+                        <img src="{{asset('/assets/img/alt.png')}}" alt="No-document" height="200"
+                        width="200">
+                        @else
+                        <img src="{{asset('/assets/img/'.$data->image)}}" alt="No-document" height="200"
+                        width="200">
+                        @endif
+
+
                     </div>
 
 
@@ -99,7 +103,7 @@
      </div>
     </div>
  </div>
-    @endforeach
+
 
 
 </main>

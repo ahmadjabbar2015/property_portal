@@ -68,9 +68,16 @@
                             <div class="col">
 
                                 <h5 class="card-text">Docoument :<h5>
-                                   <p> <img src="../../assets/img/{{ $tenants->image }}" alt="No-document" height="200"
+                                    @if ( $tenants->image == null)
+                                    <p> <img src="{{asset('/assets/img/alt.png')}}" alt="No-document" height="200"
                                         width="200">
                                 </p>
+                                    @else
+                                    <p> <img src="../../assets/img/{{ $tenants->image }}" alt="No-document" height="200"
+                                        width="200">
+                                </p>
+                                    @endif
+
                             </div>
                         </div>
                     </div>

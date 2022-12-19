@@ -46,8 +46,17 @@
 
                             <div class="col">
                                 <h5 class="card-text">image:</h5>
-                                <img src="../../assets/img/{{ $propertyunits->image }}" alt="image" height="200"
+                                @if ($propertyunits->image == null)
+                                <p> <img src="{{asset('/assets/img/alt.png')}}" alt="No-document" height="200"
                                     width="200">
+                            </p>
+                                @else
+                                <p>
+                                <img src="{{ asset('/assets/img/'.$propertyunits->image) }}" alt="image" height="200"
+                                width="200">
+                            </p>
+                                @endif
+
                             </div>
                         </div>
                     @endforeach

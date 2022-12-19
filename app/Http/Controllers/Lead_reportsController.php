@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Lead;
-use App\Models\Attempt;
+use App\Models\lead;
+use App\Models\attempt;
 use App\Models\customer;
 use App\Models\propertytype;
-use App\Models\Source;
+use App\Models\source;
 use App\Models\User;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB as FacadesDB;

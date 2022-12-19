@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Attempt;
-use App\Models\Propertytype;
-use App\Models\Propertydetail;
-use App\Models\Landlord;
-use App\Models\Customer;
-use App\Models\Leases;
-use App\Models\Lead;
+use App\Models\attempt;
+use App\Models\propertytype;
+use App\Models\propertydetail;
+use App\Models\landlord;
+use App\Models\customer;
+use App\Models\leases;
+use App\Models\lead;
 use App\Models\salelease;
 use App\Models\tenants;
 use Yajra\DataTables\Facades\DataTables;
@@ -27,7 +27,7 @@ class RentLeaseReports extends Controller
             $data = DB::table('leases')
             ->join('propertydetails', 'propertydetails.id', '=', 'leases.property_id')
             ->join('tenants', 'tenants.id', '=', 'leases.tenant_id')
-            ->join('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
+            ->leftjoin('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
             ->select('leases.id','leases.rent', 'leases.frequency_collection','leases.lease_start',
             'leases.lease_end','leases.due_date','leases.advance_payments','leases.paid_payment','leases.total_payment',
             'tenants.full_name', 'propertydetails.name');
@@ -89,7 +89,7 @@ class RentLeaseReports extends Controller
             ->join('propertydetails', 'propertydetails.id', '=', 'saleleases.property_id')
             ->join('customers', 'customers.id', '=', 'saleleases.customer_id')
             ->join('leads','customers.leads_id','=','leads.id')
-            ->join('propertyunits', 'propertyunits.id', '=', 'saleleases.propertyunit_id')
+            ->leftjoin('propertyunits', 'propertyunits.id', '=', 'saleleases.propertyunit_id')
             ->select('saleleases.total_sale_price', 'saleleases.remaing_payment','saleleases.frequency_collection',
             'saleleases.number_of_years_month','saleleases.payment_per_frequency','saleleases.due_date',
             'saleleases.paid_payment','saleleases.sale_advance_payment','saleleases.id', 'propertyunits.title', 'propertydetails.name','leads.client_name As first_name');
@@ -155,7 +155,7 @@ class RentLeaseReports extends Controller
             ->join('propertydetails', 'propertydetails.id', '=', 'saleleases.property_id')
             ->join('customers', 'customers.id', '=', 'saleleases.customer_id')
             ->join('leads','customers.leads_id','=','leads.id')
-            ->join('propertyunits', 'propertyunits.id', '=', 'saleleases.propertyunit_id')
+            ->leftjoin('propertyunits', 'propertyunits.id', '=', 'saleleases.propertyunit_id')
             ->select('saleleases.total_sale_price', 'saleleases.remaing_payment','saleleases.frequency_collection','saleleases.number_of_years_month','saleleases.payment_per_frequency','saleleases.due_date','saleleases.paid_payment','saleleases.sale_advance_payment','saleleases.created_at','customers.id', 'propertyunits.title', 'propertydetails.name','leads.client_name As first_name')
             ->where('saleleases.id'  , $id)->first();
 
@@ -180,10 +180,10 @@ class RentLeaseReports extends Controller
 
         $data["alldata"] =  DB::table('leases')
         ->join('propertydetails', 'propertydetails.id', '=', 'leases.property_id')
-        ->join('tenants', 'tenants.id', '=', 'leases.id')
-        ->join('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
-        ->select('leases.id','leases.rent', 'leases.frequency_collection','leases.lease_start',
-        'leases.lease_end','leases.due_date','leases.advance_payments','leases.paid_payment','leases.total_payment','leases.created_at',
+        ->join('tenants', 'tenants.id', '=', 'leases.tenant_id')
+        ->leftjoin('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
+        ->select(
+            'leases.*',
         'tenants.full_name', 'propertydetails.name')
         ->where('leases.id'  , $id)->first();
 
@@ -197,7 +197,7 @@ class RentLeaseReports extends Controller
              ->get();
 
              $data["rent_payments"] = DB::table('leases')
-             ->join('rentpayments', 'rentpayments.rent_lease_id', '=', 'leases.id')
+             ->leftjoin('rentpayments', 'rentpayments.rent_lease_id', '=', 'leases.id')
              ->select('rentpayments.due_date as date','rentpayments.payment' , 'rentpayments.current_date as paid_date')
              ->where('leases.id'  , $id)
               ->get();

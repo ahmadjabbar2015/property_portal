@@ -1,5 +1,5 @@
 var table = $('#property_table').DataTable({
-        
+
     processing: true,
     serverSide: true,
 
@@ -16,7 +16,7 @@ var table = $('#property_table').DataTable({
             data: 'address',
             name: 'address'
         },
-        
+
         {
             data: 'propertytype_name',
             name: 'propertytype_name'
@@ -133,22 +133,63 @@ $("#gallery").click(function () {
     $("#table_property_data").hide();
     $("#galleryimg").show();
 });
-//show end 
+//show end
+
 
 
 $('#form1').on('submit', function (e) {
-    e.preventDefault();
-   
+
+    form = $('#form1').serialize();
+    $('#form1').validate(
+        {
+            rules:{
+                name :{
+                    required: true
+                },
+                rent :{
+                    required: true
+                },
+                propertytype_id :{
+                    required: true
+                },
+                landlord_id :{
+                    required: true
+                },
+                description :{
+                    required: true
+                },
+            },
+            messages:{
+                name:{
+                    required: "property field is required"
+                },
+                rent:{
+                    required: "Rent field is required"
+                },
+                propertytype_id:{
+                    required: "Property Type field is required"
+                },
+                landlord_id:{
+                    required: " Landlord field  is required"
+                },
+                description:{
+                    required: " Description field  is required"
+                },
+            },
+        }
+    );
+    if (!$('#form1').valid()) return false;
     $.ajax({
         type: 'POST',
         url: "/property/store",
-        data: $('#form1').serialize(),
+        data: form,
         success: function (result) {
-            console.log(result);
+
             $("#form2 #basic_property_id").val(result.id);
             $("#form2").show();
         }
     });
+    e.preventDefault();
     $("#btn1").hide();
     $("#btn2").show();
     $("#btn3").hide();
@@ -167,7 +208,7 @@ $('#form1').on('submit', function (e) {
 
 $('#form2').on('submit', function (e) {
     e.preventDefault();
- 
+
     $.ajax({
         type: 'POST',
         url: "property/location/store",
@@ -187,7 +228,7 @@ $('#form2').on('submit', function (e) {
         $('#image').css({ backgroundColor: '#f8f9fa', color: 'blue' });
         $('#basic').css({ backgroundColor: '#f8f9fa', color: 'blue' });
 });
-  
+
 
 
 
@@ -222,7 +263,7 @@ $('#form3').on('submit', function (e) {
         $('#location').css({ backgroundColor: '#f8f9fa', color: 'blue' });
         $('#basic').css({ backgroundColor: '#f8f9fa', color: 'blue' });
         $('#features').css({ backgroundColor: '#f8f9fa', color: 'blue' });
-}); 
+});
 //form4
 
 // $('#form4').on('submit', function (e) {
@@ -235,24 +276,29 @@ $('#form3').on('submit', function (e) {
 
 //         success: function (result) {
 //             console.log(result);
-           
+
 //         }
 //     });
-    
-   
-// }); 
-
-$("#landloard").on('change' , function(){
-   
-    let id = $(this).find('option:selected').data-deposit();
-    // alert(id);
-    
-    // $('input[name=deposit]').val(id)
-;
- })
- 
 
 
 // });
+
+$("#landloard").on('change' , function(){
+
+    let id = $(this).find('option:selected').data-deposit();
+    // alert(id);
+
+    // $('input[name=deposit]').val(id)
+;
+ })
+
+
+
+// });
+//validation
+$(function () {
+
+})
+
 
 
