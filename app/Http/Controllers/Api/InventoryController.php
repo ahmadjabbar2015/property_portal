@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\CommonResource;
+use App\Http\Requests\InventoryRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Inventory;
 use Exception;
@@ -23,7 +24,7 @@ class inventoryController extends Controller
 
         return  CommonResource::collection($inventory);
     }
-    public function storeInventory(Request $request)
+    public function storeInventory(InventoryRequest $request)
     {
         try {
             DB::beginTransaction();

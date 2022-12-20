@@ -5,6 +5,7 @@ namespace App\Utils;
 use App\Models\Propertydetail;
 use App\Models\leases;
 use App\Models\renttransaction;
+use App\Models\saletransaction;
 use App\Models\salelease;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -13,54 +14,51 @@ use DateTime;
 
 class LeaseUtil extends Util
 {
-    public function getLeases($id = null) 
+    public function getLeases($id = null)
     {
         $leases_data = leases::join('propertydetails', 'propertydetails.id', '=', 'leases.property_id')
             ->join('tenants', 'tenants.id', '=', 'leases.tenant_id')
-            ->leftjoin('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
-            ->select('leases.*', 'tenants.full_name', 'propertyunits.title', 'propertydetails.name', DB::raw('(leases.total_payment-leases.paid_payment) as remaining_amount'))->get();
-
-        // if($id != null){
-        //     $leases_data->where('leases.id' , $id);
-        // }
-
-            // $leases_data->get();
-
-            dd($leases_data);
+            ->join('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
+            ->select('leases.*', 'tenants.full_name', 'propertyunits.title', 'propertydetails.name', DB::raw('(leases.total_payment-leases.paid_payment) as remaining_amount'));
+        if ($id != null) {
+            $leases_data = $leases_data->where('leases.id', $id)->get();
+        }else{
+            $leases_data = $leases_data->get();
+        }
         return $leases_data;
     }
     public function createLease($data)
     {
-            $property_id = propertydetail::where('id', $data->property_id)->first();
-            if (!$property_id) {
-                throw new Exception("Incorrect Property Id");
-            }
-            $leasesdata = new leases;
-            $leasesdata->property_id = $data->property_id;
-            $leasesdata->propertyunit_id = $data->propertyunit_id;
-            $leasesdata->rent = $data->rent;
-            $leasesdata->get_dmy = $data->get_dmy;
-            $leasesdata->advance_payments = $data->advance_payments;
-            $leasesdata->tenant_id = $data->tenant_id;
-            $leasesdata->new_teanants_id = $data->new_teanants_id;
-            $leasesdata->lease_start = $data->lease_start;
-            $leasesdata->lease_end = $data->lease_end;
-            $leasesdata->due_date = $data->due_date;
-            $leasesdata->frequency_collection = $data->frequency_collection;
-            $leasesdata->total_payment = $data->total_payment;
-            $leasesdata->image = $data->image;
+        $property_id = propertydetail::where('id', $data->property_id)->first();
+        if (!$property_id) {
+            throw new Exception("Incorrect Property Id");
+        }
+        $leasesdata = new leases;
+        $leasesdata->property_id = $data->property_id;
+        $leasesdata->propertyunit_id = $data->propertyunit_id;
+        $leasesdata->rent = $data->rent;
+        $leasesdata->get_dmy = $data->get_dmy;
+        $leasesdata->advance_payments = $data->advance_payments;
+        $leasesdata->tenant_id = $data->tenant_id;
+        $leasesdata->new_teanants_id = $data->new_teanants_id;
+        $leasesdata->lease_start = $data->lease_start;
+        $leasesdata->lease_end = $data->lease_end;
+        $leasesdata->due_date = $data->due_date;
+        $leasesdata->frequency_collection = $data->frequency_collection;
+        $leasesdata->total_payment = $data->total_payment;
+        $leasesdata->image = $data->image;
 
-            if ($data->hasfile('image')) {
+        if ($data->hasfile('image')) {
 
-                $file = $data->file('image');
-                $extention = $file->getClientoriginalExtension();
-                $filename = time() . '.' . $extention;
-                $data = $file->move(public_path('/assets/img'), $filename);
-                $leasesdata->image = $filename;
-            }
-            $leasesdata->terms = $data->terms;
-            $leasesdata->save();
-            $this->rentintallment($leasesdata->id);
+            $file = $data->file('image');
+            $extention = $file->getClientoriginalExtension();
+            $filename = time() . '.' . $extention;
+            $data = $file->move(public_path('/assets/img'), $filename);
+            $leasesdata->image = $filename;
+        }
+        $leasesdata->terms = $data->terms;
+        $leasesdata->save();
+        $this->rentintallment($leasesdata->id);
     }
 
     public function rentintallment($id)
@@ -73,8 +71,7 @@ class LeaseUtil extends Util
         $saleduedate = $rentdata->due_date;
         $leasestartdate = $rentdata->lease_start;
         if ($frequncy  == "monthly") {
-            for ($i = 1; $i <= $no_of_ym; $i++) 
-            {
+            for ($i = 1; $i <= $no_of_ym; $i++) {
                 $date = new DateTime($saleduedate);
                 $due_data = $date->modify("+$i month");
 
@@ -87,8 +84,7 @@ class LeaseUtil extends Util
             }
         } else if ($frequncy  == "annually") {
 
-            for ($i = 1; $i < +$no_of_ym; $i++) 
-            {
+            for ($i = 1; $i < +$no_of_ym; $i++) {
                 $date = new DateTime($saleduedate);
                 $due_data = $date->modify("+$i Year");
 
@@ -101,8 +97,7 @@ class LeaseUtil extends Util
             }
         } else {
             // daily
-            for ($i = 1; $i <= $no_of_ym; $i++) 
-            {
+            for ($i = 1; $i <= $no_of_ym; $i++) {
 
                 $date = new DateTime($saleduedate);
                 $due_data = $date->modify("+$i Day");
@@ -117,7 +112,8 @@ class LeaseUtil extends Util
         }
     }
 
-    public function storeSaleLease($request){
+    public function storeSaleLease($request)
+    {
         $property_id = propertydetail::where('id', $request->property_id)->first();
         if (!$property_id) {
             throw new Exception("Incorrect Property Id");
@@ -146,5 +142,39 @@ class LeaseUtil extends Util
         }
         $sale_lease->terms = $request->terms;
         $sale_lease->save();
+    }
+    public function saleinstallmentplane($id)
+    {
+        $saledata = salelease::where('id', $id)->first();
+        $no_of_ym = $saledata->number_of_years_month;
+        $payment_my = $saledata->payment_per_frequency;
+        $frequncy = $saledata->frequency_collection;
+        $saleduedate = $saledata->due_date;
+        $leasestartdate = $saledata->lease_start;
+        if ($frequncy  == "monthly") {
+            for ($i = 1; $i <= $no_of_ym; $i++) {
+                $date = new DateTime($saleduedate);
+                $due_data = $date->modify("+$i month");
+                $saleleasetransaction = new saletransaction;
+
+                $saleleasetransaction->sale_lease_id = $id;
+                $saleleasetransaction->due_date = $due_data;
+                $saleleasetransaction->monthly = $i;
+                $saleleasetransaction->payment = $payment_my;
+                $saleleasetransaction->save();
+            }
+        } else {
+            for ($i = 1; $i <= $no_of_ym; $i++) {
+                $date = new DateTime($saleduedate);
+                $due_data = $date->modify("+$i Year");
+                $saleleasetransaction = new saletransaction;
+
+                $saleleasetransaction->sale_lease_id = $id;
+                $saleleasetransaction->due_date = $due_data;
+                $saleleasetransaction->monthly = $i;
+                $saleleasetransaction->payment = $payment_my;
+                $saleleasetransaction->save();
+            }
+        }
     }
 }

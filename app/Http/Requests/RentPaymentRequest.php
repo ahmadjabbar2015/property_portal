@@ -6,9 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class InventoryRequest extends FormRequest
+class RentPaymentRequest extends FormRequest
 {
-    
 
     /**
      * Get the validation rules that apply to the request.
@@ -17,10 +16,14 @@ class InventoryRequest extends FormRequest
      */
     public function rules()
     {
-        // dd("hel");
         return [
-            'property_id' => 'required',
-            'propertyunit_id' => 'required',
+            'rent_lease_id' => 'required',
+            'rent_monthly_id' => 'required',
+            'due_date_rent' => 'required',
+            'rent_payment' => 'required',
+            'rent_current_date' => 'required',
+        
+
         ];
     }
     public function failedValidation(Validator $validator)
@@ -32,3 +35,4 @@ class InventoryRequest extends FormRequest
         ]));
     }
 }
+

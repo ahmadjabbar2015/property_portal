@@ -33,8 +33,6 @@ class PropertyUnitController extends Controller
                 $propertyunit = new propertyunits;
                 $propertyunit->property_id = $request->property_id;
                 $propertyunit->title = $request->title;
-                $propertyunit->commission = $request->commission;
-                $propertyunit->details = $request->details;
                 $propertyunit->description = $request->description;
 
                 if ($request->hasfile('image')) {

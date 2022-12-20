@@ -12,4 +12,6 @@ class Salepayment extends Model
     protected $table = 'salepayments';
     protected $primaryKey = 'id';
     protected $guarded =['id'];
+
+    
 }

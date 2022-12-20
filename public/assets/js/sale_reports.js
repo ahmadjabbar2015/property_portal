@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $(".property_id").select2();
-    $("#tenants_id").select2();
+    $("#customer_id").select2();
     $("#installments").select2();
     $("#type_id").select2();
 });

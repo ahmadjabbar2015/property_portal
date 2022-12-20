@@ -17,9 +17,7 @@ class PropertyUnitsRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'commission' => 'required',
             'property_id' => 'required',
-            'details' => 'required',
             'description' => 'required',
             'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000'
 
