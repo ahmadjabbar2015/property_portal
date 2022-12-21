@@ -11,7 +11,6 @@ use App\Models\customer;
 use App\Models\saletransaction;
 use App\Models\renttransaction;
 use App\Models\propertydetail;
-// use DB;
  use Illuminate\Support\Facades\DB;
 use Datatables;
 use DateTime;

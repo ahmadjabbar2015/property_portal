@@ -19,8 +19,8 @@ class LeaseRequest extends FormRequest
         return [
             
                 'property_id' => 'required',
-                'rent ' => 'required',
-                'tenant_id ' => 'required',
+                'rent' => 'required',
+                'tenant_id' => 'required',
                 'new_teanants_id' => 'required',
                 'new_teanants_id' => 'required',
                 'advance_payments' => 'required',

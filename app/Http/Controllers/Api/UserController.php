@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+
 class UserController extends Controller
 {
     // 
@@ -28,6 +29,15 @@ class UserController extends Controller
             ];
         
              return response($response, 201);
+    }
+
+
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+        return response()->json([
+            'message' => 'Successfully logged out'
+    ],200);
     }
 }
 

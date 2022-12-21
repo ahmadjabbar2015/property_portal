@@ -11,7 +11,6 @@ class propertyimage extends Model
     protected $table = 'propertyimages';
     protected $primaryKey = 'id';
     protected $guarded =['id'];
-
     protected $appends = ['image_url'];
 
     

@@ -58,7 +58,7 @@ class SaleController extends Controller
     public function getLeaseSalePayment()
     {
 
-        $data = Salepayment::get();
+        $data = Salepayment::paginate(10);
         return CommonResource::collection($data);
     }
 

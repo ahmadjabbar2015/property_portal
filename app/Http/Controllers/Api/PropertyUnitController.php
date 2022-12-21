@@ -14,7 +14,7 @@ class PropertyUnitController extends Controller
     public function getPropertyUnits()
     {
 
-        $propertyunits = Propertyunits::with(['propertyDetails','propertyDetails.location', 'propertyDetails.amenities' , 'propertyDetails.propertyImages'])->get();
+        $propertyunits = Propertyunits::with(['propertyDetails','propertyDetails.location', 'propertyDetails.amenities' , 'propertyDetails.propertyImages'])->paginate(10);
         return CommonResource::collection($propertyunits);
             
        

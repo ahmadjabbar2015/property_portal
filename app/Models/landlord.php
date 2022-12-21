@@ -11,6 +11,16 @@ class landlord extends Model
     protected $table = 'landlords';
     protected $primaryKey = 'id';
     protected $guarded =['id'];
-    // protected $fillable = ['full_name', 'email','number','identity','image','address','occupation','account'];
+    protected $appends = ['image_url'];
 
+   
+    public function getImageUrlAttribute()
+    {
+        if (!empty($this->image)) {
+            $image_url = asset('/assets/img/' . rawurlencode($this->image));
+        } else {
+            $image_url = asset('assets/img/default.png');
+        }
+        return $image_url;
+    }
 }

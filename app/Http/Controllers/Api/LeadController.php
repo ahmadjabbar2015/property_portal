@@ -15,7 +15,7 @@ class LeadController extends Controller
 {
     public function getLeads()
     {
-        $lead = Lead::get();
+        $lead = Lead::paginate(10);
 
         return  CommonResource::collection($lead);
     }

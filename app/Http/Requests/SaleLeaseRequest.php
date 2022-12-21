@@ -29,6 +29,7 @@ class SaleLeaseRequest extends FormRequest
                 'frequency_collection' => 'required',
                 'number_of_years_month	' => 'required',  
                 'payment_per_frequency	' => 'required',
+                'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000',
         ];
     }
     public function failedValidation(Validator $validator)

@@ -21,9 +21,9 @@ class LeaseUtil extends Util
             ->join('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
             ->select('leases.*', 'tenants.full_name', 'propertyunits.title', 'propertydetails.name', DB::raw('(leases.total_payment-leases.paid_payment) as remaining_amount'));
         if ($id != null) {
-            $leases_data = $leases_data->where('leases.id', $id)->get();
+            $leases_data = $leases_data->where('leases.id', $id)->paginate(10);
         }else{
-            $leases_data = $leases_data->get();
+            $leases_data = $leases_data->paginate(10);
         }
         return $leases_data;
     }

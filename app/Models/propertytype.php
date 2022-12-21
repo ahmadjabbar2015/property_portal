@@ -10,6 +10,5 @@ class propertytype extends Model
     use HasFactory;
     protected $table = 'propertytype';
     protected $primaryKey = 'id';
-    // protected $fillable = ['type','description'];
     protected $guarded =['id'];
 }

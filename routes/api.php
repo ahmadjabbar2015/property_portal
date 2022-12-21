@@ -120,8 +120,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('lease-sale-payment', [SaleController::class, 'getLeaseSalePayment']);
     Route::post('lease-sale-payment/store', [SaleController::class, 'storeLeaseSalePayment']);
     Route::get('lease-sale-payment/{sale_lease_id}', [SaleController::class, 'showLeaseSalePayment']);
+
+   //logout
+    Route::post('/logout', [UserController::class, 'logout']);
+
 });
-
-
-
+//login
 Route::post("login", [UserController::class, 'index']);
+

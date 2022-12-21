@@ -20,7 +20,7 @@ class CustomerController extends Controller
             'propertydetail.amenities' , 
             'propertydetail.propertyImages',
             'agent'
-            ])->get();
+            ])->paginate(10);
         return CommonResource::collection($customer);
     }
     public function showCustomer($id)

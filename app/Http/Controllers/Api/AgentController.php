@@ -14,7 +14,7 @@ class AgentController extends Controller
     //
     public function getAgents()
     {
-        $agent = Agent::get();
+        $agent = Agent::paginate(10);
 
         return  CommonResource::collection($agent);
     }

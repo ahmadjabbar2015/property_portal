@@ -22,6 +22,7 @@ class RentPaymentRequest extends FormRequest
             'due_date_rent' => 'required',
             'rent_payment' => 'required',
             'rent_current_date' => 'required',
+            'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000',
         
 
         ];

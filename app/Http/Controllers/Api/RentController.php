@@ -52,7 +52,7 @@ class RentController extends Controller
 
     public function getLeaseRentPayment()
     {
-        $data = Rentpayment::get();
+        $data = Rentpayment::paginate(10);
         return CommonResource::collection($data);
     }
 

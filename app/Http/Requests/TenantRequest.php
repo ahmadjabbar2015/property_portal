@@ -27,6 +27,7 @@ class TenantRequest extends FormRequest
             'email' => 'required|email ',
             'number' => 'required',
             'address' => 'required',
+            'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000',
         ];
     }
 

@@ -13,7 +13,7 @@ class SourceController extends Controller
 {
     public function index()
     {
-        $source = source::get();
+        $source = source::paginate(10);
         return CommonResource::collection($source);
     }
 

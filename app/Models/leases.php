@@ -12,6 +12,7 @@ class leases extends Model
     protected $table = 'leases';
     protected $primaryKey = 'id';
     protected $guarded =['id'];
+    protected $appends = ['image_url'];
 
     public function propertyUnits()
     {
@@ -27,5 +28,17 @@ class leases extends Model
     {
 
         return $this->hasMany(customer::class, 'id');
+    }
+  
+
+   
+    public function getImageUrlAttribute()
+    {
+        if (!empty($this->image)) {
+            $image_url = asset('/assets/img/' . rawurlencode($this->image));
+        } else {
+            $image_url = asset('assets/img/default.png');
+        }
+        return $image_url;
     }
 }

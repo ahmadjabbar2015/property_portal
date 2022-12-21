@@ -35,7 +35,7 @@ class PropertyController extends Controller
     // Proerty Types
 
     public function getPropertyTypes(){
-        $property_type = propertytype::get() ;
+        $property_type = propertytype::paginate(10);
         return CommonResource::collection($property_type);
     }
 
@@ -73,7 +73,7 @@ class PropertyController extends Controller
 
     public function index()
     {
-        $property = propertydetail::with(['location' , 'amenities' , 'propertyImages'])->get();
+        $property = propertydetail::with(['location' , 'amenities' , 'propertyImages'])->paginate(10);
         return PropertyResource::collection($property);
 
     }

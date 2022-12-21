@@ -11,7 +11,7 @@ class propertydetail extends Model
     protected $table = 'propertydetails';
     protected $primaryKey = 'id';
     protected $guarded =['id'];
-    // protected $fillable = ['name','rent','type','landlord','area','deposit','description'];
+
 
     public function location(){
         return $this->belongsTo(location::class , 'id' , 'property_id');

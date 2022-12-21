@@ -13,7 +13,7 @@ use Exception;
 class TenantController extends Controller
 {
     public function index(){
-        $tenants = tenants::all();
+        $tenants = tenants::paginate(10);
         return new TenantResource($tenants);
     }
 

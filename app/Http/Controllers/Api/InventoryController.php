@@ -15,7 +15,7 @@ class inventoryController extends Controller
     //
     public function getInventories()
     {
-        $inventory = Inventory::with(['propertyDetails','propertyUnits.propertyDetails','propertyUnits.propertyDetails.location' , 'propertyUnits.propertyDetails.amenities' , 'propertyUnits.propertyDetails.propertyImages'])->get();
+        $inventory = Inventory::with(['propertyDetails','propertyUnits.propertyDetails','propertyUnits.propertyDetails.location' , 'propertyUnits.propertyDetails.amenities' , 'propertyUnits.propertyDetails.propertyImages'])->paginate(10);
         return CommonResource::collection($inventory);
     }
     public function showInventory($id)

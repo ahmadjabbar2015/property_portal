@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 class LandloardController extends Controller
 {
     public function index(){
-        $landlords = landlord::all();
+        $landlords = landlord::paginate(10);
         
             return new LandLordResource($landlords);
     }

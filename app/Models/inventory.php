@@ -12,7 +12,7 @@ class inventory extends Model
     protected $primaryKey = 'id';
     protected $guarded =['id'];
     protected $appends = ['image_url'];
-    // protected $fillable = ['main', 'title','commission','rent','deposit','details','description','image'];
+   
 
     public function propertyUnits()
     {
@@ -26,8 +26,8 @@ class inventory extends Model
 
     public function getImageUrlAttribute()
     {
-        if (!empty($this->inventoryimage)) {
-            $image_url = asset('/assets/img/' . rawurlencode($this->inventoryimage));
+        if (!empty($this->image)) {
+            $image_url = asset('/assets/img/' . rawurlencode($this->image));
         } else {
             $image_url = asset('assets/default.png');
         }

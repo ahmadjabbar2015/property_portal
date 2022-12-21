@@ -19,10 +19,13 @@ class LeadRequest extends FormRequest
         return [
         
                 'client_name' => 'required',
-                'client_contact ' => 'required|email ',
+                'client_contact' => 'required',
                 'propertytype_id' => 'required',
-                'source_id ' => 'required',
-                'status ' => 'required',
+                'source_id' => 'required',
+                'status' => 'required',
+                'user_id' => 'required',
+                'attempt_status' => 'required',
+                'customer_status' => 'required',
             
         ];
     }

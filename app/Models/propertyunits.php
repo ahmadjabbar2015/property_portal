@@ -11,11 +11,25 @@ class propertyunits extends Model
     protected $table = 'propertyunits';
     protected $primaryKey = 'id';
     protected $guarded =['id'];
-    // protected $fillable = ['main', 'title','commission','rent','deposit','details','description','image'];
+    protected $appends = ['image_url'];
+
 
     public function propertyDetails()
     {
         return $this->belongsTo(propertydetail::class,  'property_id');
     }
+   
+
+   
+    public function getImageUrlAttribute()
+    {
+        if (!empty($this->image)) {
+            $image_url = asset('/assets/img/' . rawurlencode($this->image));
+        } else {
+            $image_url = asset('assets/img/default.png');
+        }
+        return $image_url;
+    }
+    
 }
 
