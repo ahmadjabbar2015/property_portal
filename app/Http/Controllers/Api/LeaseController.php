@@ -20,7 +20,6 @@ class LeaseController extends Controller
     public function index()
     {
         $data = $this->leaseUtil->getLeases();
-        return $data;
         return CommonResource::collection($data);
     }
 
@@ -28,7 +27,6 @@ class LeaseController extends Controller
     {
 
         $data = $this->leaseUtil->getLeases($id);
-        return $data;
         return CommonResource::collection($data);
     }
 
