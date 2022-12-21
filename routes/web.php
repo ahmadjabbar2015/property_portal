@@ -49,6 +49,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Porperty_reportsController;
 use App\Http\Controllers\Lead_reportsController;
 use App\Http\Controllers\RentLeaseReports;
+use App\Http\Controllers\BussniessController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,7 +63,7 @@ use App\Http\Controllers\RentLeaseReports;
 
 Route::redirect('/', '/login');
 
-// Route::get('/register', Register::class)->name('register');
+Route::get('/register', Register::class)->name('register');
 
 Route::get('/login', Login::class)->name('login');
 
@@ -74,7 +75,8 @@ Route::get('/403', Err404::class)->name('404');
 Route::get('/500', Err500::class)->name('500');
 // Route::get('/403', Err403::class)->name('403');
 // Route::get('/upgrade-to-pro', UpgradeToPro::class)->name('upgrade-to-pro');
-
+Route::get('bussniess_regiester',[BussniessController::class,'create'])->name('regiester-business');
+Route::post('bussniess/store',[BussniessController::class,'store'])->name('bussniess.store');
 
 
 Route::middleware(['auth'])->group(function () {

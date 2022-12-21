@@ -82,15 +82,6 @@ class PropertyController extends Controller
         $input = $request->except('_token');
 
 
-        $request->validate([
-
-            'name' =>'required',
-            'rent' => 'required',
-            // 'type' => 'required',
-            // 'landlord' => 'required',
-            'description' => 'required',
-
-        ]);
 
        $result= propertydetail::create($input);
         return $result;
