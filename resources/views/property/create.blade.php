@@ -19,7 +19,7 @@
 
             <p>Full all required details in all sections before submitting the data</p><br>
             <div class="container-fluid">
-                <div class="row bg-light col-md-12 "style="height: 60px;">
+                <div class="row bg-light col-md-12  ">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-3">

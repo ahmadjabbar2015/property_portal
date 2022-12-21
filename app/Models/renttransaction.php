@@ -11,4 +11,8 @@ class renttransaction extends Model
     protected $table = 'renttransactions';
     protected $primaryKey = 'id';
     protected $guarded =['id'];
+
+    public function lease(){
+        return $this->belongsTo(leases::class , 'rent_leases_id');
+    }
 }

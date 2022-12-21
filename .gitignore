@@ -1,9 +1,9 @@
 
 /public/hot
 /public/storage
+/public/assets/img
 /storage/*.key
 /vendor
-.env
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml

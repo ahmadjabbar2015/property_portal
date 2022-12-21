@@ -71,16 +71,16 @@ class LeaseController extends Controller
             ->leftjoin('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
             ->select('leases.*', 'tenants.full_name', 'propertyunits.title', 'propertydetails.name')
             ->get();
-
+        // dd($leasesdata);
         if ($request->ajax()) {
             return Datatables::of($leasesdata)
 
                 ->addIndexColumn()
                 ->addColumn('paid', function ($row){
                     $totalpayment=$row->total_payment;
-                    $remainingpayment=$row->paid_payment;
+                    $amount_paid=$row->paid_payment;
 
-                    $remaining_total_payment = $totalpayment - $remainingpayment;
+                    $remaining_total_payment = $totalpayment - $amount_paid;
 
                     return $remaining_total_payment;
 

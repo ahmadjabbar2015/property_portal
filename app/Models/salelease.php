@@ -11,4 +11,17 @@ class salelease extends Model
     protected $table = 'saleleases';
     protected $primaryKey = 'id';
     protected $guarded =['id'];
+
+
+     public function propertyUnits()
+    {
+
+        return $this->hasMany(propertyunits::class, 'id');
+    }
+    
+    public function customer()
+    {
+
+        return $this->hasMany(customer::class, 'id');
+    }
 }

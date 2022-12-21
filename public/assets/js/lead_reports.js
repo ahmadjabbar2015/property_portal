@@ -4,11 +4,9 @@ $(document).ready(function () {
     $("#phone_number").select2();
     $("#source_id").select2();
     $("#type_id").select2();
-    $("#user_id").select2();
+    $("#user_id").select2();    
 
 });
-
-
 // $(function () {
     var table = $('#leadreports_table').DataTable({
 

@@ -11,4 +11,10 @@ class saletransaction extends Model
     protected $table = 'saletransactions';
     protected $primaryKey = 'id';
     protected $guarded =['id'];
+
+    
+    public function salelease(){
+        return $this->belongsTo(salelease::class  ,'sale_lease_id');
+    }
+    
 }
