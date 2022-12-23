@@ -17,8 +17,8 @@ class UserController extends Controller
         if (!auth()->user()->hasPermission('Users','view')){
             return redirect(route('404'));
         }
-
-        $data=User::with('role_Id')->whereNotIn('id',['1'])->get();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $data=User::with('role_Id')->whereNotIn('id',['1'])->where('bussniess_id',$bussniess_id)->get();
 
 
         if ($request->ajax()) {
@@ -55,15 +55,15 @@ class UserController extends Controller
         if (!auth()->user()->hasPermission('Users','create')){
             return redirect(route('404'));
         }
-
-        $role=Role::whereNotIn('id',['1'])->get();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $role=Role::whereNotIn('id',['1'])->where('bussniess_id',$bussniess_id)->get();
 
 
         return view('admin.users.create',compact('role'));
     }
     public function store(Request $request)
     {
-
+        $bussniess_id=auth()->user()->bussniess_id;
         $user =new User;
         $user->first_name=$request->first_name;
         $user->last_name=$request->last_name;
@@ -75,22 +75,25 @@ class UserController extends Controller
         $user->number=$request->number;
         $user->city=$request->city;
         $user->ZIP=$request->ZIP;
+        $user->bussniess_id=$bussniess_id;
         $user->save();
         $flas_message =  toastr()->success('Users Created Successfully');
         return redirect(route('users.index'))->with('flas_message');
     }
     public function edit($id)
     {
-        $role=Role::whereNotIn('id',['1'])->get();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $role=Role::whereNotIn('id',['1'])->where('bussniess_id',$bussniess_id)->get();
 
 
-       $user=User::with('role_Id')->find($id);
+       $user=User::with('role_Id')->where('bussniess_id',$bussniess_id)->find($id);
 
        return view('admin.users.edit',compact('user','role'));
     }
     public function update(Request $request,$id)
     {
-        User::where('id', $id)
+        $bussniess_id=auth()->user()->bussniess_id;
+        User::where('id', $id)->where('bussniess_id',$bussniess_id)
        ->update([
            'first_name' => $request->first_name,
            'last_name' => $request->last_name,

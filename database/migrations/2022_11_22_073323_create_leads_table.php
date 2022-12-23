@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string("remark")->nullable();
             $table->integer("attempt_status")->default(0);
             $table->integer("customer_status")->default(0);
+            $table->foreignId('bussniess_id')->constrained('bussniesses')->onDelete('cascade');
             $table->timestamps();
         });
     }

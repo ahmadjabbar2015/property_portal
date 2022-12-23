@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-        $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
+        Schema::table('tenants', function (Blueprint $table) {
+            $table->foreignId('bussniess_id')->constrained('bussniesses')->onDelete('cascade');
 
 
-        });
+            });
     }
 
     /**

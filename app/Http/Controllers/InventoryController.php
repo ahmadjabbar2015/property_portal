@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\propertyunits;
-use App\Models\propertydetail;
-use App\Models\inventory;
+use App\Models\Propertyunits;
+use App\Models\Propertydetail;
+use App\Models\Inventory;
 use Illuminate\Support\Facades\Input;
 use DB;
 use DataTables;
@@ -18,30 +18,12 @@ class Inventorycontroller extends Controller
         if (!auth()->user()->hasPermission('Inventory','create')){
             return redirect(route('404'));
         }
-        $propertyunits = propertyunits::all();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $propertyunits =Propertyunits::where('bussniess_id',$bussniess_id)->get();
         $property_details = DB::table('propertydetails')
-            ->leftjoin('property_location', 'property_location.property_id', '=', 'propertydetails.id')
-            ->leftjoin('amenities', 'amenities.property_id', '=', 'propertydetails.id')
-            ->leftjoin('propertyimages', 'propertyimages.property_id', '=', 'propertydetails.id')
-            ->leftjoin('propertytype', 'propertytype.id', '=', 'propertydetails.propertytype_id')
-            ->leftjoin('landlords', 'landlords.id', '=', 'propertydetails.landlord_id')
-            ->select(
-                'propertydetails.*',
-                'property_location.search',
-                'property_location.address',
-                'property_location.city',
-                'property_location.state',
-                'property_location.post',
-                'amenities.propertynote',
-                'amenities.age',
-                'amenities.room',
-                'amenities.bedroom',
-                'amenities.bathroom',
-                'amenities.animities',
-                'propertyimages.propertyimage',
-                'propertytype.type as propertytype_name',
-                'landlords.full_name as landlord_name'
-            )
+
+            ->where('bussniess_id',$bussniess_id)
+
             ->get();
 
         return view('inventory.create')->with('propertyunits', $propertyunits)->with('property_details', $property_details);
@@ -53,12 +35,14 @@ class Inventorycontroller extends Controller
         if (!auth()->user()->hasPermission('Inventory','view')){
             return redirect(route('404'));
         }
+        $bussniess_id=auth()->user()->bussniess_id;
         $inventorydata = DB::table('inventories')
             ->join('propertydetails', 'propertydetails.id', '=', 'inventories.property_id')
             ->leftjoin('propertyunits', 'propertyunits.id', '=', 'inventories.propertyunit_id')
+            ->where('inventories.bussniess_id',$bussniess_id)
             ->select('inventories.*', 'propertydetails.name')
             ->get();
-        // dd($inventorydata);
+
 
         if ($request->ajax()) {
 
@@ -80,11 +64,12 @@ class Inventorycontroller extends Controller
     public function store(Request $request)
     {
 
-
-        $inventory = new inventory;
+        $bussniess_id=auth()->user()->bussniess_id;
+        $inventory = new Inventory;
         $inventory->property_id = $request->property_id;
         $inventory->propertyunit_id = $request->propertyunit_id;
         $inventory->description = $request->description;
+        $inventory->bussniess_id=$bussniess_id;
         $inventory->image = $request->image;
 
         if ($request->hasfile('image')) {
@@ -105,10 +90,12 @@ class Inventorycontroller extends Controller
     }
     public function show($id)
     {
+        $bussniess_id=auth()->user()->bussniess_id;
         $data = DB::table('inventories')
             ->join('propertydetails', 'propertydetails.id', '=', 'inventories.property_id')
             ->leftjoin('propertyunits', 'propertyunits.id', '=', 'inventories.propertyunit_id')
             ->select('inventories.*', 'propertydetails.name')
+            ->where('inventories.bussniess_id',$bussniess_id)
             ->where('inventories.id', '=', $id)
             ->get();
         return view('inventory.show')->with('data', $data);
@@ -129,7 +116,7 @@ class Inventorycontroller extends Controller
                 $input['image'] = $filename;
             }
 
-            $sql = inventory::where('id', $id)->update($input);
+            $sql = Inventory::where('id', $id)->update($input);
             $flas_message =  toastr()->success('Inventory Updated Successfully');
 
             return redirect(route('inventory.index'))->with('flas_message');
@@ -141,10 +128,10 @@ class Inventorycontroller extends Controller
     }
     public function edit($id)
     {
-        $inventory = inventory::find($id);
+        $inventory = Inventory::find($id);
         // $customers = customer::all();
-        $propertydetails = propertydetail::all();
-        $propertyunits = propertyunits::all();
+        $propertydetails =Propertydetail::all();
+        $propertyunits = Propertyunits::all();
         $inventory = DB::table('inventories')
             ->join('propertydetails', 'propertydetails.id', '=', 'inventories.property_id')
             ->leftjoin('propertyunits', 'propertyunits.id', '=', 'inventories.propertyunit_id')

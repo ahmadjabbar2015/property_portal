@@ -12,7 +12,7 @@
                         alt="Bonnie Green">
                 </div>
                 <div class="d-block">
-                    <h2 class="h5 mb-3">Crossdevlogix</h2>
+
                     <a href="/login" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
                         <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -36,7 +36,15 @@
                 </a>
             </div>
         </div>
+
         <ul class="nav flex-column pt-3 pt-md-0">
+            {{--Start Dashboard --}}
+<li class="nav-item  @yield('dashboard')">
+    <a href="/dashboard" class="nav-link {{request()->routeIs('dashboard')  ? 'active' : ''}}">
+         <span class="sidebar-icon"><i class="fa-solid fas fa-poll"></i></span>
+          <span class="sidebar-text">Dashboard</span>
+    </a>
+</li>
             <!-- Tenants -->
             <?php
              if (!auth()->user()->hasPermission('Tenants','view')){

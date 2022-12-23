@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('attempts', function (Blueprint $table) {
             $table->id();
-           
+            $table->foreignId('bussniess_id')->constrained('bussniesses')->onDelete('cascade');
             $table->bigInteger("lead_id")->unsigned();
             $table->foreign('lead_id')->references('id')->on('leads')->onDelete('cascade');
             $table->string("client_name");

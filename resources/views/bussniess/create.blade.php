@@ -9,14 +9,14 @@
                         <div class="col-12 col-xl-9">
                             <div class="card card-body border-0 shadow mb-4">
                                 <h2 class="h5 mb-4">Bussniess information</h2>
-                                <form  action="{{ route('bussniess.store') }}" method="POST" id="bussniess_regiestration_form">
+                                <form  action="{{ route('bussniess.store') }}" method="POST" id="bussniess_regiestration_form" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-8 mb-3">
                                             <div>
                                                 <label for="name">Bussniess Name:*</label>
                                                 <input name="name" class="form-control" id="name" type="text"
-                                                    placeholder="Enter your bussniess name" required>
+                                                    placeholder="Enter your bussniess name" >
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
@@ -80,7 +80,7 @@
                                         <div class="col-sm-4 mb-3">
                                             <div class="form-group">
                                                 <label for="first_name">First Name:*</label>
-                                                <input name="first_name" class="form-control" id="first_name" type="text"
+                                                <input name="first_name" class="form-control"  type="text"
                                                     placeholder="Enter First Name">
                                             </div>
 
@@ -88,7 +88,7 @@
                                         <div class="col-sm-4 mb-3">
                                             <div class="form-group">
                                                 <label for="last_name">Last Name</label>
-                                                <input name="last_name" class="form-control" id="last_name" type="test"
+                                                <input name="last_name" class="form-control"  type="test"
                                                     placeholder="Last Name">
                                             </div>
 
@@ -98,7 +98,7 @@
 
                                                 <label for="email">Email:*</label>
 
-                                                <input  name="email" id="email" type="email" class="form-control"autofocus
+                                                <input  name="email" id="email" type="email" class="form-control"
                                                     placeholder="Email">
                                             </div>
 
@@ -135,4 +135,8 @@
             </div>
 
     </main>
-    </x-layouts.base>
+
+    @section('page-script')
+    <script src="{{ asset('assets/js/bussniess.js') }}"></script>
+    @endsection
+ </x-layouts.base>

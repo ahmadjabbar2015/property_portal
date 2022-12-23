@@ -43,6 +43,7 @@ class PermissionSeeder extends Seeder
         foreach ($permission_id as  $value) {
             DB::table("permission_role")->insert([
                [ 'role_id' =>1,
+               'bussniess_id' =>1,
                 'permission_id' => $value->id,
                 'can_view' => 1,
 
@@ -50,6 +51,7 @@ class PermissionSeeder extends Seeder
                 'can_delete' => 1,
                 'can_update' => 1,],
                 [ 'role_id' =>2,
+                'bussniess_id' =>1,
                 'permission_id' => $value->id,
                 'can_view' => 1,
 

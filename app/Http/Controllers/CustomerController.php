@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\customer;
-use App\Models\lead;
-use App\Models\attempt;
-use App\Models\propertydetail;
-use App\Models\agent;
+use App\Models\Customer;
+use App\Models\Lead;
+use App\Models\Attempt;
+use App\Models\Propertydetail;
+use App\Models\Agent;
 use Datatables;
 use DB;
 
@@ -19,20 +19,21 @@ class CustomerController extends Controller
         if (!auth()->user()->hasPermission('Customer','create')){
             return redirect(route('404'));
         }
-
-        $agents = agent::all();
-        $leads = attempt::where('id', $id)->first();
-        $propertydetails = propertydetail::all();
-        $customers = customer::all();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $agents = Agent::where('bussniess_id',$bussniess_id)->get();
+        $leads = Attempt::where('id', $id)->first();
+        $propertydetails = Propertydetail::where('bussniess_id',$bussniess_id)->get();
+        // $customers = customer::where('bussniess_id',$bussniess_id);
         // dd($customers);
-        return view('customer.create')->with('propertydetails', $propertydetails)->with('agents', $agents)->with('leads', $leads)->with('customers', $customers);
+        return view('customer.create')->with('propertydetails', $propertydetails)->with('agents', $agents)->with('leads', $leads);
     }
     public function index()
     {
         if (!auth()->user()->hasPermission('Customer','view')){
             return redirect(route('404'));
         }
-        $customer = customer::with(['propertydetail', 'agent','lead' => function($query) {
+        $bussniess_id=auth()->user()->bussniess_id;
+        $customer = Customer::where('bussniess_id',$bussniess_id)->with(['propertydetail', 'agent','lead' => function($query) {
             $query->where('customer_status', 1);
          }])->get();
 
@@ -62,14 +63,15 @@ class CustomerController extends Controller
     }
     public function store(Request $request)
     {
-
-        lead::where('id', $request->leads_id)->update(['customer_status' => 1]);
-        $customers = new customer;
+        $bussniess_id=auth()->user()->bussniess_id;
+        Lead::where('id', $request->leads_id)->where('bussniess_id',$bussniess_id)->update(['customer_status' => 1]);
+        $customers = new Customer;
         $customers->leads_id = $request->leads_id;
         $customers->agent_id = $request->agent_id;
         $customers->property_id = $request->property_id;
         $customers->property_price = $request->property_price;
         $customers->description = $request->description;
+        $customers->bussniess_id=$bussniess_id;
 
         $customers->save();
         // dd($customers);
@@ -78,7 +80,7 @@ class CustomerController extends Controller
     }
     public function show($id)
     {
-
+        $bussniess_id=auth()->user()->bussniess_id;
         $data = DB::table('customers')
 
 
@@ -89,6 +91,7 @@ class CustomerController extends Controller
            ->join('propertytype','propertytype.id','=','leads.propertytype_id')
            ->join('users','users.id','=','leads.user_id')
            ->join('attempts','attempts.id','=','leads.id')
+           ->where('customers.bussniess_id',$bussniess_id)
             ->select('customers.description','customers.created_at As customer_create_date', 'agents.name as agent_name','leads.*', 'propertydetails.name as property_name',
             'propertytype.type','sources.source','users.first_name As leads_creater','attempts.budget_maximum','attempts.updated_at as last_follow_date','attempts.aad_remark as attempt_remark')
             ->where('customers.id', '=', $id)
@@ -103,7 +106,7 @@ class CustomerController extends Controller
             $input = $request->except('_token');
 
 
-            $sql = customer::where('id', $id)->update($input);
+            $sql = Customer::where('id', $id)->update($input);
             $flas_message =  toastr()->success('customer Updated Successfully');
 
             return redirect(route('customer.index'))->with('flas_message');
@@ -115,8 +118,8 @@ class CustomerController extends Controller
     }
     public function edit($id)
     {
-        $agents = agent::all();
-        $propertydetails = propertydetail::all();
+        $agents = Agent::all();
+        $propertydetails = Propertydetail::all();
         $customer = DB::table('customers')
 
 
