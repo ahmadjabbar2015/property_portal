@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\landlord;
-use App\Models\propertydetail;
-use App\Models\location;
-use App\Models\propertytype;
-use App\Models\amenitie;
-use App\Models\propertyimage;
+use App\Models\Landlord;
+use App\Models\Propertydetail;
+use App\Models\Location;
+use App\Models\Propertytype;
+use App\Models\Amenitie;
+use App\Models\Propertyimage;
 use DB;
 use Datatables;
 class PropertyController extends Controller
@@ -20,12 +20,14 @@ class PropertyController extends Controller
         if (!auth()->user()->hasPermission('Property','view')){
             return redirect(route('404'));
         }
+        $bussniess_id=auth()->user()->bussniess_id;
         $data=DB::table('propertydetails')
         ->leftjoin('property_location', 'property_location.property_id', '=', 'propertydetails.id')
         ->leftjoin('amenities', 'amenities.property_id', '=', 'propertydetails.id')
         ->leftjoin('propertyimages','propertyimages.property_id','=','propertydetails.id')
         ->leftjoin('propertytype','propertytype.id','=','propertydetails.propertytype_id')
         ->leftjoin('landlords','landlords.id','=','propertydetails.landlord_id')
+        ->where('propertydetails.bussniess_id',$bussniess_id)
         ->select('propertydetails.*', 'property_location.search',
         'property_location.address',
         'property_location.city',
@@ -66,33 +68,30 @@ class PropertyController extends Controller
         if (!auth()->user()->hasPermission('Property','create')){
             return redirect(route('404'));
         }
-        try {
+        // try {
+            $bussniess_id=auth()->user()->bussniess_id;
+        $landlord = Landlord::where('bussniess_id',$bussniess_id)->get();
 
-        $landlord = landlord::all();
-        $propertytype = propertytype::all();
+        $propertytype = Propertytype::where('bussniess_id',$bussniess_id)->get();
+        // dd($propertytype);
         return view('property.create')->with('landlord', $landlord)->with('propertytype', $propertytype);
-        } catch (\Throwable $th) {
-            $flas_message=  toastr()->error('something went wrong');
+        // } catch (\Throwable $th) {
+        //     $flas_message=  toastr()->error('something went wrong');
 
-            return redirect(route('property.create'))->with('flas_message');
-        }
+        //     return redirect(route('property.create'))->with('flas_message');
+        // }
     }
     public function Store(Request $request)
     {
+        $bussniess_id=auth()->user()->bussniess_id;
         $input = $request->except('_token');
+        $input['bussniess_id']=$bussniess_id;
 
 
-        $request->validate([
 
-            'name' =>'required',
-            'rent' => 'required',
-            // 'type' => 'required',
-            // 'landlord' => 'required',
-            'description' => 'required',
 
-        ]);
+       $result= Propertydetail::create($input);
 
-       $result= propertydetail::create($input);
         return $result;
 
     }
@@ -102,19 +101,21 @@ class PropertyController extends Controller
         $input = $request->all();
 
 
-        $result= location::create($input);
+        $result= Location::create($input);
         return $result;
 
     }
     public function amenities(Request $request)
     {
-        $amenities=new amenitie;
+
+        $amenities=new Amenitie;
         $amenities->property_id=$request->property_id;
         $amenities->propertynote=$request->propertynote;
         $amenities->age=$request->age;
         $amenities->room=$request->room;
         $amenities->bedroom=$request->bedroom;
         $amenities->bathroom=$request->bathroom;
+
 
         $amenities->animities=json_encode($request->animities);
       $amenities->save();
@@ -123,7 +124,8 @@ class PropertyController extends Controller
     public function imageadd(Request $request )
     {
         try {
-       $propertyimage=new propertyimage;
+
+       $propertyimage=new Propertyimage;
        $propertyimage->property_id=$request->property_id;
        $propertyimage->propertyimage=$request->propertyimage;
        if ($request->hasfile('propertyimage'))
@@ -150,13 +152,14 @@ class PropertyController extends Controller
     {
         try {
 
-
+            $bussniess_id=auth()->user()->bussniess_id;
         $data=DB::table('propertydetails')
         ->leftjoin('property_location', 'property_location.property_id', '=', 'propertydetails.id')
         ->leftjoin('amenities', 'amenities.property_id', '=', 'propertydetails.id')
         ->leftjoin('propertyimages','propertyimages.property_id','=','propertydetails.id')
         ->leftjoin('propertytype','propertytype.id','=','propertydetails.propertytype_id')
         ->leftjoin('landlords','landlords.id','=','propertydetails.landlord_id')
+        ->where('propertydetails.bussniess_id',$bussniess_id)
         ->select('propertydetails.*', 'property_location.search',
         'property_location.address',
         'property_location.city',
@@ -208,8 +211,8 @@ class PropertyController extends Controller
         )
         ->where('propertydetails.id','=',$id)
         ->first();
-        $propertytype = propertytype::all();
-        $landlord = landlord::all();
+        // $propertytype = propertytype::all();
+        // $landlord = landlord::all();
 
 
         return view('property.edit')->with(compact('data','propertytype','landlord'));

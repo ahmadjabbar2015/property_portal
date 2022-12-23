@@ -3,7 +3,7 @@
     @include('layouts.sidenav')
     <main class="content">
         @include('layouts.topbar')
-  
+
     <div class="container mt-6">
         <div class="row">
             <div class="col-md-8  ">
@@ -37,16 +37,16 @@
                                     Gallery
                                 </button>
                             </div>
-                            
+
 
 
                         </div>
                     {{-- </div> --}}
                 </div>
-            </div>   
-            
+            </div>
+
 @foreach($data as $data)
-            
+
             {{-- / Overview --}}
             <!-- <div class="container"> -->
             <div id="property_type" >
@@ -67,11 +67,11 @@
                     <div class="row mt-3">
                         <div class="col-md-4">
                             <P class="card-title ml-5"> Agency Commission :<b>${{ $data->agency}}</b> </p>
-                        
+
                         </div>
                         <div class="col-md-4">
                             <P class="card-title ">Rent : <b>${{ $data->rent}}</b> </p>
-                            
+
                         </div>
                         <div class="col-md-4">
                             <P class="card-title "> Deposit :<b>${{ $data->deposit}} </b></p>
@@ -87,7 +87,7 @@
             </div>
             </div>
 
-        
+
 
 
         {{-- / Features --}}
@@ -96,22 +96,22 @@
                 <div class="col-md-3 ">
                     <h6 class="card-title d-flex justify-content-center"> Rooms: </h6>
                    <p class="card-title d-flex justify-content-center"> <b>{{ $data->room}}</b></p>
-               
+
                 </div>
                 <div class="col-md-3">
                     <h6 class="card-title d-flex justify-content-center">Bedrooms :</h6>
                     <p class="card-title d-flex justify-content-center"> <b>{{ $data->bedroom}}</b></p>
-                   
+
                 </div>
                 <div class="col-md-3">
                     <h6 class="card-title d-flex justify-content-center"> bathrooms :</h6>
                     <p class="card-title d-flex justify-content-center"> <b>{{ $data->bathroom}}</b></p>
-                    
+
                 </div>
                 <div class="col-md-3">
                     <h6 class="card-title d-flex justify-content-center">Age : </h6>
                     <p class="card-title d-flex justify-content-center"><b>{{ $data->age}}</b></p>
-                    
+
                 </div>
             </div>
             <div class="col-md-12 mt-4">
@@ -126,11 +126,11 @@
                     <?php
                     $showdata= $data->animities;
                     $aminites=json_decode($showdata);
-                    
+
                     ?>
                     @if ($aminites !=null)
-                         
-                  
+
+
                     @foreach($aminites as $item)
                         <div col-md-4>
                                     <input class="form-check-input" type="checkbox" value="{{$item}}"  name="" id="dCheck" checked>
@@ -148,11 +148,18 @@
         {{-- /Gallery --}}
 <div id="galleryimg" class="display:none; col-12 mt-4 pb-4">
     <h1>Images</h1>
-    <img src="/assets/img/{{ $data->propertyimage }}" alt="No-document" height="200" width="200"> </p>
+    @if ($data->propertyimage == null)
+    <p> <img src="{{asset('/assets/img/alt.png')}}" alt="No-document" height="200"
+        width="200">
+</p>
+    @else
+        <p><img src="{{asset('/assets/img/'.$data->propertyimage)}}" alt="No-document" height="200" width="200"> </p>
+    @endif
+
 
 
 </div>
-    
+
 @endforeach
     </div>
     </div>

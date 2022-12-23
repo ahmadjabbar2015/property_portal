@@ -17,6 +17,7 @@ class CreatePropertytype extends Migration
             $table->id()->foreignkey();
             $table->string("type");
             $table->string("description")->nullable();
+            $table->foreignId('bussniess_id')->constrained('bussniesses')->onDelete('cascade');
             $table->timestamps();
         });
     }

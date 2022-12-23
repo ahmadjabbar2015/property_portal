@@ -15,6 +15,8 @@ class CreateLandlord extends Migration
     {
         Schema::create('landlords', function (Blueprint $table) {
             $table->id()->foreignkey();
+            $table->foreignId('bussniess_id')->constrained('bussniesses')->onDelete('cascade');
+
             $table->string("full_name");
             $table->string("email");
             $table->string("number");

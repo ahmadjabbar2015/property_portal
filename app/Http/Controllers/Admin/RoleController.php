@@ -17,7 +17,8 @@ class RoleController extends Controller
         if (!auth()->user()->hasPermission('Role','view')){
             return redirect(route('404'));
         }
-        $data=Role::whereNotIn('id',['1'])->get();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $data=Role::whereNotIn('id',['1'])->where('bussniess_id',$bussniess_id)->get();
 
         if ($request->ajax()) {
 
@@ -43,9 +44,10 @@ class RoleController extends Controller
         if (!auth()->user()->hasPermission('Role','create')){
             return redirect(route('404'));
         }
-
+        $bussniess_id=auth()->user()->bussniess_id;
         $role = new Role;
         $role->name = $request->name;
+        $role->bussniess_id =$bussniess_id;
         $role->save();
 
         $permission_id=DB::table("Permissions")->get();
@@ -53,6 +55,7 @@ class RoleController extends Controller
         foreach ($permission_id as  $value) {
             DB::table("permission_role")->insert([
                 'role_id' =>$role->id,
+                'bussniess_id' =>$bussniess_id,
                 'permission_id' => $value->id,
                 'can_view' => 1,
 
@@ -66,18 +69,20 @@ class RoleController extends Controller
     }
     public function destroy($id)
     {
-        DB::table('permission_role')->where('role_id',$id)->delete();
-        DB::table('roles')->delete($id);
+        $bussniess_id=auth()->user()->bussniess_id;
+        DB::table('permission_role')->where('role_id',$id)->where('bussniess_id',$bussniess_id)->delete();
+        DB::table('roles')->where('bussniess_id',$bussniess_id)->delete($id);
         $flas_message =  toastr()->success('Source Deleted Successfully');
         return redirect(url('role/index'))->with('flas_message');
 
     }
     public function assign_permission(Request $request,$id)
     {
+        $bussniess_id=auth()->user()->bussniess_id;
         $role_id=$id;
       $permission_data=  DB::table('permission_role')
       ->leftjoin('permissions','permissions.id','=','permission_role.permission_id')
-      ->where('role_id',$id)->get();
+      ->where('role_id',$id)->where('permission_role.bussniess_id',$bussniess_id)->get();
 
 
         return view('admin.role.permission',compact('permission_data','role_id'));
@@ -87,7 +92,7 @@ class RoleController extends Controller
     {
 
 
-
+        $bussniess_id=auth()->user()->bussniess_id;
         $role_id=$id;
 
         foreach ($request->permission_id as  $value) {
@@ -117,8 +122,9 @@ if (isset($value['update'])) {
     $value['update']=0;
 }
 
-            DB::table("permission_role")->where('role_id',$id)->where('permission_id',$value['permission_id'])->update([
+            DB::table("permission_role")->where('role_id',$id)->where('bussniess_id',$bussniess_id)->where('permission_id',$value['permission_id'])->update([
                 'role_id' =>$id,
+                'bussniess_id' =>$bussniess_id,
                 'permission_id' => $value['permission_id'],
                 'can_view' => $value['show'],
 

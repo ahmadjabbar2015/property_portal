@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('saleleases', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('bussniess_id')->constrained('bussniesses')->onDelete('cascade');
             $table->bigInteger("property_id")->unsigned();
             $table->foreign('property_id')->references('id')->on('propertydetails')->onDelete('cascade');
             $table->bigInteger('propertyunit_id')->unsigned()->nullable();

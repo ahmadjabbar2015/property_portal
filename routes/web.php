@@ -49,6 +49,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Porperty_reportsController;
 use App\Http\Controllers\Lead_reportsController;
 use App\Http\Controllers\RentLeaseReports;
+use App\Http\Controllers\BussniessController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,7 +63,7 @@ use App\Http\Controllers\RentLeaseReports;
 
 Route::redirect('/', '/login');
 
-// Route::get('/register', Register::class)->name('register');
+Route::get('/register', Register::class)->name('register');
 
 Route::get('/login', Login::class)->name('login');
 
@@ -74,7 +75,8 @@ Route::get('/403', Err404::class)->name('404');
 Route::get('/500', Err500::class)->name('500');
 // Route::get('/403', Err403::class)->name('403');
 // Route::get('/upgrade-to-pro', UpgradeToPro::class)->name('upgrade-to-pro');
-
+Route::get('bussniess_regiester',[BussniessController::class,'create'])->name('regiester-business');
+Route::post('bussniess/store',[BussniessController::class,'store'])->name('bussniess.store');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -151,7 +153,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('lease/store', [LeaseController::class, 'store']);
     Route::post('lease/store/sale',[LeaseController::class,'sale_store']);
-    Route::get('lease/show/{id}', [LeaseController::class, 'show']);
+    Route::get('lease/rent_show/{id}', [LeaseController::class, 'show']);
+    Route::get('lease/sale_show/{id}', [LeaseController::class, 'saleshow']);
     Route::get('lease/edit/{id}', [LeaseController::class, 'edit']);
     Route::post('lease/update/{id}', [LeaseController::class, 'update']);
     Route::get('lease/delete/{id}', [LeaseController::class, 'delete']);
@@ -179,12 +182,10 @@ Route::middleware(['auth'])->group(function () {
     //customer
     Route::get('customers/index', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('customer/{id}', [CustomerController::class, 'create']);
-    Route::get('customer/hello', [CustomerController::class, 'hello'])->name('customer.hello');
+    // Route::get('customer/hello', [CustomerController::class, 'hello'])->name('customer.hello');
     Route::post('customer/store', [CustomerController::class, 'store']);
-    Route::get('customer/show/{id}', [CustomerController::class, 'show']);
-    Route::get('customer/edit/{id}', [CustomerController::class, 'edit']);
-    Route::post('customer/update/{id}', [CustomerController::class, 'update']);
-    Route::get('customer/delete/{id}', [CustomerController::class, 'delete']);
+   Route::get('customer/show/{id}',[CustomerController::class,'show']);
+
     //Agent
     Route::get('agent', [AgentController::class, 'create']);
     Route::get('agent/index', [AgentController::class, 'index'])->name('agent.index');

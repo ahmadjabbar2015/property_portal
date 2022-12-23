@@ -15,14 +15,15 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-           
-           
-            
-            
+
+
+
+
             $table->bigInteger("property_id")->unsigned();
             $table->foreign('property_id')->references('id')->on('propertydetails')->onDelete('cascade');
             $table->string("property_price")->nullable();
             $table->string("description")->nullable();
+            $table->foreignId('bussniess_id')->constrained('bussniesses')->onDelete('cascade');
             $table->timestamps();
         });
     }

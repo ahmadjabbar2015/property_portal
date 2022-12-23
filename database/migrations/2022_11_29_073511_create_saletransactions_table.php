@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('saletransactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('bussniess_id')->constrained('bussniesses')->onDelete('cascade');
             $table->bigInteger("sale_lease_id")->unsigned();
             $table->foreign('sale_lease_id')->references('id')->on('saleleases')->onDelete('cascade');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use App\Models\propertyunits;
 use App\Models\tenants;
 use App\Models\leases;
@@ -11,6 +12,17 @@ use App\Models\customer;
 use App\Models\saletransaction;
 use App\Models\renttransaction;
 use App\Models\propertydetail;
+=======
+use App\Models\Propertyunits;
+use App\Models\Tenants;
+use App\Models\Leases;
+use App\Models\Salelease;
+use App\Models\Customer;
+use App\Models\Saletransaction;
+use App\Models\Renttransaction;
+use App\Models\Propertydetail;
+// use DB;
+>>>>>>> hamza
  use Illuminate\Support\Facades\DB;
 use Datatables;
 use DateTime;
@@ -25,6 +37,7 @@ class LeaseController extends Controller
         if (!auth()->user()->hasPermission('Leases','create')){
             return redirect(route('404'));
         }
+        $bussniess_id=auth()->user()->bussniess_id;
 
         $property = DB::table('propertydetails')
             ->leftjoin('property_location', 'property_location.property_id', '=', 'propertydetails.id')
@@ -32,7 +45,7 @@ class LeaseController extends Controller
             ->leftjoin('propertyimages', 'propertyimages.property_id', '=', 'propertydetails.id')
             ->leftjoin('propertytype', 'propertytype.id', '=', 'propertydetails.propertytype_id')
             ->leftjoin('landlords', 'landlords.id', '=', 'propertydetails.landlord_id')
-            ->where('propertydetails.property_status','=','0')
+            ->where('propertydetails.bussniess_id','=',$bussniess_id)
             ->select(
                 'propertydetails.*',
                 'property_location.search',
@@ -53,10 +66,11 @@ class LeaseController extends Controller
             ->get();
         $customer = DB::table('customers')
             ->join('leads', 'leads.id', '=', 'customers.leads_id')
+            ->where('customers.bussniess_id',$bussniess_id)
 
             ->select('leads.client_name', 'customers.*')->get();
 
-        $tenants = tenants::all();
+        $tenants =Tenants::where('bussniess_id',$bussniess_id)->get();
         return view('lease.create')->with('customer', $customer)->with('tenants', $tenants)->with('property', $property);
     }
     public function index(Request $request)
@@ -64,10 +78,12 @@ class LeaseController extends Controller
         if (!auth()->user()->hasPermission('Leases','view')){
             return redirect(route('404'));
         }
+        $bussniess_id=auth()->user()->bussniess_id;
         $leasesdata = DB::table('leases')
             ->join('propertydetails', 'propertydetails.id', '=', 'leases.property_id')
             ->join('tenants', 'tenants.id', '=', 'leases.tenant_id')
             ->leftjoin('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
+            ->where('leases.bussniess_id',$bussniess_id)
             ->select('leases.*', 'tenants.full_name', 'propertyunits.title', 'propertydetails.name')
             ->get();
         // dd($leasesdata);
@@ -86,7 +102,8 @@ class LeaseController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $actionBtn = '
-                    <a title="installement" href="/lease/rent_intallment/' . $row->id . '" class="edit btn btn-info btn-sm"><i class="fas fa-coins"></i></a>
+                    <a title="view" href="/lease/rent_show/'. $row->id . '" class="edit btn btn-info btn-sm"><i class="fa-sharp fa-solid fa-eye"></i></a>
+                    <a title="installement" href="/lease/rent_intallment/' . $row->id . '" class="edit btn btn-secondary btn-sm"><i class="fas fa-coins"></i></a>
                     <a title="payment" href="/lease/rent_payment/' . $row->id . '" class="edit btn btn-success btn-sm"><i class="fa fa-credit-card"></i></a> ';
                     return $actionBtn;
                 })
@@ -95,12 +112,29 @@ class LeaseController extends Controller
         }
         return view('lease.index');
     }
+    public function show($id)
+    {
+        $bussniess_id=auth()->user()->bussniess_id;
+        $data =  DB::table('leases')
+        ->join('propertydetails', 'propertydetails.id', '=', 'leases.property_id')
+        ->join('tenants', 'tenants.id', '=', 'leases.tenant_id')
+        ->leftjoin('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
+        ->where('leases.bussniess_id',$bussniess_id)
+        ->select('leases.*',
+        'tenants.full_name', 'propertydetails.name')
+        ->where('leases.id', $id)->first();
+
+
+
+
+        return view('lease.show')->with('data', $data);
+    }
 
     public function store(Request $request)
     {
-
+        $bussniess_id=auth()->user()->bussniess_id;
         $property_id=$request->property_id;
-        $leasesdata = new leases;
+        $leasesdata = new Leases;
         $leasesdata->property_id = $request->property_id;
 
         $leasesdata->propertyunit_id = $request->propertyunit_id;
@@ -114,6 +148,7 @@ class LeaseController extends Controller
         $leasesdata->due_date = $request->due_date;
         $leasesdata->frequency_collection = $request->frequency_collection;
         $leasesdata->total_payment = $request->total_payment;
+        $leasesdata->bussniess_id =$bussniess_id;
         $leasesdata->image = $request->image;
 
         if ($request->hasfile('image')) {
@@ -139,7 +174,8 @@ class LeaseController extends Controller
     }
     public function rentintallment($id)
     {
-        $rentdata = leases::where('id', $id)->first();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $rentdata = Leases::where('id', $id)->where('bussniess_id',$bussniess_id)->first();
 
         $no_of_ym = $rentdata->get_dmy;
         $payment_my = $rentdata->rent;
@@ -151,7 +187,7 @@ class LeaseController extends Controller
                 $date = new DateTime($saleduedate);
                 $due_data = $date->modify("+$i month");
                 $saleleasetransaction = new renttransaction;
-
+$saleleasetransaction->bussniess_id=$bussniess_id;
                 $saleleasetransaction->rent_leases_id = $id;
                 $saleleasetransaction->due_date = $due_data;
                 $saleleasetransaction->monthly = $i;
@@ -163,7 +199,7 @@ class LeaseController extends Controller
                 $date = new DateTime($saleduedate);
                 $due_data = $date->modify("+$i Year");
                 $saleleasetransaction = new renttransaction;
-
+                $saleleasetransaction->bussniess_id=$bussniess_id;
                 $saleleasetransaction->rent_leases_id = $id;
                 $saleleasetransaction->due_date = $due_data;
                 $saleleasetransaction->monthly = $i;
@@ -175,7 +211,7 @@ class LeaseController extends Controller
                 $date = new DateTime($saleduedate);
                 $due_data = $date->modify("+$i Day");
                 $saleleasetransaction = new renttransaction;
-
+                $saleleasetransaction->bussniess_id=$bussniess_id;
                 $saleleasetransaction->rent_leases_id = $id;
                 $saleleasetransaction->due_date = $due_data;
                 $saleleasetransaction->monthly = $i;
@@ -184,12 +220,19 @@ class LeaseController extends Controller
             }
         }
     }
+    public function rentinstallmentplane($id)
+    {
+        $bussniess_id=auth()->user()->bussniess_id;
+        $data = Renttransaction::where('rent_leases_id', $id)->where('bussniess_id',$bussniess_id)->get();
+        return view("lease.rent_installment")->with('data', $data);
+    }
     public function sale_store(Request $request)
     {
 
-
+        $bussniess_id=auth()->user()->bussniess_id;
         $property_id=$request->property_id;
-        $salelease = new salelease;
+        $salelease = new Salelease;
+        $salelease->bussniess_id=$bussniess_id;
         $salelease->property_id = $request->property_id;
         $salelease->propertyunit_id = $request->propertyunit_id;
         $salelease->total_sale_price = $request->total_sale_price;
@@ -224,7 +267,8 @@ class LeaseController extends Controller
     }
     public function saleinstallmentplane($id)
     {
-        $saledata = salelease::where('id', $id)->first();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $saledata = Salelease::where('id', $id)->where('bussniess_id',$bussniess_id)->first();
         $no_of_ym = $saledata->number_of_years_month;
         $payment_my = $saledata->payment_per_frequency;
         $frequncy = $saledata->frequency_collection;
@@ -234,8 +278,8 @@ class LeaseController extends Controller
             for ($i = 1; $i <= $no_of_ym; $i++) {
                 $date = new DateTime($saleduedate);
                 $due_data = $date->modify("+$i month");
-                $saleleasetransaction = new saletransaction;
-
+                $saleleasetransaction = new Saletransaction;
+$saleleasetransaction->bussniess_id=$bussniess_id;
                 $saleleasetransaction->sale_lease_id = $id;
                 $saleleasetransaction->due_date = $due_data;
                 $saleleasetransaction->monthly = $i;
@@ -246,8 +290,8 @@ class LeaseController extends Controller
             for ($i = 1; $i <= $no_of_ym; $i++) {
                 $date = new DateTime($saleduedate);
                 $due_data = $date->modify("+$i Year");
-                $saleleasetransaction = new saletransaction;
-
+                $saleleasetransaction = new Saletransaction;
+                $saleleasetransaction->bussniess_id=$bussniess_id;
                 $saleleasetransaction->sale_lease_id = $id;
                 $saleleasetransaction->due_date = $due_data;
                 $saleleasetransaction->monthly = $i;
@@ -256,14 +300,7 @@ class LeaseController extends Controller
             }
         }
     }
-    public function show($id)
-    {
-        $saledata = salelease::with('propertyUnits', 'property')->where("id", $id)->get();
 
-
-
-        return view('lease.show')->with('saledata', $saledata);
-    }
     public function edit($id)
     {
         $property = DB::table('propertydetails')
@@ -342,7 +379,7 @@ class LeaseController extends Controller
     }
     public function saleindex(Request $request)
     {
-
+        $bussniess_id=auth()->user()->bussniess_id;
         if (!auth()->user()->hasPermission('Leases','view')){
             return redirect(route('404'));
         }
@@ -351,7 +388,8 @@ class LeaseController extends Controller
             ->join('propertydetails', 'propertydetails.id', '=', 'saleleases.property_id')
             ->join('customers', 'customers.id', '=', 'saleleases.customer_id')
             ->join('leads','customers.leads_id','=','leads.id')
-            ->join('propertyunits', 'propertyunits.id', '=', 'saleleases.propertyunit_id')
+            ->leftjoin('propertyunits', 'propertyunits.id', '=', 'saleleases.propertyunit_id')
+            ->where('saleleases.bussniess_id',$bussniess_id)
             ->select('saleleases.*',  'propertyunits.title', 'propertydetails.name','leads.client_name As first_name')
             ->get();
 
@@ -373,6 +411,7 @@ class LeaseController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $actionBtn = '
+                    <a title="view" href="/lease/sale_show/'. $row->id . '" class="edit btn btn-info btn-sm"><i class="fa-sharp fa-solid fa-eye"></i></a>
                     <a title="installement" href="/lease/installment/' . $row->id . '" class="edit btn btn-info btn-sm"><i class="fas fa-coins"></i></a>
                     <a title="payment" href="/lease/sale/payment/' . $row->id . '" class="edit btn btn-success btn-sm"><i class="fa fa-credit-card"></i></a>
 
@@ -387,15 +426,23 @@ class LeaseController extends Controller
     }
     public function installmentplane($id)
     {
-
-        $data = saletransaction::where('sale_lease_id', $id)->get();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $data = Saletransaction::where('sale_lease_id', $id)->where('bussniess_id',$bussniess_id)->get();
 
         return view("lease.sale_installment")->with('data', $data);
     }
-
-    public function rentinstallmentplane($id)
+    public function saleshow($id)
     {
-        $data = renttransaction::where('rent_leases_id', $id)->get();
-        return view("lease.rent_installment")->with('data', $data);
+        $bussniess_id=auth()->user()->bussniess_id;
+        $data =  DB::table('saleleases')
+                ->join('propertydetails', 'propertydetails.id', '=', 'saleleases.property_id')
+                ->join('customers', 'customers.id', '=', 'saleleases.customer_id')
+                ->join('leads','customers.leads_id','=','leads.id')
+                ->leftjoin('propertyunits', 'propertyunits.id', '=', 'saleleases.propertyunit_id')
+                ->select('saleleases.*','customers.id', 'propertyunits.title', 'propertydetails.name','leads.client_name As first_name')
+                ->where('saleleases.id'  , $id)->where('saleleases.bussniess_id',$bussniess_id)->first();
+
+                return view("lease.sale_show",compact('data'));
     }
+
 }

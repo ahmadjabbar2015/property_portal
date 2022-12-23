@@ -271,7 +271,7 @@ $("#propertysale_id").on('change', function () {
         dataType: "json",
         success: function (response) {
 
-            // $(".select-unit").html("<option disabled value=''>Select An Option</option>");
+
             $.each(response, function (indexInArray, propertyunits) {
                 $(".property_sale_unit").append("<option value='" + propertyunits.id + "'>" + propertyunits.title + "</option>");
             });
