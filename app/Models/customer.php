@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class customer extends Model
+class Customer extends Model
 {
     use HasFactory;
     protected $table = 'customers';
@@ -17,17 +17,17 @@ class customer extends Model
     public function lead()
     {
 
-        return $this->belongsTo(lead::class, 'leads_id');
+        return $this->belongsTo(Lead::class, 'leads_id');
     }
     public function propertydetail()
     {
 
-        return $this->belongsTo(propertydetail::class, 'property_id');
+        return $this->belongsTo(Propertydetail::class, 'property_id');
     }
     public function agent()
     {
 
-        return $this->belongsTo(agent::class, 'agent_id');
+        return $this->belongsTo(Agent::class, 'agent_id');
     }
-   
+
 }

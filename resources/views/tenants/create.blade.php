@@ -17,10 +17,9 @@
 
                 <div class="shadow -lg-3 p-3 mb-5 bg-body rounded mr-4 ml-4">
                     <h4>
-                        Register New Tennat
+                        Register New Tenant
                     </h4>
-                    {{-- {{ $slot }} --}}
-                    <p>Tennat Tennats Creats Subtitle</p><br>
+
                     <div class="row mt-2">
                         <div class="col">
                             <label for="Fname">Full name :*</label>
@@ -86,7 +85,7 @@
 
                     <div class="progress" style="height: 50px;">
 
-                        <h4 class="mt-3  ml-5"> <i class="fa fa-bookmark  "></i> INCASE OF EMERGENCY CONTACT</h4>
+                        <h4 class="mt-3"> <i class="pr-2 fa fa-bookmark"></i>INCASE OF EMERGENCY CONTACT</h4>
                     </div><br>
                     <div class="row ">
                         <div class="col">

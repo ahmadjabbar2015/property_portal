@@ -72,7 +72,7 @@
                         width="200">
                 </p>
                     @else
-                    <p> <img src="{{asset('/assets/img/alt.png'.$landlord->image)}}" alt="No-document" height="200"
+                    <p> <img src="{{asset('/assets/img/'.$landlord->image)}}" alt="No-document" height="200"
                         width="200">
                 </p>
                     @endif

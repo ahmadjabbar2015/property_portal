@@ -1,3 +1,22 @@
+
+function myFunction() {
+
+    var email = document.getElementById("email").value;
+
+    $('#userError').html('')
+    $.ajax({
+        type: "get",
+        url: "/User/email/" + email,
+        success: function (response) {
+            if (response != 0) {
+                $('#userError').html("Already Exists Please Update The  Email");
+            }
+
+        }
+    });
+}
+
+
 $(function () {
     var bussniess_regiestration_form = $("#bussniess_regiestration_form");
     bussniess_regiestration_form.validate({
@@ -44,7 +63,7 @@ $(function () {
                 required: " City   is required"
             },
             zip_code: {
-                required: "Zio code  is required"
+                required: "Zip code  is required"
             },
             first_name: {
                 required: "Username  is required"
@@ -62,3 +81,4 @@ $(function () {
         }
     })
 })
+

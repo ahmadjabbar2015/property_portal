@@ -9,6 +9,10 @@
                         <div class="col-12 col-xl-9">
                             <div class="card card-body border-0 shadow mb-4">
                                 <h2 class="h5 mb-4">Bussniess information</h2>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <a href="/login" class="btn btn-info ">Already Login </a>
+                                </div>
+
                                 <form  action="{{ route('bussniess.store') }}" method="POST" id="bussniess_regiestration_form" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
@@ -99,9 +103,9 @@
                                                 <label for="email">Email:*</label>
 
                                                 <input  name="email" id="email" type="email" class="form-control"
-                                                    placeholder="Email">
+                                                    placeholder="Email" onfocusout="myFunction()">
                                             </div>
-
+                                            <span class="text-danger fst-italic" id="userError"> </span>
                                         </div>
                                         <div class="col-sm-4 mb-3">
                                             <div class="form-group">
