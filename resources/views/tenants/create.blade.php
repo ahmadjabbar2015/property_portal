@@ -17,8 +17,9 @@
 
                 <div class="shadow -lg-3 p-3 mb-5 bg-body rounded mr-4 ml-4">
                     <h4>
-                        Register New Tennat
+                        Register New Tenant
                     </h4>
+
                     <div class="row mt-2">
                         <div class="col-md-6 col-xs-1 mb-2">
                             <label for="Fname">Full name :*</label>

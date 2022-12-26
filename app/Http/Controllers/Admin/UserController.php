@@ -112,4 +112,13 @@ class UserController extends Controller
 
         return redirect(route('users.index'))->with('flas_message');
     }
+    public function checkemail($data)
+    {
+        $emailcheck=User::where('email',$data)->count();
+        if ($emailcheck != 0) {
+            return 1;
+          } else {
+            return 0;
+          }
+    }
 }
