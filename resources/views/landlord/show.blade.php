@@ -67,9 +67,16 @@
                     </div>
                     <div class="mt-4">
                     <h5 class="card-text">Documents:</h5>
-                       <p> <img src="../../assets/img/{{ $landlord->image }}" alt="No-document" height="200"
-                            width="200">
-                    </p>
+                    @if ($landlord->image == null)
+                    <p> <img src="{{asset('/assets/img/alt.png')}}" alt="No-document" height="200"
+                        width="200">
+                </p>
+                    @else
+                    <p> <img src="{{asset('/assets/img/'.$landlord->image)}}" alt="No-document" height="200"
+                        width="200">
+                </p>
+                    @endif
+
                 </div>
                 </div>
 

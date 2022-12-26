@@ -4,8 +4,7 @@
 <main class="content">
     @include('layouts.topbar')
 
-    {{-- @dd($propertyunits); --}}
-    {{-- saad --}}
+
     <div class="container">
         <form method="POST" action="{{ url('propertyunits/store') }}" enctype="multipart/form-data" id="regiester_propertyunit">
             @csrf
@@ -45,15 +44,15 @@
 
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Description /Features*</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Room features and description"
+                            <textarea class="form-control" id="exampleFormControlTextarea1" placeholder=" features and description"
                                 rows="3" name="description"></textarea>
                         </div><br>
                         <div class="col">
-                            <label for="file">Upload Room Image </label>
+                            <label for="file">Upload Image </label>
                             <input type="file" class="form-control" id="" name="image">
                         </div><br>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button class="btn btn-lg btn-primary me-md-2" type="submit">Create Room Units</button>
+                            <button class="btn btn-lg btn-primary me-md-2" type="submit">Create Units</button>
                         </div>
                     </div>
                 </div>

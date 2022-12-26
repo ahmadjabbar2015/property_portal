@@ -10,7 +10,7 @@
                 <div class="col-12 d-flex align-items-center justify-content-center">
                     <div class="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                         <div class="text-center text-md-center mb-4 mt-md-0">
-                            <h1 class="mb-3 h3">Welcome</h1>
+                            <h1 class="mb-3 h3">Welcome back</h1>
 
 
 
@@ -71,7 +71,12 @@
                         </form>
 
 
-
+                        <div class="d-flex justify-content-center align-items-center mt-4">
+                            <span class="fw-normal">
+                                Not registered?
+                                <a href="{{ route('regiester-business') }}" class="fw-bold">Create account</a>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

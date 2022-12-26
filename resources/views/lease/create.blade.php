@@ -20,7 +20,7 @@
             </div>
             {{-- rent form --}}
             <div id="rent_div">
-                <form action="lease/store" method="POST" id="regiester_leases">
+                <form action="lease/store" method="POST" id="regiester_leases" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="get_dmy" value="">
                     <div class="row mt-4 ">
@@ -133,7 +133,7 @@
                                         <label for="vehicle1"> Collection Frequency*</label>
                                         <select class="form-select form-control " aria-label=""
                                             id="frequency_collection" name="frequency_collection">
-                                            <option selected>Chosse An Option </option>
+                                            <option selected disabled>Chosse An Option </option>
                                             <option value="monthly">Monthly</option>
                                             <option value="annually">Annually</option>
                                             <option value="daily">Daily</option>
@@ -176,7 +176,7 @@
 
             {{-- sale form --}}
             <div id="sale_div">
-                <form action="lease/store/sale" method="POST" id="regiester_sale_leases">
+                <form action="lease/store/sale" method="POST" id="regiester_sale_leases" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row mt-4 ">
@@ -192,7 +192,7 @@
 
                                         <select class="form-select form-control" aria-label="" name="property_id"
                                             id="propertysale_id">
-                                            <option selected disabled>Choose an Option</option>
+
                                             @foreach ($property as $propertydata)
                                                 <option data-id="{{ $propertydata->rent }}" data-name = "{{$propertydata->agency}}"
                                                     value="{{ $propertydata->id }}">{{ $propertydata->name }}
@@ -203,6 +203,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="vehicle1"> Property Units</label>
+
                                         <select class="form-select property_sale_unit form-control" aria-label=""
                                             name="propertyunit_id" id="propertysale_unit">
 

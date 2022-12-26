@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\propertytype;
+use App\Models\Propertytype;
 use Yajra\DataTables\Facades\DataTables;
 use DB;
 
@@ -16,9 +16,9 @@ class propertytypeController extends Controller
         if (!auth()->user()->hasPermission('Add property Type','view')){
             return redirect(route('404'));
         }
+        $bussniess_id=auth()->user()->bussniess_id;
 
-
-        $data = propertytype::latest()->get();
+        $data = Propertytype::where('bussniess_id',$bussniess_id)->get();
 
 
 
@@ -43,9 +43,12 @@ class propertytypeController extends Controller
         if (!auth()->user()->hasPermission('Add property Type','create')){
             return redirect(route('404'));
         }
-        $propertytype = new propertytype;
+        $bussniess_id=auth()->user()->bussniess_id;
+        $propertytype = new Propertytype;
         $propertytype->type = $request->type;
         $propertytype->description = $request->description;
+        $propertytype->bussniess_id = $bussniess_id;
+
         $propertytype->save();
 
 
@@ -54,15 +57,15 @@ class propertytypeController extends Controller
     public function delete($id)
     {
 
-        try {
-            DB::table('propertytype')->delete($id);
-            $flas_message =  toastr()->success('Propertytype Deleted Successfully');
-            return redirect(route('property.type'))->with('flas_message');
-        } catch (\Throwable $th) {
-            $flas_message =  toastr()->error('something went wrong');
+        // try {
+        //     DB::table('propertytype')->delete($id);
+        //     $flas_message =  toastr()->success('Propertytype Deleted Successfully');
+        //     return redirect(route('property.type'))->with('flas_message');
+        // } catch (\Throwable $th) {
+        //     $flas_message =  toastr()->error('something went wrong');
 
-            return redirect(route('property.type'))->with('flas_message');
-        }
+        //     return redirect(route('property.type'))->with('flas_message');
+        // }
     }
 
 }

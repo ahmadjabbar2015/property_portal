@@ -90,9 +90,7 @@
     <!-- Apex Charts -->
     <script src="/vendor/apexcharts/apexcharts.min.js"></script>
 
-    <!-- Charts -->
-    <script src="/assets/js/chartist.min.js"></script>
-    <script src="/assets/js/chartist-plugin-tooltip.min.js"></script>
+
 
     <!-- Datepicker -->
     <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/js/datepicker.min.js"></script>

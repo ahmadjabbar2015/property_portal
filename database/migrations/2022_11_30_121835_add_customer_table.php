@@ -18,8 +18,9 @@ return new class extends Migration
             $table->foreign('agent_id')->references('id')->on('agents')->onDelete('cascade');
             $table->bigInteger("leads_id")->unsigned();
             $table->foreign('leads_id')->references('id')->on('leads')->onDelete('cascade');
+
         });
-       
+
     }
 
     /**

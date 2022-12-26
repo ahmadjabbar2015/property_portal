@@ -16,8 +16,9 @@ class AlterPropertyunitsTables extends Migration
         Schema::table('propertyunits', function (Blueprint $table) {
         $table->bigInteger("property_id")->unsigned();
         $table->foreign('property_id')->references('id')->on('propertydetails')->onDelete('cascade');
+        $table->foreignId('bussniess_id')->constrained('bussniesses')->onDelete('cascade');
         });
-       
+
     }
 
     /**

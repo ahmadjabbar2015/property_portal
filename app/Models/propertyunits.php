@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class propertyunits extends Model
+class Propertyunits extends Model
 {
     use HasFactory;
     protected $table = 'propertyunits';
@@ -16,7 +16,7 @@ class propertyunits extends Model
 
     public function propertyDetails()
     {
-        return $this->belongsTo(propertydetail::class,  'property_id');
+        return $this->belongsTo(Propertydetail::class,  'property_id');
     }
    
 

@@ -52,7 +52,7 @@
                 <br>
                 <div id="btn1">
 
-                    <form id="form1" onsubmit="return form1validation()">
+                    <form id="form1" class="first_propert_form">
                         @csrf
 
                         <div class="row">

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class lead extends Model
+class Lead extends Model
 {
     use HasFactory;
     protected $table = 'leads';
@@ -15,19 +15,19 @@ class lead extends Model
 
     public function propertyType()
     {
-        return $this->belongsTo(propertytype::class, 'propertytype_id');
+        return $this->belongsTo(Propertytype::class, 'propertytype_id');
     }
 
     public function source()
     {
-        return $this->belongsTo(source::class, 'source_id');
+        return $this->belongsTo(Source::class, 'source_id');
     }
     public function users()
     {
-        return $this->belongsTo(user::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function getAttempts()
     {
-        return $this->hasMany(attempt::class , 'lead_id' , 'id');
+        return $this->hasMany(Attempt::class , 'lead_id' , 'id');
     }
 }

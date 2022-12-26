@@ -22,6 +22,7 @@ class CreateInventoriesTable extends Migration
             $table->string('description');
             $table->string('unit');
             $table->string('image')->nullable();
+            $table->foreignId('bussniess_id')->constrained('bussniesses')->onDelete('cascade');
             $table->timestamps();
         });
     }

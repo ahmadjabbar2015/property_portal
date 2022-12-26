@@ -6,32 +6,32 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class leases extends Model
+class Leases extends Model
 {
     use HasFactory;
     protected $table = 'leases';
     protected $primaryKey = 'id';
-    protected $guarded =['id'];
+    protected $guarded = ['id'];
     protected $appends = ['image_url'];
 
     public function propertyUnits()
     {
 
-        return $this->hasMany(propertyunits::class, 'id');
+        return $this->hasMany(Propertyunits::class, 'id');
     }
     public function tenants()
     {
 
-        return $this->hasMany(tenants::class, 'id');
+        return $this->hasMany(Tenants::class, 'id');
     }
     public function customer()
     {
 
-        return $this->hasMany(customer::class, 'id');
+        return $this->hasMany(Customer::class, 'id');
     }
-  
 
-   
+
+
     public function getImageUrlAttribute()
     {
         if (!empty($this->image)) {

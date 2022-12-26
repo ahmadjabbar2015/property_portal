@@ -24,6 +24,7 @@ class Porperty_reportsController extends Controller
             return redirect(route('404'));
         }
 
+        $bussniess_id=auth()->user()->bussniess_id;
 
         if ($request->ajax()) {
 
@@ -31,9 +32,10 @@ class Porperty_reportsController extends Controller
 
             $data = Propertydetail::join('landlords', 'landlords.id', '=', 'propertydetails.landlord_id')
                 ->join('propertytype', 'propertytype.id', '=', 'propertydetails.propertytype_id')
-                ->join('propertyunits', 'propertyunits.property_id', '=', 'propertydetails.id')
+                ->leftjoin('propertyunits', 'propertyunits.property_id', '=', 'propertydetails.id')
                 ->join('customers', 'customers.property_id', '=', 'propertydetails.id')
                 ->join('leads', 'customers.leads_id', '=', 'leads.id')
+                ->where('propertydetails.bussniess_id',$bussniess_id)
                 ->select('propertydetails.*', 'propertydetails.rent', 'landlords.full_name', 'propertytype.type', 'propertyunits.title', 'customers.leads_id as client_name ', 'leads.client_name');
 
             if (!empty($request->input('start_date'))) {
@@ -71,23 +73,26 @@ class Porperty_reportsController extends Controller
                 ->make(true);
         }
 
-        $propertytype = Propertytype::all();
-        $landlord = Landlord::all();
+        $propertytype = Propertytype::where('bussniess_id',$bussniess_id)->get();
+        $landlord = Landlord::where('bussniess_id',$bussniess_id)->get();
         $customer = Customer::join('leads', 'customers.leads_id', '=', 'leads.id')
+        ->where('customers.bussniess_id',$bussniess_id)
             ->select('customers.id', 'leads.client_name')->get();
-        $propertydetail = Propertydetail::all();
+        $propertydetail = Propertydetail::where('bussniess_id',$bussniess_id)->get();
 
         return view('porperty_reports.index')->with(compact('propertytype', 'landlord', 'propertydetail', 'customer'));
     }
     public function show($id)
     {
+        $bussniess_id=auth()->user()->bussniess_id;
         $propertydetail = Propertydetail::join('landlords', 'landlords.id', '=', 'propertydetails.landlord_id')
             ->join('propertytype', 'propertytype.id', '=', 'propertydetails.propertytype_id')
             ->join('customers', 'customers.property_id', '=', 'propertydetails.id')
-            ->join('propertyunits', 'propertyunits.property_id', '=', 'propertydetails.id')
+            ->leftjoin('propertyunits', 'propertyunits.property_id', '=', 'propertydetails.id')
             ->join('leads', 'customers.leads_id', '=', 'leads.id')
             ->select('propertydetails.*', 'landlords.full_name', 'propertytype.type', 'customers.leads_id as client_name', 'leads.client_name','propertyunits.title')
             ->where('propertydetails.id','=',$id)
+            ->where('propertydetails.bussniess_id',$bussniess_id)
             ->first();
         // dd($propertydetail);
 
