@@ -55,8 +55,9 @@
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input name="email" class="form-control" id="email" type="email"
-                                        placeholder="name@gmail.com" >
+                                        placeholder="name@gmail.com" onfocusout="myFunction()" >
                                 </div>
+                                <span class="text-danger fst-italic" id="userError"> </span>
 
                             </div>
                             <div class="col-md-6 mb-3">

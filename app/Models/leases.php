@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class leases extends Model
+class Leases extends Model
 {
     use HasFactory;
     protected $table = 'leases';
@@ -16,16 +16,16 @@ class leases extends Model
     public function propertyUnits()
     {
 
-        return $this->hasMany(propertyunits::class, 'id');
+        return $this->hasMany(Propertyunits::class, 'id');
     }
     public function tenants()
     {
 
-        return $this->hasMany(tenants::class, 'id');
+        return $this->hasMany(Tenants::class, 'id');
     }
     public function customer()
     {
 
-        return $this->hasMany(customer::class, 'id');
+        return $this->hasMany(Customer::class, 'id');
     }
 }

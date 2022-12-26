@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class propertydetail extends Model
+class Propertydetail extends Model
 {
     use HasFactory;
     protected $table = 'propertydetails';
@@ -14,17 +14,17 @@ class propertydetail extends Model
     // protected $fillable = ['name','rent','type','landlord','area','deposit','description'];
 
     public function location(){
-        return $this->belongsTo(location::class , 'id' , 'property_id');
+        return $this->belongsTo(Location::class , 'id' , 'property_id');
     }
 
     public function amenities(){
-        return   $this->belongsTo(amenitie::class , 'id', 'property_id');
+        return   $this->belongsTo(Amenitie::class , 'id', 'property_id');
     }
 
     public function propertyImages(){
-        return $this->belongsTo(propertyimage::class , 'id', 'property_id' );
+        return $this->belongsTo(Propertyimage::class , 'id', 'property_id' );
     }
 
-    
+
 }
 

@@ -78,7 +78,7 @@ Route::get('/500', Err500::class)->name('500');
 Route::get('bussniess_regiester',[BussniessController::class,'create'])->name('regiester-business');
 Route::post('bussniess/store',[BussniessController::class,'store'])->name('bussniess.store');
 
-
+Route::get('/User/email/{email}',[UserController::class,'checkemail']);
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin',[newAdminController::class,'index'])->name('admin.index');
     Route::get('/profile', Profile::class)->name('profile');

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class inventory extends Model
+class Inventory extends Model
 {
     use HasFactory;
     protected $table = 'inventories';
@@ -16,12 +16,12 @@ class inventory extends Model
 
     public function propertyUnits()
     {
-        return $this->belongsTo(propertyunits::class,  'propertyunit_id');
+        return $this->belongsTo(Propertyunits::class,  'propertyunit_id');
     }
 
     public function propertyDetails()
     {
-        return $this->belongsTo(propertydetail::class,  'property_id');
+        return $this->belongsTo(Propertydetail::class,  'property_id');
     }
 
     public function getImageUrlAttribute()
@@ -34,5 +34,5 @@ class inventory extends Model
         return $image_url;
     }
 
-    
+
 }

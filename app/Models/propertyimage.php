@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class propertyimage extends Model
+class Propertyimage extends Model
 {
     use HasFactory;
     protected $table = 'propertyimages';
@@ -14,7 +14,7 @@ class propertyimage extends Model
 
     protected $appends = ['image_url'];
 
-    
+
     public function getImageUrlAttribute()
     {
         if (!empty($this->propertyimage)) {
@@ -26,8 +26,8 @@ class propertyimage extends Model
     }
 
 
-    
-    
+
+
     // public function getImagePathAttribute()
     // {
     //     if (!empty($this->image)) {
