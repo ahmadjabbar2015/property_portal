@@ -4,12 +4,12 @@
 @include('layouts.sidenav')
 <main class="content">
     @include('layouts.topbar')
-  
+
     {{-- saad --}}
 
     <div class="container">
 
-        
+
         <form action="{{ url('/tenants/update/' . $tenants->id) }}" method="POST" enctype="multipart/form-data" id="regiester_tenants">
             {!! csrf_field() !!}
 
@@ -54,8 +54,15 @@
                     <div class="col">
                         <label for="file">Identifcation Docoument</label>
                         <input type="file" id="" name="image" value="{{ $tenants->image }}">
-                        <img src="../../assets/img/{{ $tenants->image }}" alt="No-document"
-                                    height="200" width="200">
+                        @if ($tenants->image == null)
+                        <p> <img src="{{asset('/assets/img/alt.png')}}" alt="No-document" height="200"
+                            width="200">
+                    </p>
+                        @else
+                        <img src="{{asset('/assets/img/alt.png'.$tenants->image)}}" alt="No-document"
+                        height="200" width="200">
+                        @endif
+
                     </div>
                     <div class="col">
                         <label>Address :*</label>

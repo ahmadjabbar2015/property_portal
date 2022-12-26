@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\tenants;
+use App\Models\Tenants;
 use DataTables;
 use Illuminate\Support\Facades\Input;
 
@@ -13,28 +13,26 @@ class TenantsController extends Controller
 {
 
 
-    public function create()
+    public function create(Request $request)
     {
+
+
         if (!auth()->user()->hasPermission('Tenants','create')){
             return redirect(route('404'));
         }
+
 
         return view('tenants.create');
     }
     public function store(Request $request)
     {
+
         try {
+            $bussniess_id=auth()->user()->bussniess_id;
 
-            $request->validate([
 
-                'full_name' => 'required',
-                'email' => 'required',
-                'number' => 'required',
-                'address' => 'required',
 
-            ]);
-
-            $tenants = new tenants;
+            $tenants = new Tenants;
             $tenants->full_name = $request->full_name;
             $tenants->email = $request->email;
             $tenants->number = $request->number;
@@ -44,6 +42,7 @@ class TenantsController extends Controller
             $tenants->place = $request->place;
             $tenants->emrgency_name = $request->emrgency_name;
             $tenants->emrgency_number = $request->emrgency_number;
+            $tenants->bussniess_id=$bussniess_id;
             $tenants->image = $request->image;
 
 
@@ -74,7 +73,8 @@ class TenantsController extends Controller
         if (!auth()->user()->hasPermission('Tenants','view')){
             return redirect(route('404'));
         }
-        $data = tenants::latest()->get();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $data = Tenants::where('bussniess_id',$bussniess_id)->get();
 
         if ($request->ajax()) {
 
@@ -97,7 +97,8 @@ class TenantsController extends Controller
         if (!auth()->user()->hasPermission('Tenants','update')){
             return redirect(route('404'));
         }
-        $tenants = tenants::find($id);
+        $bussniess_id=auth()->user()->bussniess_id;
+        $tenants = Tenants::find($id)->where('bussniess_id',$bussniess_id);
         return view('tenants.edit')->with('tenants', $tenants);
     }
     public function update(Request $request, $id)
@@ -109,8 +110,6 @@ class TenantsController extends Controller
 
             $input = $request->except('_token');
 
-
-            // $tenants = new tenants;
             if ($request->hasfile('image')) {
 
 
@@ -121,8 +120,9 @@ class TenantsController extends Controller
                 $data = $file->move(public_path('/assets/img'), $filename);
                 $input['image'] = $filename;
             }
+            $bussniess_id=auth()->user()->bussniess_id;
 
-            $sql = tenants::where('id', $id)->update($input);
+            $sql = Tenants::where('id', $id)->where('bussniess_id',$bussniess_id)->update($input);
             $flas_message =  toastr()->success('Tenants Updated Successfully');
 
             return redirect(route('tenants.index'))->with('flas_message');
@@ -138,7 +138,8 @@ class TenantsController extends Controller
             return redirect(route('404'));
         }
         try {
-            DB::table('tenants')->delete($id);
+            $bussniess_id=auth()->user()->bussniess_id;
+            DB::table('tenants')->where('bussniess_id',$bussniess_id)->delete($id);
             $flas_message =  toastr()->success('Tenants Deleted Successfully');
 
             return redirect(route('tenants.index'))->with('flas_message');
@@ -150,8 +151,8 @@ class TenantsController extends Controller
     }
     public function show($id)
     {
-
-        $tenants = tenants::find($id);
+        $bussniess_id=auth()->user()->bussniess_id;
+        $tenants = Tenants::where('bussniess_id',$bussniess_id)->find($id);
         return view('tenants.show')->with('tenants', $tenants);
     }
 }

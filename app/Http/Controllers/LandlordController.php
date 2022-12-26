@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\landlord;
+use App\Models\Landlord;
 use Illuminate\Http\Request;
 use Datatables;
 use Illuminate\Support\Facades\Input;
@@ -21,17 +21,11 @@ class LandlordController extends Controller
     }
     public function store(Request $request)
     {
+        $bussniess_id=auth()->user()->bussniess_id;
 
         $input = $request->all();
-        // $request->validate([
 
-        //     'full_name' => 'required',
-        //     'email' => 'required',
-        //     'number' => 'required',
-        //     'address' => 'required',
-
-        // ]);
-        $landlord=new landlord;
+        $landlord=new Landlord;
         $landlord->full_name=$request->full_name;
         $landlord->email=$request->email;
         $landlord->number=$request->number;
@@ -39,6 +33,7 @@ class LandlordController extends Controller
         $landlord->address=$request->address;
         $landlord->occupation=$request->occupation;
         $landlord->account=$request->account;
+        $landlord->bussniess_id=$bussniess_id;
         $landlord->image=$request->image;
 
 
@@ -63,7 +58,8 @@ class LandlordController extends Controller
         if (!auth()->user()->hasPermission('Landlords','view')){
             return redirect(route('404'));
         }
-        $data = landlord::latest()->get();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $data = Landlord::where('bussniess_id',$bussniess_id)->get();
 
         if ($request->ajax()) {
 
@@ -82,7 +78,8 @@ class LandlordController extends Controller
     }
     public function edit($id)
     {
-        $landlords = landlord::find($id);
+
+        $landlords =Landlord::find($id);
 
         return view('landlord.edit')->with(compact('landlords'));
     }
@@ -101,21 +98,22 @@ class LandlordController extends Controller
         }
 
 
-        $sql = landlord::where('id', $id)->update($input);
+        $sql = Landlord::where('id', $id)->update($input);
 
         $flas_message =  toastr()->success('Landlord updated Successfully');
         return redirect(route('landlord.index'))->with('flas_message');
     }
     public function show($id)
     {
-        $landlord = landlord::find($id);
+        $bussniess_id=auth()->user()->bussniess_id;
+        $landlord =Landlord::where('bussniess_id',$bussniess_id)->find($id);
         return view('landlord.show')->with('landlord', $landlord);
     }
     public function delete($id)
     {
-        FacadesDB::table('landlords')->delete($id);
-        $flas_message =  toastr()->success('Landlord Deleted Successfully');
-        return redirect(route('landlord.index'))->with('flas_message');
+        // FacadesDB::table('landlords')->delete($id);
+        // $flas_message =  toastr()->success('Landlord Deleted Successfully');
+        // return redirect(route('landlord.index'))->with('flas_message');
     }
 }
 

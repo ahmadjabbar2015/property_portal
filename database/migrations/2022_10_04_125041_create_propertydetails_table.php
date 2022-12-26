@@ -26,6 +26,7 @@ class CreatePropertydetailsTable extends Migration
             $table->string("deposit")->nullable();
             $table->string("description");
             $table->integer("property_status")->default(0);
+            $table->foreignId('bussniess_id')->constrained('bussniesses')->onDelete('cascade');
             $table->timestamps();
         });
     }

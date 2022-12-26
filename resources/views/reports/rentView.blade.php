@@ -193,13 +193,26 @@
                                 </thead>
 
                                 <tbody>
-                             @foreach ($rent_payments as $item)
+
+
+                                    @foreach ($rent_payments as $item)
                                     <tr>
+                                        @if ($item->date == null)
+
+                                        @else
                                         <td>{{date('F d, Y', strtotime($item->date))}}</td>
-                                         <td>{{date('F d, Y', strtotime($item->paid_date))}}</td>
+                                        @endif
+                                       @if ($item->paid_date == null)
+
+                                       @else
+                                       <td>{{date('F d, Y', strtotime($item->paid_date))}}</td>
+                                       @endif
+
                                         <td>{{$item->payment}}</td>
                                     </tr>
                               @endforeach
+
+
                                 </tbody>
                             </table>
                     </div>

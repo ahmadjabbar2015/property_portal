@@ -6,15 +6,12 @@
     {{-- saad --}}
 
     <div class="container">
-      
-            
-      
-        
+
 
         <div class="row  ">
             @foreach ($data as $data)
-                
-          
+
+
             <div class=" col-md-7 mt-7 ml-4">
                 <h1>
                     Show Inventory
@@ -29,32 +26,32 @@
             <div class="row ml-3">
                 <div class="col">
                     <P class="card-title "> Inventory For : </P>
-                    <h5>    
+                    <h5>
                          {{ $data->name }}
                     </h5>
                 </div>
                 <div class="col">
                     <P class="card-title "> Type :</P>
-                    <h5>    
-                         {{ $data->unit }} 
-                        
+                    <h5>
+                         {{ $data->unit }}
+
                     </h5>
                 </div>
             </div><br><br>
             <div class="col ml-3">
                 <h5 class="card-title "> Description :</h5>
-                <p>    
+                <p>
                     {{ $data->description }}
                 </p>
             </div><br><br>
             <div class="col ml-3 mb-8">
                 <h5 class="card-title "> image :</h5>
-                    
-               
+
+
                     <img src="../../assets/img/{{ $data->image }}" alt="image" height="200" width="200">
-                    <p>   {{ $data->image }}</p>
-                
-            </div><br><br><br><br>
+
+
+            </div>
         </div>
         @endforeach
 

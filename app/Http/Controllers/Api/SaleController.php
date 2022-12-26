@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CommonResource;
-use App\Models\saletransaction;
+use App\Models\Saletransaction;
 use App\Models\Salepayment;
-use App\Models\salelease;
+use App\Models\Salelease;
 use App\Http\Requests\SalePaymentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

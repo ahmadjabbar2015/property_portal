@@ -2,6 +2,7 @@
 namespace Database\Seeders;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Bussniess;
 
 
 use Illuminate\Database\Seeder;
@@ -18,8 +19,19 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-$superadminRole = Role::create(['name'=>'super_admin']);
-$adminRole = Role::create(['name'=>'admin']);
+
+$bussniess=Bussniess::create([
+    'name' => "demo",
+
+    'country' => "demo_country",
+    'state' =>"demo_state",
+    'city' => "demo_city",
+    'zip_code' => "zip",
+    'landmark' => "landmark",
+
+]);
+$superadminRole = Role::create(['name'=>'super_admin','bussniess_id'=>1]);
+$adminRole = Role::create(['name'=>'admin','bussniess_id'=>1]);
 
 
 
@@ -29,6 +41,7 @@ $adminRole = Role::create(['name'=>'admin']);
             'email' => 'admin@admin.com',
             'password' => Hash::make('admin12'),
             'role_id' => $superadminRole->id,
+            'bussniess_id' => 1
         ]);
     }
 }

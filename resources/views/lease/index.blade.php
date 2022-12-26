@@ -1,8 +1,8 @@
-<x-layouts.base>
-@extends('layouts.app')
-@include('layouts.sidenav')
-<main class="content">
-    @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'View Rent Lease')
+@section('view_rent' , 'active')
+@section('main')
+
 
     <div class="container">
         <div class="row">
@@ -40,8 +40,8 @@
             </div>
         </div>
     </div>
-</main>
-</x-layouts.base>
+    @endsection
+
 @section('page-script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>

@@ -1,15 +1,10 @@
-<x-layouts.base>
-    @extends('layouts.app')
-
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
-
-        {{-- saad --}}
+@extends('layouts.master')
+@section('title' , 'Show Landload')
+@section('main')
 
         <div class="container">
             <a href="/landlord/index">
-                <button type="button" class="btn btn-primary btn-lg"><-Back Landlord</button>
+                <button type="button" class="btn btn-primary"><-Back Landlord</button>
                 </a>
             <div class="row text-center">
                 <div class=" mt-6 ml-4">
@@ -67,13 +62,19 @@
                     </div>
                     <div class="mt-4">
                     <h5 class="card-text">Documents:</h5>
-                       <p> <img src="../../assets/img/{{ $landlord->image }}" alt="No-document" height="200"
-                            width="200">
-                    </p>
+                    @if ($landlord->image == null)
+                    <p> <img src="{{asset('/assets/img/alt.png')}}" alt="No-document" height="200"
+                        width="200">
+                </p>
+                    @else
+                    <p> <img src="{{asset('/assets/img/'.$landlord->image)}}" alt="No-document" height="200"
+                        width="200">
+                </p>
+                    @endif
+
                 </div>
                 </div>
 
             </div>
         </div>
-    </main>
-</x-layouts.base>
+@endsection

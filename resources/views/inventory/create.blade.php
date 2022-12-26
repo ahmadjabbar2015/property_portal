@@ -3,7 +3,7 @@
 @include('layouts.sidenav')
 <main class="content">
     @include('layouts.topbar')
-  
+
     {{-- saad --}}
 
     <div class="container">
@@ -30,9 +30,9 @@
                         <select class="form-select form-control select2 " aria-label=""
                             name="unit">
                             <!-- <option value="property" selected >Property</option>
-                          
+
                             <option value="property_unit"  selected >Property Units</option> -->
-                  
+
                             <option value="null">Property</option>
                             <option value="UNIT" name="unit" >Property_unit</option>
                         </select>
@@ -66,15 +66,15 @@
 
                     </div>
                 </div><br>
-             
+
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Description *</label>
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
-                     
+
                     </div><br>
-             
+
                     <div class="form-group">
-                        <label for="image">Upload Room Image</label>
+                        <label for="image">Upload Image</label>
                         <input type="file" class="form-control" id="" name="image">
                     </div><br>
 

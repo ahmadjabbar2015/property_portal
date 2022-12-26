@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\source;
+use App\Models\Source;
 use DataTables;
 use DB;
 class SourceController extends Controller
@@ -16,8 +16,10 @@ class SourceController extends Controller
         if (!auth()->user()->hasPermission('Source','create')){
             return redirect(route('404'));
         }
-        $Sources = new source;
+        $bussniess_id=auth()->user()->bussniess_id;
+        $Sources = new Source;
         $Sources->source = $request->source;
+        $Sources->bussniess_id=$bussniess_id;
         $Sources->save();
         $flas_message =  toastr()->success('Source Addedd Successfully');
         return redirect(route('source.index'))->with('flas_message');
@@ -28,7 +30,8 @@ class SourceController extends Controller
         if (!auth()->user()->hasPermission('Source','view')){
             return redirect(route('404'));
         }
-        $data = source::latest()->get();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $data = Source::where('bussniess_id',$bussniess_id)->get();
 
         if ($request->ajax()) {
 
@@ -52,7 +55,9 @@ class SourceController extends Controller
         }
 
         try {
-            DB::table('sources')->delete($id);
+            $bussniess_id=auth()->user()->bussniess_id;
+
+            DB::table('sources')->where('bussniess_id',$bussniess_id)->delete($id);
             $flas_message =  toastr()->success('Source Deleted Successfully');
             return redirect(route('source.index'))->with('flas_message');
         } catch (\Throwable $th) {

@@ -19,6 +19,7 @@ class CreateAgentsTable extends Migration
             $table->string("email");
             $table->string("number");
             $table->string("address");
+            $table->foreignId('bussniess_id')->constrained('bussniesses')->onDelete('cascade');
             $table->timestamps();
         });
     }

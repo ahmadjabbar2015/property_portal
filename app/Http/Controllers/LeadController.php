@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\attempt;
+use App\Models\Attempt;
 use Illuminate\Http\Request;
-use App\Models\lead;
-use App\Models\source;
+use App\Models\Lead;
+use App\Models\Source;
 use App\Models\User;
-
 use App\Models\propertytype;
 use DB;
 use Datatables;
@@ -21,18 +20,18 @@ class LeadController extends Controller
     if (!auth()->user()->hasPermission('Lead','create')){
         return redirect(route('404'));
     }
-
-    $propertytypes = propertytype::all();
-    $sources = source::all();
+    $bussniess_id=auth()->user()->bussniess_id;
+    $propertytypes =Propertytype::where('bussniess_id',$bussniess_id)->get();
+    $sources = Source::where('bussniess_id',$bussniess_id)->get();
     return view('lead.create')->with('source', $sources)->with('propertytype', $propertytypes);
   }
   public function store(Request $request)
   {
 
+    $bussniess_id=auth()->user()->bussniess_id;
 
 
-
-    $leads = new lead;
+    $leads = new Lead;
     $leads->client_name = $request->client_name;
     $leads->client_contact = $request->client_contact;
     $leads->client_mail = $request->client_mail;
@@ -42,6 +41,7 @@ class LeadController extends Controller
     $leads->status = $request->status;
     $leads->remark = $request->remark;
     $leads->user_id = $request->user()->id;
+    $leads->bussniess_id=$bussniess_id;
     // dd($leads);
     $leads->save();
     $flas_message =  toastr()->success('Leads Addedd Successfully');
@@ -52,7 +52,8 @@ class LeadController extends Controller
     if (!auth()->user()->hasPermission('Lead','view')){
         return redirect(route('404'));
     }
-    $data = lead::with('propertyType', 'source', 'users')->where('attempt_status', 0)->get();
+    $bussniess_id=auth()->user()->bussniess_id;
+    $data =Lead::with('propertyType', 'source', 'users')->where('bussniess_id',$bussniess_id)->where('attempt_status', 0)->get();
     if ($request->ajax()) {
 
       return Datatables::of($data)
@@ -90,17 +91,18 @@ class LeadController extends Controller
 
   public function attempt($id)
   {
-    $lead = lead::where('id', $id)->with('propertyType', 'source')->first();
-    $propertytypes = propertytype::all();
-    $sources = source::all();
+    $bussniess_id=auth()->user()->bussniess_id;
+    $lead = Lead::where('id', $id)->where('bussniess_id',$bussniess_id)->with('propertyType', 'source')->first();
+    $propertytypes =Propertytype::where('bussniess_id',$bussniess_id)->get();
+    $sources =Source::where('bussniess_id',$bussniess_id)->get();
 
     return view('lead.attempt')->with('source', $sources)->with('propertytype', $propertytypes)->with('lead', $lead);
   }
   public function update($id, Request $request)
   {
 
-
-    $attempt = new attempt();
+    $bussniess_id=auth()->user()->bussniess_id;
+    $attempt = new Attempt();
     $attempt->client_name = $request->client_name;
     $attempt->client_contact = $request->client_contact;
     $attempt->client_mail = $request->client_mail;
@@ -115,10 +117,11 @@ class LeadController extends Controller
     $attempt->class_status = $request->class_status;
     $attempt->next_follow_date = $request->next_follow_date;
     $attempt->aad_remark = $request->aad_remark;
+    $attempt->bussniess_id=$bussniess_id;
     $attempt->lead_id = $id;
     $attempt->save();
 
-    lead::where('id', $id)->update(['attempt_status' => 1]);
+    Lead::where('id', $id)->where('bussniess_id',$bussniess_id)->update(['attempt_status' => 1]);
     $flas_message =  toastr()->success('Lead Updated Successfully');
     return redirect()->route('lead.attempt_index');
   }
@@ -127,8 +130,8 @@ class LeadController extends Controller
   public function attempt_index(Request $request)
   {
 
-
-    $data = attempt::with('propertyType', 'source')->get();
+    $bussniess_id=auth()->user()->bussniess_id;
+    $data =Attempt::where('bussniess_id',$bussniess_id)->with('propertyType', 'source')->get();
 
     if ($request->ajax()) {
 
@@ -157,7 +160,8 @@ class LeadController extends Controller
   }
   public function checknumber($id)
   {
-    $leadscheck = lead::where('client_contact', $id)->count();
+    $bussniess_id=auth()->user()->bussniess_id;
+    $leadscheck =Lead::where('bussniess_id',$bussniess_id)->where('client_contact', $id)->count();
     if ($leadscheck != 0) {
       return 1;
     } else {
@@ -166,15 +170,17 @@ class LeadController extends Controller
   }
   public function attempt_edit($id)
   {
-    $propertytype = propertytype::all();
-    $lead = lead::all();
-    $attempts = attempt::find($id);
+    $bussniess_id=auth()->user()->bussniess_id;
+    $propertytype = Propertytype::where('bussniess_id',$bussniess_id);
+    $lead =Lead::where('bussniess_id',$bussniess_id);
+    $attempts =Attempt::where('bussniess_id',$bussniess_id)->find($id);
     return view('lead.attempt_edit')->with('attempt', $attempts)->with('lead',$lead)->with('propertytype',$propertytype);
   }
   public function attempt_update ( Request $request, $id)
   {
+    $bussniess_id=auth()->user()->bussniess_id;
     $input = $request->except('_token');
-    $sql = attempt::where('id', $id)->update($input);
+    $sql =Attempt::where('bussniess_id',$bussniess_id)->where('id', $id)->update($input);
     $flas_message =  toastr()->success('Attempt Updated Successfully');
 
     return redirect(route('lead.attempt_index'))->with('flas_message');

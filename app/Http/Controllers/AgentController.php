@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\agent;
+use App\Models\Agent;
 use Datatables;
 use DB;
 class AgentController extends Controller
@@ -22,8 +22,8 @@ class AgentController extends Controller
         if (!auth()->user()->hasPermission('Agent','view')){
             return redirect(route('404'));
         }
-
-        $data = agent::latest()->get();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $data = Agent::where('bussniess_id',$bussniess_id)->get();
 
         if ($request->ajax()) {
 
@@ -43,14 +43,15 @@ class AgentController extends Controller
     }
     public function store(Request $request)
     {
-        // dd($request);
+        $bussniess_id=auth()->user()->bussniess_id;
 
-        $agents=new agent;
+        $agents=new Agent;
         $agents->name=$request->name;
 
         $agents->email=$request->email;
         $agents->number=$request->number;
         $agents->address=$request->address;
+        $agents->bussniess_id=$bussniess_id;
 
         $agents->save();
 
@@ -59,7 +60,8 @@ class AgentController extends Controller
     }
     public function show($id)
     {
-        $agents = agent::find($id);
+        $bussniess_id=auth()->user()->bussniess_id;
+        $agents = Agent::where('bussniess_id',$bussniess_id)->find($id);
         return view('agent.show')->with('agent', $agents);
     }
     public function update($id, Request $request)
@@ -69,7 +71,7 @@ class AgentController extends Controller
             $input = $request->except('_token');
 
 
-            $sql = agent::where('id', $id)->update($input);
+            $sql = Agent::where('id', $id)->update($input);
             $flas_message =  toastr()->success('Agent Updated Successfully');
 
             return redirect(route('agent.index'))->with('flas_message');
@@ -81,7 +83,7 @@ class AgentController extends Controller
     }
     public function edit($id)
     {
-        $agent = agent::find($id);
+        $agent = Agent::find($id);
         return view('agent.edit')->with('agent', $agent);
     }
     public function delete($id)

@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Lead;
 use App\Models\Attempt;
-use App\Models\customer;
-use App\Models\propertytype;
+use App\Models\Customer;
+use App\Models\Propertytype;
 use App\Models\Source;
 use App\Models\User;
 use Yajra\DataTables\Facades\DataTables;
@@ -23,12 +23,14 @@ class Lead_reportsController extends Controller
         if (!auth()->user()->hasPermission('Reports','view')){
             return redirect(route('404'));
         }
+        $bussniess_id=auth()->user()->bussniess_id;
         if ($request->ajax()) {
 
             $data = Lead::join('attempts', 'attempts.id', '=', 'leads.id')
                 ->join('propertytype', 'propertytype.id', '=', 'leads.propertytype_id')
                 ->join('sources', 'sources.id', '=', 'leads.source_id')
                 ->join('users', 'users.id', '=', 'leads.user_id')
+                ->where('leads.bussniess_id',$bussniess_id)
                 ->select('leads.*',  'attempts.lead_status', 'attempts.next_follow_date', 'propertytype.type', 'sources.source', 'users.first_name');
 
 
@@ -71,25 +73,26 @@ class Lead_reportsController extends Controller
                 ->make(true);
         }
 
-        $propertytype = Propertytype::all();
-        $source = Source::all();
-        $lead = Lead::all();
-        $user = User::all();
+        $propertytype = Propertytype::where('bussniess_id',$bussniess_id)->get();
+        $source = Source::where('bussniess_id',$bussniess_id)->get();
+        $lead = Lead::where('bussniess_id',$bussniess_id)->get();
+        $user = User::where('bussniess_id',$bussniess_id)->get();
         return view('lead_reports.index')->with(compact('propertytype', 'source', 'lead', 'user'));
     }
 
     public function show($id)
     {
-        // $lead = Lead::find($id);
+        $bussniess_id=auth()->user()->bussniess_id;
         $lead = Lead::
         join('propertytype', 'propertytype.id', '=', 'leads.propertytype_id')
         ->join('sources', 'sources.id', '=', 'leads.source_id')
         ->join('users', 'users.id', '=', 'leads.user_id')
         ->select('leads.*', 'propertytype.type', 'sources.source', 'users.first_name')
+        ->where('leads.bussniess_id',$bussniess_id)
         ->where('leads.id','=',$id)
         ->first();
-        $attempt = Attempt::find($id);
-        $customer=Customer::find($id);
+        $attempt = Attempt::where('bussniess_id',$bussniess_id)->find($id);
+        $customer=Customer::where('bussniess_id',$bussniess_id)->find($id);
         return view('lead_reports.show')->with(compact('lead','attempt','customer'));
     }
 }

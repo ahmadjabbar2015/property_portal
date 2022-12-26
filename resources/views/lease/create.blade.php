@@ -1,10 +1,8 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'Add Rent Lease')
+@section('add_rent' , 'active')
+@section('main')
 
-        {{-- saad --}}
 
         <div class="container">
             <div class="">
@@ -20,7 +18,7 @@
             </div>
             {{-- rent form --}}
             <div id="rent_div">
-                <form action="lease/store" method="POST" id="regiester_leases">
+                <form action="lease/store" method="POST" id="regiester_leases" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="get_dmy" value="">
                     <div class="row mt-4 ">
@@ -34,7 +32,7 @@
                                     <div class="col-md-6">
                                         <label for="vehicle1"> Select Property *</label>
 
-                                        <select class="form-select form-control" aria-label="" name="property_id"
+                                        <select class="form-select form-control mb-3" aria-label="" name="property_id"
                                             id="property_id">
                                             <option selected disabled>Choose an Option</option>
                                             @foreach ($property as $propertydata)
@@ -58,38 +56,28 @@
                                 </div>
 
 
+                               
 
-                                <div class="row mt-4 col-md-12">
+                                <div class="row mt-3">
                                     <div class="col-md-6">
                                         <label>Rent *</label>
-                                        <div class="input-group mb-3 text-center">
+                                         <input type="number" class="form-control" id="rent" name="rent">
+                                    </div>
 
-                                            <span class="input-group-text bg-#918b8a" id="basic-addon1">Rs</span>
-
-                                            <input type="number" class="form-control" id="rent" placeholder=""
-                                                name="rent">
-                                        </div>
-
-                                    </div><br>
                                     <div class="col-md-6">
                                         <label>Advance Paid *</label>
-                                        <div class="input-group mb-3 text-center">
-
-                                            <span class="input-group-text bg-#918b8a" id="deposit">Rs</span>
-
                                             <input type="number" class="form-control" placeholder=""
                                                 name="advance_payments">
 
 
-                                        </div>
                                     </div>
 
 
 
                                 </div>
 
-                                <div class="row mt-4 col-md-12">
-                                    <div class="col">
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
 
                                         <label for="vehicle1"> Select Tenants *</label>
                                         <select class="form-select form-control" aria-label="" name="tenant_id"
@@ -104,36 +92,36 @@
                                         </select>
 
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-6">
                                         <label for="vehicle1"> Tenants ID</label>
-                                        <input type="" class="form-control" placeholder=""
+                                        <input type="" class="form-control"
                                             name="new_teanants_id">
                                     </div>
 
                                 </div>
-                                <div class="row mt-4 col-md-12" id="date_div">
-                                    <div class="col">
+                                <div class="row mt-4" id="date_div">
+                                    <div class="col-md-6">
                                         <label for="vehicle1"> Lease Start Date *</label>
                                         <input type="date" class="form-control" placeholder="" id="lease_start"
                                             name="lease_start">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-6">
                                         <label for="vehicle1"> Lease End Date *</label>
                                         <input type="date" class="form-control" placeholder="" id="lease_end"
                                             name="lease_end">
                                     </div>
                                 </div>
                                 {{-- date  --}}
-                                <div class="row mt-4 col-md-12">
-                                    <div class="col">
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
                                         <label for="vehicle1">First Payment Due Date *</label>
                                         <input type="date" class="form-control" placeholder="" name="due_date">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-6">
                                         <label for="vehicle1"> Collection Frequency*</label>
                                         <select class="form-select form-control " aria-label=""
                                             id="frequency_collection" name="frequency_collection">
-                                            <option selected>Chosse An Option </option>
+                                            <option selected disabled>Chosse An Option </option>
                                             <option value="monthly">Monthly</option>
                                             <option value="annually">Annually</option>
                                             <option value="daily">Daily</option>
@@ -143,19 +131,19 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row mt-4 col-md-12">
-                                    <div class="col" id="getpayments">
+                                <div class="row mt-4">
+                                    <div class="col-md-6" id="getpayments">
                                         <label for="vehicle1"> Payments *</label>
                                         <input type="number" class="form-control" placeholder=""
                                             name="total_payment">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-6">
                                         <label for="file">Upload Lesae Docuuments</label>
                                         <input type="file" class="form-control" id="" name="image">
                                     </div>
                                 </div>
-                                <div class="row mt-4 col-md-12">
-                                    <div class="col">
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
                                         <label for="exampleFormControlTextarea1">Tenants Terms: </label>
                                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="terms"></textarea>
                                     </div>
@@ -176,7 +164,7 @@
 
             {{-- sale form --}}
             <div id="sale_div">
-                <form action="lease/store/sale" method="POST" id="regiester_sale_leases">
+                <form action="lease/store/sale" method="POST" id="regiester_sale_leases" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row mt-4 ">
@@ -186,13 +174,13 @@
                                     Create Booking Leases
                                 </h4>
 
-                                <div class="row mt-4 col-md-12">
+                                <div class="row mt-4">
                                     <div class="col-md-6">
                                         <label for="vehicle1"> Select Sale Property *</label>
 
                                         <select class="form-select form-control" aria-label="" name="property_id"
                                             id="propertysale_id">
-                                            <option selected disabled>Choose an Option</option>
+
                                             @foreach ($property as $propertydata)
                                                 <option data-id="{{ $propertydata->rent }}" data-name = "{{$propertydata->agency}}"
                                                     value="{{ $propertydata->id }}">{{ $propertydata->name }}
@@ -203,6 +191,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="vehicle1"> Property Units</label>
+
                                         <select class="form-select property_sale_unit form-control" aria-label=""
                                             name="propertyunit_id" id="propertysale_unit">
 
@@ -215,29 +204,18 @@
 
 
 
-                                <div class="row mt-4 col-md-12">
+                                <div class="row mt-4">
                                     <div class="col-md-6">
                                         <label>Total Price*</label>
-                                        <div class="input-group mb-3 text-center">
-
-                                            <span class="input-group-text bg-#918b8a" id="basic-addon1">Rs</span>
-
                                             <input type="number" class="form-control" id="total_sale_price"
                                                 placeholder="" name="total_sale_price">
-                                        </div>
+                                      
 
-                                    </div><br>
+                                    </div>
                                     <div class="col-md-6">
                                         <label>Advance Payment *</label>
-                                        <div class="input-group mb-3 text-center">
-
-                                            <span class="input-group-text bg-#918b8a">Rs</span>
-
                                             <input type="number" class="form-control" id="sale_advance_payment"
                                                 placeholder="" name="sale_advance_payment">
-
-
-                                        </div>
                                     </div>
 
 
@@ -245,7 +223,7 @@
 
                                 </div>
 
-                                <div class="row mt-4 col-md-12">
+                                <div class="row mt-4">
                                     <div class="col">
 
                                         <label for="vehicle1"> Select Customer *</label>
@@ -259,15 +237,15 @@
                                         </select>
 
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-6">
                                         <label for="vehicle1"> Remaning Payment</label>
                                         <input type="" class="form-control" id="remaing_payment"
                                             placeholder="" name="remaing_payment">
                                     </div>
 
                                 </div>
-                                <div class="row mt-4 col-md-12" id="date_sale_div">
-                                    <div class="col">
+                                <div class="row mt-4" id="date_sale_div">
+                                    <div class="col-md-6">
                                         <label for="vehicle1"> Lease Start Date *</label>
                                         <input type="date" class="form-control" placeholder=""
                                             id="lease_sale_start" name="lease_start">
@@ -309,13 +287,13 @@
 
                                     </div>
                                 </div>
-                                <div class="row mt-4 col-md-12">
-                                    <div class="col" id="">
+                                <div class="row mt-4">
+                                    <div class="col-md-6" id="">
                                         <label for="vehicle1">Payments Frquency*</label>
                                         <input type="number" class="form-control" placeholder=""
                                             id="payment_per_frequency" name="payment_per_frequency">
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-6">
                                         <label for="file">Upload Lesae Docuuments</label>
                                         <input type="file" class="form-control" id="" name="image">
                                     </div>
@@ -339,10 +317,9 @@
                     </div>
                 </form>
             </div>
-    </main>
-</x-layouts.base>
-{{-- @include('layouts.footers.auth') --}}
+
+            @endsection
 
 @section('page-script')
-    <script src="{{ asset('assets') }}/js/lease.js"></script>
+    <script src="{{ asset('assets/js/lease.js') }}"></script>
 @endsection

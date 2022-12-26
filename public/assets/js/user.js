@@ -1,5 +1,20 @@
 
+function myFunction() {
 
+    var email = document.getElementById("email").value;
+
+    $('#userError').html('')
+    $.ajax({
+        type: "get",
+        url: "/User/email/" + email,
+        success: function (response) {
+            if (response != 0) {
+                $('#userError').html("Already Exists Please Update The  Email");
+            }
+
+        }
+    });
+}
 $('#user_table').DataTable({
 
     processing: true,

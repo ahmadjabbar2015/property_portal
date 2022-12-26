@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CommonResource;
-use App\Models\renttransaction;
+use App\Models\Renttransaction;
 use Illuminate\Http\Request;
 use App\Http\Requests\RentPaymentRequest;
 use App\Models\Rentpayment;
-use App\Models\leases;
+use App\Models\Leases;
 use Illuminate\Support\Facades\DB;
 
 class RentController extends Controller
