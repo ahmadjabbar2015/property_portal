@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LeadRequest;
 use App\Http\Requests\AttemptRequest;
 use App\Http\Resources\CommonResource;
-use App\Models\attempt;
+use App\Models\Attempt;
 use App\Models\Lead;
 use Illuminate\Support\Facades\DB;
 

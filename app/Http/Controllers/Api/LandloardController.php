@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LandlordRequest;
 use App\Http\Resources\LandLordResource;
 use App\Http\Resources\TenantResource;
-use App\Models\landlord;
+use App\Models\Landlord;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

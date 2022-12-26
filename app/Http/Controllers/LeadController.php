@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Lead;
 use App\Models\Source;
 use App\Models\User;
-
 use App\Models\propertytype;
 use DB;
 use Datatables;
