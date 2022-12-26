@@ -1,32 +1,17 @@
-<x-layouts.base>
-@extends('layouts.app')
-@include('layouts.sidenav')
-<main class="content">
-    @include('layouts.topbar')
-
-    {{-- saad --}}
+@extends('layouts.master')
+@section('title' , 'Show Rent Lease')
+@section('main')
 
     <div class="container ">
         <div class="row">
-            <div class="col-md-12  ">
-                <div class="mt-7 col-12  ">
-                </div>
-                <div class=" row ml-4 mr-4">
-                    <div class="col-8">
-                        <h4>
-                            Lease Rent Details
-                        </h4>
-
+            <div class="col-md-6">
+                        <h4>Lease Rent Details</h4>
+            </div>
+                    <div class="col-md-6 mb-4">
+                        <a href="/lease/index" class="btn btn-secondary">Back Sale Lease</a>
                     </div>
-                    <div class="col-4 d-flex justify-content-end">
-                        <a href="/lease/index" class="btn btn-lg btn-secondary " type="submit"><-Back Sale Lease</a>
-                    </div>
-
-
-                </div>
-
-
-                <div class="row mt-3">
+        </div>
+                <div class="row">
                     <div class="col">
                         <h5 class="card-title "> Property  :</h5>{{$data->name}}
 
@@ -105,10 +90,8 @@
  </div>
 
 
+ @endsection
 
-</main>
-</x-layouts.base>
-{{-- @include('layouts.footers.auth') --}}
 
 @section('page-script')
 <script src="{{ asset('assets') }}/js/lease.js"></script>

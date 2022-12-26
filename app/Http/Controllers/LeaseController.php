@@ -3,16 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-<<<<<<< HEAD
-use App\Models\propertyunits;
-use App\Models\tenants;
-use App\Models\leases;
-use App\Models\salelease;
-use App\Models\customer;
-use App\Models\saletransaction;
-use App\Models\renttransaction;
-use App\Models\propertydetail;
-=======
 use App\Models\Propertyunits;
 use App\Models\Tenants;
 use App\Models\Leases;
@@ -22,7 +12,6 @@ use App\Models\Saletransaction;
 use App\Models\Renttransaction;
 use App\Models\Propertydetail;
 // use DB;
->>>>>>> hamza
  use Illuminate\Support\Facades\DB;
 use Datatables;
 use DateTime;
@@ -67,7 +56,6 @@ class LeaseController extends Controller
         $customer = DB::table('customers')
             ->join('leads', 'leads.id', '=', 'customers.leads_id')
             ->where('customers.bussniess_id',$bussniess_id)
-
             ->select('leads.client_name', 'customers.*')->get();
 
         $tenants =Tenants::where('bussniess_id',$bussniess_id)->get();

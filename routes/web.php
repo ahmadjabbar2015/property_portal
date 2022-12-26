@@ -122,17 +122,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('tenants', [TenantsController::class, 'create'])->name('tenants.create');
     Route::get('tenants/index', [TenantsController::class, 'index'])->name('tenants.index');
     Route::post('tenant/store', [TenantsController::class, 'store']);
-    Route::get('tenants/show/{id}', [TenantsController::class, 'show']);
+    Route::get('tenants/show/{id}', [TenantsController::class, 'show'])->name('tenants.show');
     Route::get('tenants/edit/{id}', [TenantsController::class, 'edit']);
     Route::post('tenants/update/{id}', [TenantsController::class, 'update']);
     Route::get('tenants/delete/{id}', [TenantsController::class, 'delete']);
     //landlord
-    Route::get('landlord', [LandlordController::class, 'create']);
+    Route::get('landlord', [LandlordController::class, 'create'])->name('landlord.create');
     Route::post('landlord/store', [LandlordController::class, 'store']);
     Route::get('landlord/index', [LandlordController::class, 'index'])->name('landlord.index');
     Route::get('landlord/edit/{id}', [LandlordController::class, 'edit']);
     Route::post('landlord/update/{id}', [LandlordController::class, 'update']);
-    Route::get('landlord/show/{id}', [LandlordController::class, 'show']);
+    Route::get('landlord/show/{id}', [LandlordController::class, 'show'])->name('landlord.show');
     Route::get('landlord/delete/{id}', [LandlordController::class, 'delete']);
     //propertytype
     Route::get('propertytype', [PropertytypeController::class, 'type'])->name('property.type');
