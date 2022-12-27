@@ -1,23 +1,23 @@
 @extends('layouts.master')
 @section('title' , 'Show Rent Lease')
+@section('view_rent' , 'active')
 @section('main')
 
-    <div class="container ">
-        <div class="row">
+    <div class="container">
+        <div class="row mb-5 mt-3">
             <div class="col-md-6">
                         <h4>Lease Rent Details</h4>
             </div>
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-6">
                         <a href="/lease/index" class="btn btn-secondary">Back Sale Lease</a>
                     </div>
         </div>
                 <div class="row">
                     <div class="col">
-                        <h5 class="card-title "> Property  :</h5>{{$data->name}}
-
+                        <h5 class="card-title "> Property:</h5>{{$data->name}}
                     </div>
                     <div class="col">
-                        <h5 class="card-text">Teanat Name :</h5>
+                        <h5 class="card-text">Teanat Name:</h5>
                         {{ $data->full_name}}
                     </div>
 
@@ -38,7 +38,7 @@
                         {{ $data->paid_payment}}
                     </div>
                     <div class="col">
-                        <h5 class="card-text">Payment Collection :</h5>
+                        <h5 class="card-text">Payment Collection:</h5>
                         {{ $data->frequency_collection}}
                     </div>
                 </div>

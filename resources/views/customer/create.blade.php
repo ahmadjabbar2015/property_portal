@@ -1,10 +1,7 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
-        {{-- saad --}}
-        <div class="container ">
+@extends('layouts.master')
+@section('title' , 'Add Cutomer')
+@section('main')
+        <div class="container">
             <div class="row">
                 <div class="col-md-12  ">
                     <div class="mt-7 col-12  ">
@@ -69,7 +66,7 @@
 
 
                     </div>
-                    <div class="form-group mt-5">
+                    <div class="form-group mt-4">
                         <label for="exampleFormControlTextarea1">Description *</label>
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
 
@@ -80,9 +77,8 @@
                 </div>
             </form>
         </div>
-        {{-- @include('layouts.footers.auth') --}}
-    </main>
-</x-layouts.base>
+        @endsection
+
 @section('page-script')
     <script src="{{ asset('assets') }}/js/customer.js"></script>
 @endsection

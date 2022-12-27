@@ -62,7 +62,7 @@
                                 clip-rule="evenodd"></path>
                         </svg></span>
                 </span>
-                <div class="multi-level collapse" role="list" id="submenu-tenants" aria-expanded="">
+                <div class="multi-level collapse {{Request::is('tenants*') ? 'show' : ''}}" role="list" id="submenu-tenants" aria-expanded="">
                     <ul class="flex-column nav ">
                         <?php
                         if (!auth()->user()->hasPermission('Tenants','create')){
@@ -109,7 +109,7 @@
                                 clip-rule="evenodd"></path>
                         </svg></span>
                 </span>
-                <div class="multi-level collapse " role="list" id="submenu-landlord" aria-expanded="false">
+                <div class="multi-level collapse {{Request::is('landlord*') ? 'show' : ''}}" role="list" id="submenu-landlord" aria-expanded="">
                     <ul class="flex-column nav">
                         <?php
                         if (!auth()->user()->hasPermission('Landlords','create')){
@@ -152,7 +152,7 @@
                                 clip-rule="evenodd"></path>
                         </svg></span>
                 </span>
-                <div class="multi-level collapse  " role="list" id="submenu-property" aria-expanded="false">
+                <div class="multi-level collapse {{Request::is('Property*') ? 'show' : ''}}" role="list" id="submenu-property" aria-expanded="">
                     <ul class="flex-column nav">
                         <?php
                         if (!auth()->user()->hasPermission('Property','create')){
@@ -196,8 +196,8 @@
                                 clip-rule="evenodd"></path>
                         </svg></span>
                 </span>
-                <div class="multi-level collapse" role="list" id="submenu-propertyunits"
-                    aria-expanded="false">
+                <div class="multi-level collapse {{Request::is('propertyunits*') ? 'show' : ''}}" role="list" id="submenu-propertyunits"
+                    aria-expanded="">
                     <ul class="flex-column nav">
                         <?php
                         if (!auth()->user()->hasPermission('Property Units','create')){
@@ -299,14 +299,14 @@
 
                    }else {
                            ?>
-                        <li class="nav-item ">
-                            <a href="/inventory" class="nav-link">
+                        <li class="nav-item @yield('add_inv')">
+                            <a href="/inventory" class="nav-link {{request()->routeIs('inventory.create') ? 'active' : ''}}">
                                 <span class="sidebar-text">Add Inventory</span>
                             </a>
                         </li>
                         <?php }?>
-                        <li class="nav-item ">
-                            <a href="/inventory/index" class="nav-link">
+                        <li class="nav-item @yield('view_inv')">
+                            <a href="/inventory/index" class="nav-link {{request()->routeIs('inventory.index') ? 'active' : ''}}">
                                 <span class="sidebar-text">Show Inventory</span>
                             </a>
                         </li>
@@ -338,8 +338,8 @@
                 <div class="multi-level collapse " role="list" id="submenu-events" aria-expanded="false">
                     <ul class="flex-column nav">
 
-                        <li class="nav-item ">
-                            <a href="/calendar" class="nav-link">
+                        <li class="nav-item @yield('view_cal') ">
+                            <a href="/calendar" class="nav-link {{request()->routeIs('calendar.index')? 'active' : ''}}">
                                 <span class="sidebar-text">Events</span>
                             </a>
                         </li>
@@ -371,8 +371,8 @@
                 <div class="multi-level collapse " role="list" id="submenu-tickets" aria-expanded="false">
                     <ul class="flex-column nav">
 
-                        <li class="nav-item">
-                            <a href="/ticket/index" class="nav-link">
+                        <li class="nav-item @yield('view_tik')">
+                            <a href="/ticket/index" class="nav-link {{request()->routeIs('ticket.index') ? 'active' : ''}}">
                                 <span class="sidebar-text"> Tickets</span>
                             </a>
                         </li>
@@ -409,14 +409,14 @@
 
                    }else {
                            ?>
-                        <li class="nav-item ">
-                            <a href="/agent" class="nav-link">
+                        <li class="nav-item @yield('add_agent')">
+                            <a href="/agent" class="nav-link {{request()->routeIs('agent.create')}}">
                                 <span class="sidebar-text">Add Agent </span>
                             </a>
                         </li>
                         <?php }?>
-                        <li class="nav-item ">
-                            <a href="/agent/index" class="nav-link">
+                        <li class="nav-item @yield('view_agent')">
+                            <a href="/agent/index" class="nav-link {{request()->routeIs('agent.index')}}">
                                 <span class="sidebar-text">Show Agent</span>
                             </a>
                         </li>
@@ -453,21 +453,21 @@
 
                    }else {
                            ?>
-                        <li class="nav-item ">
-                            <a href="/lead" class="nav-link">
+                        <li class="nav-item @yield('add_lead')">
+                            <a href="/lead" class="nav-link {{request()->routeIs('lead.create') ? 'active' : ''}}">
                                 <span class="sidebar-text"> Add Lead  </span>
                             </a>
                         </li>
 
 
-                        <li class="nav-item ">
-                            <a href="/lead/attempt_index" class="nav-link">
+                        <li class="nav-item @yield('view_attempt')">
+                            <a href="/lead/attempt_index" class="nav-link {{request()->routeIs('lead.attempt_index') ? 'active' : ''}}">
                                 <span class="sidebar-text">Attempt</span>
                             </a>
                         </li>
                         <?php }?>
-                        <li class="nav-item ">
-                            <a href="/lead/index" class="nav-link">
+                        <li class="nav-item @yield('view_lead')">
+                            <a href="/lead/index" class="nav-link {{request()->routeIs('lead.index') ? 'active' : ''}}">
                                 <span class="sidebar-text">  Lead Show </span>
                             </a>
                         </li>
@@ -499,8 +499,8 @@
                 </span>
                 <div class="multi-level collapse  " role="list" id="submenu-customer" aria-expanded="false">
                     <ul class="flex-column nav">
-                        <li class="nav-item ">
-                            <a href="/customers/index" class="nav-link">
+                        <li class="nav-item @yield('view_customer')">
+                            <a href="/customers/index" class="nav-link {{request()->routeIs('customers.index') ? 'active' : ''}}">
                                 <span class="sidebar-text">Show Customer</span>
                             </a>
                         </li>
@@ -535,22 +535,22 @@ if (!auth()->user()->hasPermission('Reports','view')){
                 <div class="multi-level collapse  " role="list" id="submenu-reports" aria-expanded="false">
                     <ul class="flex-column nav">
 
-                        <li class="nav-item ">
+                        <li class="nav-item @yield('view_proReport') ">
                             <a href="/porperty_reports/index" class="nav-link">
                                 <span class="sidebar-text">Property Reports</span>
                             </a>
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item @yield('view_leadReport') ">
                             <a href="/lead_reports/index" class="nav-link">
                                 <span class="sidebar-text"> Lead Reports</span>
                             </a>
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item @yield('view_rentReport') ">
                             <a href="{{route('rent.lease.reports')}}" class="nav-link">
                                 <span class="sidebar-text"> Rent Reports</span>
                             </a>
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item @yield('view_bookingReport') ">
                             <a href="{{route('sale.lease.reports')}}" class="nav-link">
                                 <span class="sidebar-text">Booking Reports</span>
                             </a>
@@ -586,7 +586,7 @@ if (!auth()->user()->hasPermission('Reports','view')){
 
        }else {
                ?>
-            <li class="nav-item ">
+            <li class="nav-item @yield('protype')">
                 <a href="/propertytype" class="nav-link">
                     <span class="sidebar-text">Add Property Type</span>
                 </a>
@@ -597,8 +597,8 @@ if (!auth()->user()->hasPermission('Reports','view')){
 
        }else {
                ?>
-            <li class="nav-item ">
-                <a href="/source/index" class="nav-link">
+            <li class="nav-item @yield('scource')">
+                <a href="/source/index" class="nav-link {{request()->routeIs('source.index') ? 'active' : ''}}">
                     <span class="sidebar-text"> Source </span>
                 </a>
             </li>
@@ -608,8 +608,8 @@ if (!auth()->user()->hasPermission('Reports','view')){
 
        }else {
                ?>
-            <li class="nav-item ">
-                <a href="/role/index" class="nav-link">
+            <li class="nav-item @yield('role')">
+                <a href="/role/index" class="nav-link {{request()->routeIs('role.index') ? 'active' : ''}}">
                     <span class="sidebar-text"> Role </span>
                 </a>
             </li>
@@ -619,8 +619,8 @@ if (!auth()->user()->hasPermission('Reports','view')){
 
        }else {
                ?>
-            <li class="nav-item ">
-                <a href="/users/index" class="nav-link">
+            <li class="nav-item @yield('view_user')">
+                <a href="/users/index" class="nav-link {{request()->routeIs('users.index')?'active' :''}}">
                     <span class="sidebar-text"> Users </span>
                 </a>
             </li>

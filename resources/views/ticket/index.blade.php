@@ -1,10 +1,8 @@
-<x-layouts.base>
-@extends('layouts.app')
-@include('layouts.sidenav')
-<main class="content">
-    @include('layouts.topbar')
-  
-    {{-- saad --}}
+@extends('layouts.master')
+@section('title' , 'View Ticket')
+@section('view_tik' , 'active')
+@section('main')
+
     <div class="container">
 
         <div class="row">
@@ -90,10 +88,8 @@
             </div>
         </div>
     </div>
-    @include('layouts.footer')
-    @include('layouts.footer2')
-</main>
-</x-layouts.base>
+    @endsection
+
 <form method="POST" action="{{ url('ticket/store') }}" enctype="">
     @csrf
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

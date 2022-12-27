@@ -1,35 +1,36 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
-        {{-- saad --}}
+@extends('layouts.master')
+@section('title' , 'Show Agent')
+@section('main')
 
         <div class="container">
-
-            <div class="row text-center">
-                <div class=" mt-6 ml-4 ">
-                    <h1>
-                        Agent Details
-                    </h1>
-
+            <div class="row mb-3" style="text-align: center;">
+                <div class="col-md-12 mt-4 ml-4 ">
+                    <h1>Agent Details</h1>
                 </div>
-            </div><br>
-            <div class="d-flex justify-content-center">
-                <div class="shadow -lg-3 p-3 mb-5 bg-body rounded col-md-10">
-                    <div class="text-end">
-                        <h4>
-                            Agent
-                        </h4>
+            </div>
+             
+<div class="row mb-5">
+                    <div class="col">
+                     
+                      <h2 style="display: inline-block;">
+                        ABOUT ME:
+                    </h2>
+             </div>
+             <div class="col">
+
+                    
                         <button type="submit" class="btn btn-success"><a href="{{ url('/agent/edit/' . $agent->id) }}">
                                 Edit</a></button>
                         <button type="submit" class="btn btn-danger"><a
                                 href="{{ url('/agent/delete/' . $agent->id) }}">
                                 Delete </a></button>
-                    </div><br><br>
-                    <h2>
-                        ABOUT ME:
-                    </h2>
+                            </div>
+
+
+                                
+                    
+</div>
+                    
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title "> Name :<h5>
@@ -53,6 +54,6 @@
 
                 </div>
                 <div>
-                </div>
-    </main>
-</x-layouts.base>
+           
+            </div>
+@endsection

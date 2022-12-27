@@ -1,8 +1,7 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'View Cutomer')
+@section('view_customer' , 'active')
+@section('main')
         <div class="container">
 
             <div class="ms-2 me-2 mt-5">
@@ -32,10 +31,7 @@
 
         </div>
 
-    </main>
-
-
-</x-layouts.base>
+@endsection
 @section('page-script')
     <script src="{{ asset('assets') }}/js/customer.js"></script>
 @endsection

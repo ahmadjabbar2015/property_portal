@@ -162,7 +162,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('lease/installment/{id}',[LeaseController::class,'installmentplane']);
     Route::get('/lease/rent_intallment/{id}',[LeaseController::class,'rentinstallmentplane']);
     //inventory
-    Route::get('inventory', [InventoryController::class, 'create']);
+    Route::get('inventory', [InventoryController::class, 'create'])->name('inventory.create');
     Route::get('inventory/index', [InventoryController::class, 'index'])->name('inventory.index');
     Route::post('/inventory/store', [InventoryController::class, 'store']);
     Route::get('inventory/show/{id}', [InventoryController::class, 'show'])->name('inventory.show');
@@ -181,13 +181,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('ticket/show/{id}', [TicketController::class, 'show']);
     //customer
     Route::get('customers/index', [CustomerController::class, 'index'])->name('customers.index');
-    Route::get('customer/{id}', [CustomerController::class, 'create']);
+    Route::get('customer/{id}', [CustomerController::class, 'create'])->name('customers.create');
     // Route::get('customer/hello', [CustomerController::class, 'hello'])->name('customer.hello');
     Route::post('customer/store', [CustomerController::class, 'store']);
    Route::get('customer/show/{id}',[CustomerController::class,'show']);
 
     //Agent
-    Route::get('agent', [AgentController::class, 'create']);
+    Route::get('agent', [AgentController::class, 'create'])->name('agent.create');
     Route::get('agent/index', [AgentController::class, 'index'])->name('agent.index');
     Route::any('agent/store', [AgentController::class, 'store']);
     Route::get('agent/show/{id}', [AgentController::class, 'show']);
@@ -195,7 +195,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('agent/update/{id}', [AgentController::class, 'update']);
     Route::get('agent/delete/{id}', [AgentController::class, 'delete']);
     //lead
-    Route::get('lead', [LeadController::class, 'create']);
+    Route::get('lead', [LeadController::class, 'create'])->name('lead.create');
     Route::any('lead/store', [LeadController::class, 'store']);
     Route::get('lead/index', [LeadController::class, 'index'])->name('lead.index');
     Route::get('lead/checknumber/{id}',[LeadController::class,'checknumber']);

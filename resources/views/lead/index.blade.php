@@ -1,13 +1,12 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'View Lead')
+@section('view_lead' , 'active')
+@section('main')
       
         <div class="container">
             <div class="row">
-                <div class="col">
-                    <div class="ms-2 me-2 mt-5 ">
+                <div class="col ms-2 me-2 mt-5 ">
+                  
     
                         <a href="/lead"> <button class="btn btn-danger mt-5 ml-3 mb-3"> Add  Fresh lead
                             </button></a>
@@ -31,12 +30,12 @@
                                 </thead>
                             </table>
                         </div>
-                    </div>
+                   
                 </div>
             </div>
         </div>
-    </main>
-    </x-layouts.base>
+        @endsection
+
     @section('page-script')
     <script src="{{ asset('assets') }}/js/lead.js"></script>
     @endsection

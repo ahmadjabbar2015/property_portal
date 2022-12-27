@@ -1,12 +1,8 @@
-<x-layouts.base>
-@extends('layouts.app')
-@include('layouts.sidenav')
-<main class="content">
-  @include('layouts.topbar')
-<div class="container">
-<br>
-<br>
-</div>
+@extends('layouts.master')
+@section('title' , 'Calander')
+@section('view_cal' , 'active')
+@section('main')
+
 <div class="container">
     <div class="row">
         <div class="row">
@@ -59,11 +55,9 @@
     </div>
 </div>
 
-</main>
-</x-layouts.base>
-@section('page-script')
-   
+@endsection
 
+@section('page-script')
 <!-- evenet -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>

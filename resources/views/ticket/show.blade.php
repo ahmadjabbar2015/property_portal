@@ -1,85 +1,71 @@
-<x-layouts.base>
-@extends('layouts.app')
-@include('layouts.sidenav')
-<main class="content">
-
-    @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'Show Ticket')
+@section('main')
   
 
     <div class="container">
 
         <div class="row">
-            <div class=" mt-6 ml-4">
-                <h1>
-                    Details Tickets
-                </h1>
+            <div class=" col-md-12 mt-3  ml-4">
+                <h1>Details Tickets</h1>
             </div>
-        </div><br>
-        <div class="shadow -lg-3 p-3 mb-5 bg-body rounded  col">
+        </div>
+        <div class="shadow -lg-3 p-3 mb-2    bg-body rounded  col">
             <div class="row">
-                <div class="col-md-8 ">
-                    <h4 class="ml-4">
+                <div class="col-md-8 ml-4">
+                    <h4>
                         REQUEST RENT PAYMENT
                     </h4>
                 </div>
 
-                <div class="col-md-3 d-grid gap-2 d-md-flex justify-content-md-end mr-2">
+                <div class="col-md-4 mb-3">
                     <button type="submit" class="btn  btn-info "><a href="#">
                             Edit </a></button>
                     <button type="submit" class="btn  btn-danger "><a href="#">
                             Delete </a></button>
-                </div><br><br>
-            </div><br><br>
+                </div
+            </div>
 
             @foreach ($ticket as $ticket)
-                <div class="row">
-                    <div class="col-md-5 ">
-                        <div class="ml-3">
-                            <h6 class="card-title "> Reporty By :</h6>
+                <div class="row text-centar">
+                    <div class="col ml-3 col-xs-6">
+                       
+                            <h6 class="card-title"> Reporty By:</h6>
                             <p> {{ $ticket->name }}</p>
-                        </div>
+                    
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="ml-4">
-                            <h6 class="card-title "> Assigned To :</h6>
-                            <select class="form-select form-control select2 " aria-label="Default select example"
-                                name="assign_name">
-                                <option> <?php if($ticket->assign_name==null){?>
-                                    No Assign
-                                    <?php  
-                            }else{?>
-                                    {{ $ticket->assign_name }}
-                                    <?php
-                            } ?></option>
-                            </select>
-                        </div>
+                    <div class="col ml-4 col-xs-6">
+                      
+                            <h6 class="card-title "> Assigned To:</h6>
+                            <p>No Assign</p>
+                      
                     </div>
                 </div><br><br>
+
                 <div class="ml-3">
-                    <h6 class="card-title "> Create on :</h6>
-                    <p> {{ $ticket->created_at }}</p>
+                    <h6 class="card-title "> Created on:</h6>
+                    <p> {{ date('F d, Y', strtotime($ticket->created_at)) }}</p>
                 </div>
                 <br><br>
                 <div class="row">
-                    <div class=" col ml-3">
-                        <h6 class="card-title "> Status</h6>
-                        <select class="form-select form-control select2 w-25" aria-label="Default select example"
-                            name="assigned">
+                    <div class=" col-md-4 ml-3">
+                        <h6 class="card-title ">Status</h6>
+                        <select class="form-select form-control" name="assigned">
                             <option>{{ $ticket->status }}</option>
                         </select>
 
                     </div>
-                    <div class=" col ml-3">
+                    <div class="col-md-4 ml-3 mb-4">
                         <h6 class="card-title ">Priority</h6>
-                        <select class="form-select form-control select2  w-25" name="priority">
+                        <select class="form-select form-control" name="priority">
                             <option>{{ $ticket->priority }}</option>
                         </select>
                     </div>
-                </div><br><br>
+                </div>
             @endforeach
-            <div class=" col">
-                <h6 class="card-title ">Overview :</h6>
+            <div class="col">
+                <h6 class="card-title ">Overview:</h6>
                 <p> {{ $ticket->description }}</p>
                 </select>
             </div>
@@ -114,8 +100,7 @@
             <br><br>
         </div> -->
     </div>
-</main>
-</x-layouts.base>
+@endsection 
 @section('page-script')
     <script src="{{ asset('assets') }}/js/ticket.js"></script>
 @endsection

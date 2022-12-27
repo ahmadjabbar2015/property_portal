@@ -1,8 +1,8 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'View Booking Reports')
+@section('view_bookingReport' , 'active')
+@section('main')    
+
 
         <div class="container">
 
@@ -16,7 +16,7 @@
             </div>
             <div id="filter_id" class="shadow bg-light">
                 <div class="row mt-3 px-3 ">
-                    <div class="col-md-3 mt-3 mb-5" >
+                    <div class="col-md-3 mt-3 " >
                         <label>Property</label>
                         <select class="form-control property_id" placeholder="Property" id="search_property_id" >
                             <option value="" selected >Select your option</option>
@@ -47,7 +47,7 @@
                                 <option value="annually">Annual</option>
                         </select>
                     </div>
-                    <div class="col-md-3 mt-3">
+                    <div class="col-md-3 mt-3 mb-4">
 
                             <label>Date Rage</label>
                             <input class="form-control form-control-solid date_range"  onchange="datepicker()" placeholder="Pick date rage"
@@ -84,8 +84,7 @@
                 </div>
             </div>
         </div>
-    </main>
-</x-layouts.base>
+@endsection
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>

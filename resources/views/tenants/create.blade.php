@@ -7,7 +7,7 @@
             <form method="POST" action="{{ url('tenant/store') }}" enctype="multipart/form-data" id="regiester_tenants">
                 @csrf
 
-                <div class="row" style="margin-top: -83px;">
+                <div class="row" style="margin-top:-83px;">
                     <div class="col-md-12 mt-6 ml-4 col-xs-12">
                         <h1>
                             Tenants

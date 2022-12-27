@@ -1,9 +1,6 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
-        {{-- saad --}}
+@extends('layouts.master')
+@section('title' , 'Show Cutomer')
+@section('main')
 
         <div class="container">
             <a href="/customers/index">
@@ -11,46 +8,49 @@
                     Back Customer</button>
             </a>
             <div class="row text-center">
-                <div class=" mt-6 ml-4">
+                <div class=" mt-4 ml-4">
                     <h1>
                         Customer Details
                     </h1>
 
                 </div>
-            </div><br>
+            </div>  
 
             <div class="d-flex justify-content-center">
-                <div class="shadow -lg-3 p-3 mb-5 bg-body rounded col-md-10">
-                    <div class="text-end">
-                        <h4>
+                <div class="row">
+                    <div class="col">
+                        <h4 style="display: inline-block;">
                             Customer
                         </h4>
+                    </div>
+                    <div class="col">
+
                         <button type="submit" class="btn btn-success"><a href="#">
                                 Edit</a></button>
                         <button type="submit" class="btn btn-danger"><a href="#"> Delete
                             </a></button>
-                    </div><br><br>
+                    </div>
                     <h2>
                         ABOUT Customer:
                     </h2>
                     <div class="row mt-4">
                         <div class="col">
-                            <h5 class="card-title ">First Name :</h5>
+                            <h5 class="card-title ">First Name:</h5>
                             <p> {{ $data->client_name }} </P>
                         </div>
                         <div class="col">
-                            <h5 class="card-title ">Contact No.:</h5>
+                            <h5 class="card-title ">Contact No:</h5>
                             <p> {{ $data->client_contact }} </P>
                         </div>
                         <div class="col">
-                            <h5 class="card-text">Email :</h5>
+                            <h5 class="card-text">Email:</h5>
                             <p> {{ $data->client_mail }} </p>
                         </div>
                     </div>
                     <div class="row mt-4">
 
                         <div class="col">
-                            <h5 class="card-text">Location : </h5>
+                            <h5 class="card-text">Location: </h5>
                             <p> {{ $data->clinet_location }}</p>
                         </div>
                         <div class="col">
@@ -95,7 +95,7 @@
                     </div>
                     <div class="row mt-4">
                         <div class="col">
-                            <h5 class="card-text">Last Follow Date: </h5>
+                            <h5 class="card-text">Last Follow Date:</h5>
                             <p>
                                 {{date('F d, Y', strtotime($data->last_follow_date ))}}
                             </p>
@@ -105,14 +105,11 @@
                             <p>{{ $data->budget_maximum }}</p>
                         </div>
                         <div class="col">
-                            <h5 class="card-text">Customer Remarks : </h5>
+                            <h5 class="card-text">Customer Remarks: </h5>
                             <p>{{ $data->remark }}</p>
                         </div>
-                    </div>
-
-                </div>
+                    </div>  
             </div>
 
         </div>
-    </main>
-</x-layouts.base>
+@endsection

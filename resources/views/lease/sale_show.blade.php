@@ -1,11 +1,6 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
-
-        {{-- saad --}}
-
+@extends('layouts.master')
+@section('title' , 'Show Sale')
+@section('main')
         <div class="container ">
             <div class="row">
                 <div class="col-md-12  ">
@@ -100,9 +95,8 @@
 
 
 
-    </main>
-    </x-layouts.base>
-    {{-- @include('layouts.footers.auth') --}}
+
+     @endsection
 
     @section('page-script')
     <script src="{{ asset('assets') }}/js/lease.js"></script>

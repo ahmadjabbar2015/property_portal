@@ -1,17 +1,14 @@
-<x-layouts.base>
-@extends('layouts.app')
-@include('layouts.sidenav')
-<main class="content">
-    @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'View Inventory')
+@section('view_inv' , 'active')
+@section('main')
   
 <div class="container">
     <div class="row">
         <div class="col">
-            <div class="ms-2 me-2 mt-5">
-
+            <div class="ms-2 me-2 mt-3">
                 <a href="/inventory"> <button class="btn btn-primary mt-5 ml-3 mb-3">Add Inventory
                     </button></a>
-
                 <div class="table-responsive">
                     <table class="table landlords_data" id="inventory_table">
                         <thead>
@@ -30,8 +27,8 @@
         </div>
     </div>
 </div>
-</main>
-</x-layouts.base>
+@endsection
+
 @section('page-script')
 <script src="{{ asset('assets') }}/js/inventory.js"></script>
 @endsection

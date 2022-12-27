@@ -1,9 +1,8 @@
-<x-layouts.base>
-    @extends('layouts.app')
+@extends('layouts.master')
+@section('title' , 'View Rent Reports')
+@section('view_rentReport' , 'active')
+@section('main')    
 
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
 
        @php
                     $totalpaid = $alldata->total_payment;
@@ -14,112 +13,111 @@
         <div class="container">
 
             <div class="row d-flex justify-content-center">
-                <div class="col-md-9 mt-3 shadow ">
+                <div class="col-md-9 mt-3 shadow " style="text-align: center">
 
                     <h2 class="mt-3 mb-4 ">
                         Property Rent Details ({{date('F d, Y', strtotime($alldata->created_at))}})
-
                     </h2>
 
                         <hr>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                 Property Name
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $alldata->name }}</h6>
                         </div>
                         <hr>
                     </div>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                 Tenants Name
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $alldata->full_name }}</h6>
                         </div>
                         <hr>
                     </div>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                 rent
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{$alldata->rent}} </h6>
                         </div>
                         <hr>
                     </div>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                 Installements
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $alldata->frequency_collection }}</h6>
                         </div>
                         <hr>
                     </div>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                               Start Lease
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ date('F d, Y', strtotime($alldata->lease_start)) }}</h6>
                         </div>
                         <hr>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                 End Lease
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{date('F d, Y', strtotime($alldata->lease_end))}}</h6>
                         </div>
                         <hr>
                     </div>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                               Due Date
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ date('F d, Y', strtotime($alldata->due_date)) }}</h6>
                         </div>
                         <hr>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                 Advance Payment
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $alldata->advance_payments }}</h6>
                         </div>
                         <hr>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                 Remaning Payment
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
 
                             <h6>{{$total_remaning_payment}}</h6>
                         </div>
@@ -127,23 +125,23 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                Total payment
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $alldata->total_payment }}</h6>
                         </div>
                         <hr>
 
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col">
                                 <h6 class="mb-3">
                                   Paid payment
                                 </h6>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col">
                                 <h6>{{ $alldata->paid_payment }}</h6>
                             </div>
                             <hr>
@@ -177,8 +175,8 @@
                           @endforeach
                             </tbody>
                         </table>
-    <div>
-        <hr>
+                            <div>
+                                <hr>
 
                         <div class="row">
                             <table class="table table-striped">
@@ -216,18 +214,22 @@
                                 </tbody>
                             </table>
                     </div>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary" type="button"><i class="fa fa-print"></i>
-                        Print</button>
-                    <a href="{{url("rentleasereports")}}">
-                        <button class="btn btn-danger" type="button">Close</button>
-                    </a>
-                </div>
-                <p class="text-center">
-                    @ Cross Devlogix.Com
-                </p>
+            
             </div>
 
         </div>
-    </main>
-</x-layouts.base>
+
+        <div class="mb-5" style="text-align: end;">
+            <button class="btn btn-primary" type="button"><i class="fa fa-print"></i>
+                Print</button>
+            <a href="{{url("rentleasereports")}}">
+                <button class="btn btn-danger" type="button">Close</button>
+            </a>
+        </div>
+        
+    <p class="text-center">
+            @ Cross Devlogix.Com
+        </p>
+
+
+@endsection

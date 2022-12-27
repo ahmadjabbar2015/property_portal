@@ -1,10 +1,7 @@
-
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
-    <title>Create  Profile</title>
+@extends('layouts.master')
+@section('title' , 'Create  Profile')
+@section('main')
+    
     <div>
 
         <div class="row">
@@ -119,8 +116,8 @@
 
         </div>
     </div>
-</main>
-</x-layouts.base>
+    @endsection
+
 @section('page-script')
     <script src="{{ asset('assets') }}/js/user.js"></script>
     @endsection

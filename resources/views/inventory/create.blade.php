@@ -1,23 +1,20 @@
-<x-layouts.base>
-@extends('layouts.app')
-@include('layouts.sidenav')
-<main class="content">
-    @include('layouts.topbar')
-
-    {{-- saad --}}
+@extends('layouts.master')
+@section('title' , 'Add Inventory')
+@section('add_inv' , 'active')
+@section('main')
 
     <div class="container">
         <form method="POST" action="/inventory/store" enctype="multipart/form-data" id="regiester_inventory">
             @csrf
             <div class="row">
-                <div class=" mt-6 ml-4">
+                <div class=" mt-3 ml-4">
                     <h1>
                         Create Inventory
                     </h1>
                 </div>
             </div><br>
 
-            <div class="shadow -lg-3 p-3 mb-5 bg-body rounded mr-4 ml-4">
+            <div class="shadow -lg-3 p-3 mb-3 bg-body rounded mr-4 ml-4">
                 <div class="row">
                     <div class="col-md-10">
                         <h4>
@@ -41,7 +38,7 @@
 
 
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-6">
                         <label>Select Main Property *</label>
                         <select class="form-select form-control select2 " aria-label="Default select example"
                             name="property_id">
@@ -54,7 +51,7 @@
 
                         </select>
                     </div>
-                    <div class="col" id="property_units_show">
+                    <div class="col-md-6" id="property_units_show">
                         <label> Property Units</label>
                         <select class="form-select form-control select2 "  aria-label="Default select example"
                             name="propertyunit_id">
@@ -85,10 +82,7 @@
         </form>
     </div>
 
-</main>
-
-</x-layouts.base>
-    {{-- @include('layouts.footers.auth') --}}
+@endsection
 
 @section('page-script')
 <script src="{{ asset('assets') }}/js/inventory.js"></script>

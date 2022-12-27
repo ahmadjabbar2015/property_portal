@@ -1,8 +1,7 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'Roles')
+@section('role' , 'active')
+@section('main')
 
         <div class="container">
             <div class="row">
@@ -29,8 +28,8 @@
                 </div>
             </div>
         </div>
-    </main>
-</x-layouts.base>
+
+        @endsection
 
 
 <form method="POST" action="{{ route('role.store') }}" id="role_table">
