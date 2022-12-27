@@ -13,8 +13,9 @@ class PropertyUnitController extends Controller
     //
     public function getPropertyUnits()
     {
-
-        $propertyunits = Propertyunits::with(['propertyDetails','propertyDetails.location', 'propertyDetails.amenities' , 'propertyDetails.propertyImages'])->paginate(10);
+        $bussniess_id=auth()->user()->bussniess_id;
+        $propertyunits = Propertyunits::with(['propertyDetails','propertyDetails.location', 'propertyDetails.amenities' , 'propertyDetails.propertyImages'])
+        ->where('bussniess_id',$bussniess_id)->paginate(10);
         return CommonResource::collection($propertyunits);
             
        
@@ -22,7 +23,9 @@ class PropertyUnitController extends Controller
 
     public function showPropertyunit($id)
     {
-        $property_units = propertyunits::with(['propertyDetails','propertyDetails.location', 'propertyDetails.amenities' , 'propertyDetails.propertyImages'])->where('id', $id)->get();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $property_units = propertyunits::with(['propertyDetails','propertyDetails.location', 'propertyDetails.amenities' , 'propertyDetails.propertyImages'])->where('id', $id)
+        ->where('bussniess_id',$bussniess_id)->get();
 
         return  CommonResource::collection($property_units);
     }
@@ -30,10 +33,12 @@ class PropertyUnitController extends Controller
     {
         try {
             DB::beginTransaction();
+            $bussniess_id=auth()->user()->bussniess_id;
                 $propertyunit = new propertyunits;
                 $propertyunit->property_id = $request->property_id;
                 $propertyunit->title = $request->title;
                 $propertyunit->description = $request->description;
+                $propertyunit->bussniess_id = $bussniess_id;
 
                 if ($request->hasfile('image')) {
                     $file = $request->file('image');

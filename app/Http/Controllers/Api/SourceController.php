@@ -13,13 +13,17 @@ class SourceController extends Controller
 {
     public function index()
     {
-        $source = source::paginate(10);
+      
+        $bussniess_id=auth()->user()->bussniess_id;
+        $source =source::where('bussniess_id',$bussniess_id)->paginate(10);
         return CommonResource::collection($source);
     }
 
     public function show($id)
     {
-        $source = source::where('id' , $id)->get();
+        $bussniess_id=auth()->user()->bussniess_id;
+        $source = source::where('id' , $id)
+        ->where('bussniess_id',$bussniess_id) ->get();
         return CommonResource::collection($source);
     }
 
@@ -38,8 +42,11 @@ class SourceController extends Controller
 
         try {
             DB::beginTransaction();
+            $bussniess_id = auth()->user()->bussniess_id;
                 source::create([
-                    'source' => $request->source
+                    'source' => $request->source,
+                    'bussniess_id'=> $bussniess_id=$bussniess_id,
+                  
                 ]);
             DB::commit();
             return [

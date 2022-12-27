@@ -12,19 +12,27 @@ use Exception;
 
 class TenantController extends Controller
 {
-    public function index(){
-        $tenants = tenants::paginate(10);
+    public function index()
+    {
+
+        $bussniess_id = auth()->user()->bussniess_id;
+        $tenants = tenants::where('bussniess_id', $bussniess_id)->paginate(10);
         return new TenantResource($tenants);
     }
 
-    public function show($id){
-        $tenant = tenants::where('id' , $id)->get();
+    public function show($id)
+    {
+        $bussniess_id = auth()->user()->bussniess_id;
+        $tenant = tenants::where('id', $id)
+        ->where('bussniess_id', $bussniess_id)->get();
         return new TenantResource($tenant);
     }
 
-    public function store(TenantRequest $request){
-        try{
+    public function store(TenantRequest $request)
+    {
+        try {
             DB::beginTransaction();
+            $bussniess_id = auth()->user()->bussniess_id;
             $tenants = new tenants;
             $tenants->full_name = $request->full_name;
             $tenants->email = $request->email;
@@ -34,6 +42,7 @@ class TenantController extends Controller
             $tenants->occupation = $request->occupation;
             $tenants->place = $request->place;
             $tenants->emrgency_name = $request->emrgency_name;
+            $tenants->bussniess_id=$bussniess_id;
             $tenants->emrgency_number = $request->emrgency_number;
 
             if ($request->hasfile('image')) {
@@ -50,11 +59,11 @@ class TenantController extends Controller
                 'success'   => true,
                 'message'   => "Tenant Added Successfully",
             ];
-       }catch(Exception $e){
-        return [
-            'success'   => false,
-            'message'   => $e->getMessage(),
-        ];
-       }
+        } catch (Exception $e) {
+            return [
+                'success'   => false,
+                'message'   => $e->getMessage(),
+            ];
+        }
     }
 }

@@ -15,12 +15,17 @@ class inventoryController extends Controller
     //
     public function getInventories()
     {
-        $inventory = Inventory::with(['propertyDetails','propertyUnits.propertyDetails','propertyUnits.propertyDetails.location' , 'propertyUnits.propertyDetails.amenities' , 'propertyUnits.propertyDetails.propertyImages'])->paginate(10);
+        $bussniess_id = auth()->user()->bussniess_id;
+        $inventory = Inventory::with(['propertyDetails', 'propertyUnits.propertyDetails', 'propertyUnits.propertyDetails.location', 'propertyUnits.propertyDetails.amenities', 'propertyUnits.propertyDetails.propertyImages'])
+            ->where('bussniess_id', $bussniess_id)->paginate(10);
+
         return CommonResource::collection($inventory);
     }
     public function showInventory($id)
     {
-        $inventory = Inventory::where('id', $id)->get();
+        $bussniess_id = auth()->user()->bussniess_id;
+        $inventory = Inventory::where('id', $id)
+            ->where('bussniess_id', $bussniess_id)->get();
 
         return  CommonResource::collection($inventory);
     }
@@ -28,11 +33,14 @@ class inventoryController extends Controller
     {
         try {
             DB::beginTransaction();
+
+            $bussniess_id = auth()->user()->bussniess_id;
             $inventory = new Inventory;
             $inventory->property_id = $request->property_id;
-            $inventory->propertyunit_id  = $request->propertyunit_id ;
+            $inventory->propertyunit_id  = $request->propertyunit_id;
             $inventory->description = $request->description;
             $inventory->image = $request->image;
+            $inventory->bussniess_id=$bussniess_id;
             $inventory->unit = $request->unit;
 
             if ($request->hasfile('image')) {
@@ -41,7 +49,7 @@ class inventoryController extends Controller
                 $filename = time() . '.' . $extention;
                 $inventory = $file->move(public_path('/assets/img'), $filename);
                 $inventory->image = $filename;
-            }    
+            }
 
             $inventory->save();
             DB::commit();

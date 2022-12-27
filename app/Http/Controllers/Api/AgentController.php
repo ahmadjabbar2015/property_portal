@@ -14,13 +14,18 @@ class AgentController extends Controller
     //
     public function getAgents()
     {
-        $agent = Agent::paginate(10);
-
+ 
+        $bussniess_id=auth()->user()->bussniess_id;
+        $agent =Agent::where('bussniess_id',$bussniess_id)->paginate(10);
         return  CommonResource::collection($agent);
     }
     public function showAgent($id)
     {
-        $agent = Agent::where('id', $id)->get();
+        
+        $bussniess_id=auth()->user()->bussniess_id;
+
+        $agent = Agent::where('id', $id)
+      ->where('bussniess_id',$bussniess_id)->get();
 
         return  CommonResource::collection($agent);
     }
@@ -28,11 +33,14 @@ class AgentController extends Controller
     {
         try {
             DB::beginTransaction();
+            $bussniess_id=auth()->user()->bussniess_id;
                 $agent = new Agent;
                 $agent->name = $request->name;
                 $agent->email = $request->email;
                 $agent->number = $request->number;
                 $agent->address = $request->address;
+                $agent->bussniess_id=$bussniess_id;
+                
                 $agent->save();
             DB::commit();
             return $this->returnSuccess("Agent");
@@ -43,4 +51,6 @@ class AgentController extends Controller
         }
       
     }
+
+    
 }

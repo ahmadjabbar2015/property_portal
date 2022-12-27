@@ -15,7 +15,9 @@ class LeadController extends Controller
 {
     public function getLeads()
     {
-        $lead = Lead::paginate(10);
+
+        $bussniess_id = auth()->user()->bussniess_id;
+        $lead = Lead::where('bussniess_id', $bussniess_id)->paginate(10);
 
         return  CommonResource::collection($lead);
     }
@@ -23,13 +25,15 @@ class LeadController extends Controller
     public function showLead($id)
     {
         $with = [];
-        if(request()->has('attempt')){
+        if (request()->has('attempt')) {
             $attempt = request()->attempt;
-            if($attempt == 'true'){
+            if ($attempt == 'true') {
                 $with[] = 'getAttempts';
             }
         }
-        $lead = Lead::with($with)->where('id', $id)->get();
+        $bussniess_id = auth()->user()->bussniess_id;
+        $lead = Lead::with($with)->where('id', $id)
+            ->where('bussniess_id', $bussniess_id)->get();
 
         return  CommonResource::collection($lead);
     }
@@ -37,7 +41,9 @@ class LeadController extends Controller
     public function storeLead(LeadRequest $request)
     {
         try {
+           
             DB::beginTransaction();
+            $bussniess_id = auth()->user()->bussniess_id;
             $lead = new lead;
             $lead->client_name = $request->client_name;
             $lead->client_contact = $request->client_contact;
@@ -48,26 +54,31 @@ class LeadController extends Controller
             $lead->status = $request->status;
             $lead->remark = $request->remark;
             $lead->user_id = $request->user()->id;
+            $lead->bussniess_id = $bussniess_id;
             $lead->save();
             DB::commit();
             return $this->returnSuccess("Lead");
-            
         } catch (\Throwable $th) {
             DB::rollBack();
             return $this->returnFalse($th->getMessage());
         }
     }
-    
+
     public function getAttempt($id)
     {
-        $lead = attempt::where('id', $id)->get();
+        $bussniess_id = auth()->user()->bussniess_id;
+        $lead = attempt::where('id', $id)
+            ->where('bussniess_id', $bussniess_id)->get();
         return  CommonResource::collection($lead);
     }
 
-    public function storeAttempt(AttemptRequest $request )
+    public function storeAttempt(AttemptRequest $request)
     {
         try {
+
+            
             DB::beginTransaction();
+            $bussniess_id = auth()->user()->bussniess_id;
             $attempt = new attempt();
             $attempt->client_name = $request->client_name;
             $attempt->client_contact = $request->client_contact;
@@ -83,7 +94,8 @@ class LeadController extends Controller
             $attempt->class_status = $request->class_status;
             $attempt->next_follow_date = $request->next_follow_date;
             $attempt->aad_remark = $request->aad_remark;
-            $attempt->lead_id =$request->lead_id;
+            $attempt->lead_id = $request->lead_id;
+            $attempt->bussniess_id=$bussniess_id;
             $attempt->save();
             DB::commit();
             return $this->returnSuccess("Attempt");

@@ -12,44 +12,43 @@ use App\Models\Bussniess;
 class BussniessController extends Controller
 {
 
-    public function create(Type $var = null)
+    public function create()
     {
         return view('bussniess.create');
     }
     public function store(Request $request)
     {
 
-        try{
+        try {
             DB::beginTransaction();
 
-            $bussniess_regirester=[
-                        'name' => $request->name,
-                    'date' => $request->date,
-                    'country' => $request->country,
-                    'state' => $request->state,
-                    'city' => $request->city,
-                    'zip_code' => $request->zip_code,
-                    'landmark' => $request->landmark,
-                    'logo' =>$request->logo,
+            $bussniess_regirester = [
+                'name' => $request->name,
+                'date' => $request->date,
+                'country' => $request->country,
+                'state' => $request->state,
+                'city' => $request->city,
+                'zip_code' => $request->zip_code,
+                'landmark' => $request->landmark,
+                'logo' => $request->logo,
 
             ];
-            $logo=$request->logo;
-            if ($request->hasfile('logo'))
-            {
+            $logo = $request->logo;
+            if ($request->hasfile('logo')) {
 
 
-                $file=$request->file('logo');
-                $extention=$file->getClientoriginalExtension();
-                $filename=time().'.'.$extention;
+                $file = $request->file('logo');
+                $extention = $file->getClientoriginalExtension();
+                $filename = time() . '.' . $extention;
 
-                $data=$file->move(public_path('/assets/img'),$filename);
-                $logo=$filename;
+                $data = $file->move(public_path('/assets/img'), $filename);
+                $logo = $filename;
             }
-            $bussniess_regirester['logo']=$logo;
+            $bussniess_regirester['logo'] = $logo;
 
             $bussniess_details = Bussniess::create($bussniess_regirester);
 
-            $users=DB::table("users")->insert([
+            $users = DB::table("users")->insert([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
@@ -58,11 +57,6 @@ class BussniessController extends Controller
                 'bussniess_id' => $bussniess_details->id
 
             ]);
-
-
-
-
-
             DB::commit();
             return redirect(route('login'))->with('success', 'Bussniess Addedd!');
         } catch (\Throwable $th) {
@@ -71,5 +65,5 @@ class BussniessController extends Controller
 
             return redirect()->back()->with('flas_message');
         }
-}
+    }
 }

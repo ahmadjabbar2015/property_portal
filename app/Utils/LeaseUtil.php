@@ -16,23 +16,27 @@ class LeaseUtil extends Util
 {
     public function getLeases($id = null)
     {
+        $bussniess_id = auth()->user()->bussniess_id;
         $leases_data = leases::join('propertydetails', 'propertydetails.id', '=', 'leases.property_id')
             ->join('tenants', 'tenants.id', '=', 'leases.tenant_id')
             ->join('propertyunits', 'propertyunits.id', '=', 'leases.propertyunit_id')
+            ->where('propertydetail.bussniess_id', $bussniess_id)
             ->select('leases.*', 'tenants.full_name', 'propertyunits.title', 'propertydetails.name', DB::raw('(leases.total_payment-leases.paid_payment) as remaining_amount'));
         if ($id != null) {
             $leases_data = $leases_data->where('leases.id', $id)->paginate(10);
-        }else{
+        } else {
             $leases_data = $leases_data->paginate(10);
         }
         return $leases_data;
     }
     public function createLease($data)
     {
+        $bussniess_id = auth()->user()->bussniess_id;
         $property_id = propertydetail::where('id', $data->property_id)->first();
         if (!$property_id) {
             throw new Exception("Incorrect Property Id");
         }
+        
         $leasesdata = new leases;
         $leasesdata->property_id = $data->property_id;
         $leasesdata->propertyunit_id = $data->propertyunit_id;
@@ -46,6 +50,7 @@ class LeaseUtil extends Util
         $leasesdata->due_date = $data->due_date;
         $leasesdata->frequency_collection = $data->frequency_collection;
         $leasesdata->total_payment = $data->total_payment;
+        $leasesdata->bussniess_id = $bussniess_id;
         $leasesdata->image = $data->image;
 
         if ($data->hasfile('image')) {
@@ -62,8 +67,9 @@ class LeaseUtil extends Util
     }
 
     public function rentintallment($id)
-    {
-        $rentdata = leases::where('id', $id)->first();
+    { $bussniess_id = auth()->user()->bussniess_id;
+        $rentdata = leases::where('id', $id)
+        ->first();
 
         $no_of_ym = $rentdata->get_dmy;
         $payment_my = $rentdata->rent;
@@ -80,6 +86,7 @@ class LeaseUtil extends Util
                 $sale_lease_transaction->due_date = $due_data;
                 $sale_lease_transaction->monthly = $i;
                 $sale_lease_transaction->payment = $payment_my;
+                $sale_lease_transaction->bussniess_id = $bussniess_id;
                 $sale_lease_transaction->save();
             }
         } else if ($frequncy  == "annually") {
@@ -107,6 +114,7 @@ class LeaseUtil extends Util
                 $sale_lease_transaction->due_date = $due_data;
                 $sale_lease_transaction->monthly = $i;
                 $sale_lease_transaction->payment = $payment_my;
+                $sale_lease_transaction->bussniess_id = $bussniess_id;
                 $sale_lease_transaction->save();
             }
         }
@@ -114,6 +122,7 @@ class LeaseUtil extends Util
 
     public function storeSaleLease($request)
     {
+        $bussniess_id = auth()->user()->bussniess_id;
         $property_id = propertydetail::where('id', $request->property_id)->first();
         if (!$property_id) {
             throw new Exception("Incorrect Property Id");
@@ -131,6 +140,7 @@ class LeaseUtil extends Util
         $sale_lease->frequency_collection = $request->frequency_collection;
         $sale_lease->number_of_years_month = $request->number_of_years_month;
         $sale_lease->payment_per_frequency = $request->payment_per_frequency;
+        $sale_lease->bussniess_id = $bussniess_id;
         $sale_lease->image = $request->image;
 
         if ($request->hasfile('image')) {
@@ -145,6 +155,7 @@ class LeaseUtil extends Util
     }
     public function saleinstallmentplane($id)
     {
+        $bussniess_id = auth()->user()->bussniess_id;
         $saledata = salelease::where('id', $id)->first();
         $no_of_ym = $saledata->number_of_years_month;
         $payment_my = $saledata->payment_per_frequency;
@@ -161,6 +172,8 @@ class LeaseUtil extends Util
                 $saleleasetransaction->due_date = $due_data;
                 $saleleasetransaction->monthly = $i;
                 $saleleasetransaction->payment = $payment_my;
+                
+                $saleleasetransaction->bussniess_id = $bussniess_id;
                 $saleleasetransaction->save();
             }
         } else {

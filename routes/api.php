@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\inventoryController;
 use App\Http\Controllers\Api\LeaseController;
 use App\Http\Controllers\Api\RentController;
 use App\Http\Controllers\Api\SaleController;
+use App\Http\Controllers\Api\BussniessController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
