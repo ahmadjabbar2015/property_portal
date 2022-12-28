@@ -1,8 +1,7 @@
-<x-layouts.base>
-@extends('layouts.app')
-@include('layouts.sidenav')
-<main class="content">
-    @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'Add Property')
+@section('add_pro' , 'active')
+@section('main')
 
 
     {{-- saad --}}
@@ -14,10 +13,9 @@
                     Create New Property
                 </h1>
             </div>
-        </div><br>
+        </div>
         <div class="shadow -lg-3 p-3 mb-5 bg-body rounded mr-2 ml-2">
-
-            <p>Full all required details in all sections before submitting the data</p><br>
+            <p>Full all required details in all sections before submitting the data</p>
             <div class="container-fluid">
                 <div class="row bg-light col-md-12  ">
                     <div class="col-md-12">
@@ -109,7 +107,7 @@
                                     <span class="input-group-text bg-#918b8a" id="basic-addon1">%</span>
                                 </div>
                             </div>
-                        </div><br>
+                        </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <label>Deposit</label>
@@ -118,12 +116,12 @@
                                     <span class="input-group-text bg-#918b8a" id="basic-addon1">$</span>
                                 </div>
                             </div>
-                        </div><br>
-                        <div class="form-group">
+                        </div>
+                        <div class="form-group mb-2">
                             <label for="exampleFormControlTextarea1">Description *</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
 
-                        </div><br>
+                        </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button class="btn btn-lg btn-primary me-md-2" type="submit">Create Property</button>
@@ -146,11 +144,11 @@
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Search location</label>
                             <input type="text" class="form-control" name="search">
-                        </div><br>
+                        </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Address</label>
                             <input type="text" class="form-control" name="address">
-                        </div><br>
+                        </div>
                         <div class="row">
                             <div class="col-md-5">
                                 <label for="exampleInputEmail1" class="form-label">City</label>
@@ -160,11 +158,11 @@
                                 <label for="exampleInputEmail1" class="form-label">State</label>
                                 <input type="text" class="form-control" name="state">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Post Code</label>
                                 <input type="text" class="form-control" name="post">
                             </div>
-                        </div><br>
+                        </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button class="btn btn-lg btn-primary me-md-2" type="submit">Create Property</button>
                         </div>
@@ -336,8 +334,8 @@
                 </div>
             </div>
         </div>
-</main>
-</x-layouts.base>
+
+@endsection
 @section('page-script')
 
     <script src="{{ asset('assets') }}/js/property.js"></script>

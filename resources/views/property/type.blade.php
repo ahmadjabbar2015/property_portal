@@ -1,38 +1,37 @@
-<x-layouts.base>
-@extends('layouts.app')
-@include('layouts.sidenav')
-<main class="content">
- @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'Property Type')
+@section('protype' , 'active')
+@section('main')
 
 
     <div class="container">
         <form method="POST" action="{{ url('propertytype/store') }}" enctype="" id="regiester_propertytype">
             @csrf
             <div class="row">
-                <div class=" mt-6 ml-4">
+                <div class=" mt-5 ml-4">
                     <h1>
                         Property Type
                     </h1>
                 </div>
-            </div><br>
+            </div>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="shadow -lg-3 p-3 mb-5 bg-body rounded mr-4 ml-4">
+                    <div class="shadow -lg-3 p-3 bg-body rounded mr-4 ml-4">
 
 
-                        <div class=" mt-2">
+                      
                             <div class="col">
-                                <label for="Fname">Type :*</label>
+                                <label for="Fname">Type:*</label>
                                 <input type="text" class="form-control" placeholder="" name="type" id="type" required>
                                 <span id="type_id" class="text-danger font-weight-bold"></span>
                             </div>
-                            <div class="col">
-                                <label for="">Description </label>
+                            <div class="col mb-3">
+                                <label for="">Description</label>
                                 <input type="textarea" class="form-control" placeholder=""
                                     rows="3"name="description">
 
                             </div>
-                        </div><br>
+                        
 
                         <button type="submit" class="btn btn-primary  ml-3">Register Type</button>
                     </div>
@@ -56,8 +55,8 @@
         </div>
     </div>
     </div>
-</main>
-</x-layouts.base>
+    @endsection
+
 @section('page-script')
     <script src="{{ asset('assets') }}/js/propertytype.js"></script>
 @endsection

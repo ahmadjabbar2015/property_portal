@@ -1,9 +1,8 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
-<title>User management</title>
+@extends('layouts.master')
+@section('title' , 'User management')
+@section('view_user' , 'active')
+@section('main')
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
     <div class="d-block mb-4 mb-md-0">
 
@@ -42,8 +41,9 @@
 
     </table>
 </div>
-</main>
-</x-layouts.base>
+
+@endsection
+
 @section('page-script')
     <script src="{{ asset('assets') }}/js/user.js"></script>
     @endsection

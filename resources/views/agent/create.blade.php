@@ -1,22 +1,11 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
-        
-        {{-- saad --}}
+@extends('layouts.master')
+@section('title' , 'Add Agent')
+@section('add_agent' , 'active')
+@section('main')
         <div class="container ">
-            <div class="row">
-                <div class="col-md-12  ">
-                    <div class="mt-7 col-12  ">
-                    </div>
-                    <div class=" row ml-4 mr-4">
-                        <div class="col-10">
-                            <h1>
-                                Agents Form
-                            </h1>
-                        </div>
-                    </div>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                <h1>Agents Form</h1>
                 </div>
             </div>
             <form method="POST" action="/agent/store" id="regiester_agent">
@@ -62,9 +51,8 @@
                 </div>
             </form>
         </div>
-        {{-- @include('layouts.footers.auth') --}}
-    </main>
-</x-layouts.base>
+@endsection
+ 
 @section('page-script')
     <script src="{{ asset('assets') }}/js/agent.js"></script>
 @endsection

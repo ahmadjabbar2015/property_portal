@@ -1,8 +1,7 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'View Rent Reports')
+@section('view_rentReport' , 'active')
+@section('main')    
 
         <div class="container">
 
@@ -16,7 +15,7 @@
             </div>
             <div id="filter_id" class="shadow bg-light">
                 <div class="row mt-3 px-3">
-                    <div class="col-md-3 mt-3 mb-5">
+                    <div class="col-md-3 mt-3">
                         <label>Property</label>
                         <select class="form-control property_id" placeholder="Property" id="search_property_id" >
                             <option value="" selected >Select your option</option>
@@ -47,10 +46,10 @@
                                 <option value="annual">Annual</option>
                         </select>
                     </div>
-                 <div class="col-md-3 mt-3">
+                 <div class="col-md-3 mt-3 mb-5">
                                     <label>Date Rage</label>
-         <input class="form-control form-control-solid date_range"  onchange="datepicker()" placeholder="Pick date rage"
-          id="kt_daterangepicker_4" name="date_range" /></div>
+                    <input class="form-control form-control-solid date_range"  onchange="datepicker()" placeholder="Pick date rage"
+                    id="kt_daterangepicker_4" name="date_range" /></div>
                 </div>
 
             </div>
@@ -82,21 +81,20 @@
                 </div>
             </div>
         </div>
-    </main>
-</x-layouts.base>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        
+        @endsection
 
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 <script>
     var start = moment().subtract(29, "days");
@@ -130,5 +128,6 @@
 
 
 @section('page-script')
-    <script src="{{ asset('assets') }}/js/rent_reports.js"></script>
+    <script src="{{ asset('assets/js/rent_reports.js') }}"></script>
+
 @endsection

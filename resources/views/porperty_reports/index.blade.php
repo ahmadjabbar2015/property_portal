@@ -1,9 +1,7 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    @include('layouts.topbar')
-    <main class="content">
-       
+@extends('layouts.master')
+@section('title' , 'Property Reports')
+@section('view_proReport' , 'active')
+@section('main')       
 
         <div class="container">
 
@@ -64,7 +62,7 @@
                        </div>
 
                 </div>
-                <div class="row mt-5 px-3">
+                <div class="row mt-3 px-3">
                     {{-- <div class="col-md-3 mb-3">
                         <label>Property Type</label>
                         <select class="form-control " placeholder="Property" id="type_id">
@@ -109,9 +107,7 @@
                 </div>
             </div>
         </div>
-    </main>
-</x-layouts.base>
-
+        @endsection
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>

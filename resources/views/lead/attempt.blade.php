@@ -1,22 +1,21 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'Lead Attempt')
+@section('main')
+
         <div class="container">
             <form action="{{ url('/lead/update/' . $lead->id) }}" method="POST" id="attemp_laeds">
                 @csrf
 
                 <div class="row">
-                    <div class=" mt-6 ml-4">
+                    <div class=" mt-2 ml-4">
                         <h1>
                             Leads Detalis
                         </h1>
                     </div>
-                </div><br>
+                </div>
                 <div class="row">
                     <div class="col">
-                        <div class="shadow -lg-3 p-3 mb-5 bg-body rounded mr-2 ml-2">
+                        <div class="shadow -lg-3 p-3 mb-4 bg-body rounded mr-2 ml-2">
                             
                             <div class="row mt-5">
                                 <div class="col">
@@ -133,13 +132,13 @@
                                         name="next_follow_date">
 
                                 </div>
-                                <div class="form-group mt-5">
+                                <div class="form-group mt-3">
                                     <label for="exampleFormControlTextarea1">Remarks: </label>
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="aad_remark" > {{ $lead->remark }}</textarea>
                                 </div>
                             </div>
 
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
                                 <button class="btn btn-lg btn-primary me-md-2" type="submit">save</button>
                             </div>
                         </div>
@@ -176,8 +175,8 @@
             </div>
         </form> --}}
 
-    </main>
-</x-layouts.base>
+        @endsection
+
 @section('page-script')
         <script src="{{ asset('assets') }}/js/attempt_index.js"></script>
     @endsection

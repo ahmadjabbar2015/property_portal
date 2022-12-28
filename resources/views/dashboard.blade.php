@@ -1,12 +1,9 @@
-{{-- <x-layouts.base> --}}
-
-    @section('dashboard' , 'active')
-
-    <title>Dashboard</title>
+ @section('dashboard' , 'active')
+ 
+<title>Dashboard</title>
 
     <div class="py-4">
     <h4>Dashboard</h4>
-    <p>Welcome TO {{auth()->user()->first_name}}</p>
     </div>
     <div class="row">
         <div class="col-12 col-sm-6 col-xl-4 mb-4">
@@ -52,22 +49,15 @@
                             </div>
                             <div class="d-sm-none">
                                 <h2 class="fw-extrabold h5">Property</h2>
-                                <h3 class="mb-1"></h3>
+                                <h3 class="mb-1">{{$totalPropertyCount->count()}}</h3>
                             </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                             <div class="d-none d-sm-block">
                                 <h2 class="h6 text-dark-400 mb-0">Property</h2>
                                 <h3 class="fw-extrabold mb-2">{{$totalPropertyCount->count()}}</h3>
-                            </div>
-                            <small class="d-flex align-items-center text-dark-500">
-                                Feb 1 - Apr 1,
-                                <svg class="icon icon-xxs text-dark-500 ms-2 me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"></path></svg>
-                                GER
-                            </small>
-                            <div class="small d-flex mt-1">
-                                <div>Since last month <svg class="icon icon-xs text-danger" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg><span class="text-danger fw-bolder">2%</span></div>
-                            </div>
+                            </div><br><br>
+                           
                         </div>
                     </div>
                 </div>
@@ -285,7 +275,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div>  
     </div>
-    {{-- </x-layouts.base> --}}
+

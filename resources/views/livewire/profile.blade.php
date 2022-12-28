@@ -1,8 +1,5 @@
-
-
     <title>crossdevlogix - Profile</title>
     <div>
-
         <div class="row">
             <div class="col-12 col-xl-8">
                 @if ($showSavedAlert)

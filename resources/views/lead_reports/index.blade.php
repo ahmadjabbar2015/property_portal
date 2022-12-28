@@ -1,9 +1,7 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
-
+@extends('layouts.master')
+@section('title' , 'View Lead Reports')
+@section('view_leadReport' , 'active')
+@section('main')    
         <div class="container">
 
             <h1>
@@ -67,7 +65,7 @@
 
 
                 </div>
-                <div class="row mt-5 px-3">
+                <div class="row mt-2 px-3">
                     <div class="col-md-3 mt-3  mb-3">
                         <label>Date Range</label>
                         <input class="form-control form-control-solid date_range" onchange="datepicker()"
@@ -106,8 +104,7 @@
                 </div>
             </div>
         </div>
-    </main>
-</x-layouts.base>
+@endsection
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>

@@ -1,15 +1,10 @@
-<x-layouts.base>
-    @extends('layouts.app')
-
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
-
-        {{-- saad --}}
+@extends('layouts.master')
+@section('title' , 'Show Landload')
+@section('main')
 
         <div class="container">
             <a href="/landlord/index">
-                <button type="button" class="btn btn-primary btn-lg"><-Back Landlord</button>
+                <button type="button" class="btn btn-primary"><-Back Landlord</button>
                 </a>
             <div class="row text-center">
                 <div class=" mt-6 ml-4">
@@ -82,5 +77,4 @@
 
             </div>
         </div>
-    </main>
-</x-layouts.base>
+@endsection

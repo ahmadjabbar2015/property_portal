@@ -1,8 +1,7 @@
-<x-layouts.base>
-    @extends('layouts.app')
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'Lead Attempt')
+@section('view_attempt' , 'active')
+@section('main')
       
         <div class="container">
             <div class="row">
@@ -39,8 +38,8 @@
                 </div>
             </div>
         </div>
-    </main>
-    </x-layouts.base>
+        @endsection
+    
     @section('page-script')
     <script src="{{ asset('assets') }}/js/attempt_index.js"></script>
     @endsection

@@ -378,3 +378,6 @@ Updivision Blog: <https://updivision.com/blog/?ref=pdl-readme>
 
 - [Themesberg](https://themesberg.com/)
 - [UPDIVISION](https://updivision.com)
+
+
+<!-- Mobail view 416 x 633 -->

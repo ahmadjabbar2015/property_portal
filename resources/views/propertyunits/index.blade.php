@@ -1,17 +1,13 @@
-
-<x-layouts.base>
-@extends('layouts.app')
-@include('layouts.sidenav')
-<main class="content">
-    @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'View Property Unit')
+@section('view_proUnit' , 'active')
+@section('main')
 
 
     <div class="container">
         <div class="row">
-            <div class="col">
-                <div class="ms-2 me-2 mt-5 ">
-
-                    <a href="/propertyunits"> <button class="btn btn-danger mt-5 ml-3 mb-3"> Add Room
+            <div class="col-md-12 mt-2">
+                    <a href="/propertyunits"> <button class="btn btn-danger mt-5 ml-3 mb-3"> Add Unit
                         </button></a>
 
                     <div class="table-responsive">
@@ -21,18 +17,15 @@
                                     <th scope="col" class="">ID</th>
                                     <th scope="col" class="">Parent Property</th>
                                     <th scope="col" class="">Title </th>
-
                                     <th scope="col" class="">Actions</th>
                                 </tr>
                             </thead>
                         </table>
                     </div>
-                </div>
             </div>
         </div>
     </div>
-</main>
-</x-layouts.base>
+@endsection
 
 
 @section('page-script')

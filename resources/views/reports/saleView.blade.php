@@ -1,9 +1,6 @@
-<x-layouts.base>
-    @extends('layouts.app')
-
-    @include('layouts.sidenav')
-    <main class="content">
-        @include('layouts.topbar')
+@extends('layouts.master')
+@section('title' , 'Show Booking Reports')
+@section('main')
 
        @php
                     $totalpaid = $alldata->paid_payment;
@@ -14,7 +11,7 @@
         <div class="container">
 
             <div class="row d-flex justify-content-center">
-                <div class="col-md-9 mt-3 shadow ">
+                <div class="col-md-9 mt-3 shadow" style="text-align: center;">
 
                     <h2 class="mt-3 mb-4 ">
                         Property Booking Details ({{date('F d, Y', strtotime($alldata->created_at))}})
@@ -22,103 +19,103 @@
 
                         <hr>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                 Property Name
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $alldata->name }}</h6>
                         </div>
                         <hr>
                     </div>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                 Customer Name
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $alldata->first_name }}</h6>
                         </div>
                         <hr>
                     </div>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                 Sale Price
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{$alldata->total_sale_price}} </h6>
                         </div>
                         <hr>
                     </div>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                 Advance Payment
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $alldata->sale_advance_payment }}</h6>
                         </div>
                         <hr>
                     </div>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                Remaning Payment
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $totalsale_remaning_payment }}</h6>
                         </div>
                         <hr>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                Installement
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $alldata->frequency_collection}}</h6>
                         </div>
                         <hr>
                     </div>
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                No.of Year/Month
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $alldata->number_of_years_month }}</h6>
                         </div>
                         <hr>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                Payment PR Year/Month
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $alldata->payment_per_frequency }}</h6>
                         </div>
                         <hr>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                Due Date
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
 
                             <h6> {{ date('F d, Y', strtotime($alldata->due_date))}}</h6>
                         </div>
@@ -126,12 +123,12 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col">
                             <h6 class="mb-3">
                                Total Paid
                             </h6>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <h6> {{ $alldata->paid_payment }}</h6>
                         </div>
                         <hr>
@@ -200,7 +197,11 @@
                                 </tbody>
                             </table>
                     </div>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+               
+
+        </div>
+ <div class="mb-5" style ="text-align: end;">
                     <button class="btn btn-primary" type="button"><i class="fa fa-print"></i>
                         Print</button>
                     <a href="{{url("/sale/report")}}">
@@ -210,8 +211,6 @@
                 <p class="text-center">
                     @ Cross Devlogix.Com
                 </p>
-            </div>
+</div>
 
-        </div>
-    </main>
-</x-layouts.base>
+@endsection

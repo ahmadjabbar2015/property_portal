@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\ticket;
+use App\Models\Ticket;
 use Datatables;
 use DB;
 
@@ -21,7 +21,8 @@ class TicketController extends Controller
         ->select('tickets.*','users.first_name','assignuser.first_name as assign_name')->get();
 
         $user_id=Auth::id();
-
+        // $bussniess_id=auth()->user()->bussniess_id;
+        // $data = ticket::where('bussniess_id',$bussniess_id)->get();
 
         if ($request->ajax()) {
 
@@ -54,12 +55,16 @@ class TicketController extends Controller
         if (!auth()->user()->hasPermission('Tickets','create')){
             return redirect(route('404'));
         }
+
+      $bussniess_id=auth()->user()->bussniess_id;
+    
       $tickets=new ticket;
       $tickets->subject=$request->subject;
       $tickets->priority=$request->priority;
       $tickets->description=$request->description;
       $tickets->users_id=1;
       $tickets->status=$request->status;
+      $tickets->bussniess_id=$bussniess_id;
       $tickets->save();
         return redirect('ticket/index')->with('success', 'ticket Addedd!');
     // } catch (\Throwable $th) {
@@ -73,13 +78,16 @@ class TicketController extends Controller
     {
       try {
 
+        $bussniess_id=auth()->user()->bussniess_id;
         $ticket=DB::table('tickets')
-        ->leftjoin('users','users.id','=','tickets.user_id')
+        ->leftjoin('users','users.id','=','tickets.users_id')
         ->leftjoin('users as assignuser','assignuser.id','=','tickets.assign_to')
-        ->select('tickets.*','users.name','assignuser.name as assign_name')
+        ->select('tickets.*','users.first_name as name')
         ->where('tickets.id','=',$id)
+        ->where('tickets.bussniess_id',$bussniess_id)
         ->get();
 
+        
 
         return view('ticket.show')->with('ticket', $ticket);
     } catch (\Throwable $th) {
